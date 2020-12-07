@@ -1,36 +1,6 @@
-
-const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
-
-const sendRequest = (path, callback) => {
-  const xhr = new XMLHttpRequest();
-
-  xhr.timeout = 10000;
-
-  xhr.ontimeout = () => {
-    console.log('timeout!');
-  }
-
-  xhr.onreadystatechange = () => {
-    // console.log('ready state change', xhr.readyState);
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
-        callback(JSON.parse(xhr.responseText));
-      } else {
-        console.log('Error!', xhr.responseText);
-      }
-    }
-  }
-
-  xhr.open('GET', `${API}/${path}`);
-
-  // xhr.setRequestHeader('Content-Type', 'application/json');
-
-  xhr.send();
-}
-
-class GoodsItem {
-  constructor({ product_name, price }) {
-    this.title = product_name;
+  class GoodsItem {
+  constructor({ title, price }) {
+    this.title = title;
     this.price = price;
   }
 
@@ -51,24 +21,13 @@ class GoodsList {
     this.basket = basket;
   }
 
-  fetchData(callback) {
-    sendRequest('catalogData.json', (data) => {
-      this.goods = data;
-      callback();
-    });
-  }
-
-  newFetchData(callback) {
-    fetch(`${API}/catalogData.json`)
-      .then((response) => {
-        console.log(response);
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-        this.goods = data;
-        callback();
-      });
+  fetchData() {
+    this.goods = [
+      { title: 'Ноутбук', price: 30000 },
+      { title: 'Клавиатура', price: 1000 },
+      { title: 'Мышь', price: 500 },
+      { title: 'Монитор', price: 10000 },
+    ];
   }
 
   addToBasket(item) {
@@ -104,7 +63,7 @@ class Basket {
   }
 
   changeQuantity() {
-
+    
   }
 
   clear() {
@@ -142,7 +101,7 @@ class BasketItem {
   }
 
   changeQuantity() {
-
+  
   }
 
   removeItem() {
@@ -158,7 +117,6 @@ class BasketItem {
 
 const basket = new Basket();
 const goodsList = new GoodsList(basket);
-goodsList.fetchData(() => {
-  goodsList.render();
-  goodsList.getTotalPrice();
-});
+goodsList.fetchData();
+goodsList.render();
+goodsList.getTotalPrice();

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Burger</title>
+</head>
+
+<body>
+    <h1> Выбериту размер бургера</h1>
+    <button id="s1"> маленький </button>
+    <button id="s2"> Большой</button>
+    <h1> Выбериту начинку бургера</h1>
+    <button id="f1"> сыр </button>
+    <button id="f2"> салат </button>
+    <button id="f3"> картоха</button>
+    <h1> Выбериту доп опцию бургера</h1>
+    <button id="o1"> специи </button>
+    <button id="o2"> майонез </button>
+    <button id="o3"> НЕ НАДО </button>
+    <h2>Заказ</h2>
+    <button id="t1"> КУПИТЬ БУРГЕР </button>
+    <button id="t2"> ОЧИСТИТЬ </button>
+    <script defer>
+        const size = [
+            [small = [50, 20]],
+            [big = [100, 40]]
+        ];
+        const fill = [
+            [cheese = [10, 20]],
+            [salad = [20, 5]],
+            [potato = [15, 10]]
+        ];
+        const option = [
+            [spices = [15, 0]],
+            [mayonez = [20, 5]]
+
+        ];
+        class Burger {
+            constructor(size, fill, option = [
+                [0, 0]
+            ]) {
+                this.size = size;
+                this.fill = fill;
+                this.option = option;
+            }
+            price() {
+                this.totalprice = 0;
+                this.totalprice = this.totalprice + this.size[0][0] + this.fill[0][0] + this.option[0][0];
+            }
+            calories() {
+                this.totalcall = 0;
+                this.totalcall = this.totalcall + this.size[0][1] + this.fill[0][1] + this.option[0][1];
+            }
+
+        }
+        let bigburger = new Burger();
+        document.querySelector("#s1").onclick = function () {
+            bigburger.size = size[0];
+            document.querySelector("#s1").setAttribute("style", "color:red");
+            document.querySelector("#s2").setAttribute("style", "");
+            console.log(bigburger);
+        }
+        document.querySelector("#s2").onclick = function () {
+            document.querySelector("#s2").setAttribute("style", "color:red");
+            document.querySelector("#s1").setAttribute("style", "");
+            bigburger.size = size[1];
+            console.log(bigburger);
+        }
+        document.querySelector("#f1").onclick = function () {
+            document.querySelector("#f1").setAttribute("style", "color:red");
+            document.querySelector("#f2").setAttribute("style", "");
+            document.querySelector("#f3").setAttribute("style", "");
+            bigburger.fill = fill[0];
+            console.log(bigburger);
+        }
+        document.querySelector("#f2").onclick = function () {
+            document.querySelector("#f2").setAttribute("style", "color:red");
+            document.querySelector("#f1").setAttribute("style", "");
+            document.querySelector("#f3").setAttribute("style", "");
+            bigburger.fill = fill[1];
+            console.log(bigburger);
+        }
+        document.querySelector("#f3").onclick = function () {
+            document.querySelector("#f3").setAttribute("style", "color:red");
+            document.querySelector("#f1").setAttribute("style", "");
+            document.querySelector("#f2").setAttribute("style", "");
+            bigburger.fill = fill[2];
+            console.log(bigburger);
+        }
+        document.querySelector("#o1").onclick = function () {
+            document.querySelector("#o1").setAttribute("style", "color:red");
+            document.querySelector("#o2").setAttribute("style", "");
+            bigburger.option = option[0];
+            console.log(bigburger);
+        }
+        document.querySelector("#o2").onclick = function () {
+            document.querySelector("#o2").setAttribute("style", "color:red");
+            document.querySelector("#o1").setAttribute("style", "");
+            bigburger.option = option[1];
+            console.log(bigburger);
+        }
+        document.querySelector("#o3").onclick = function () {
+            document.querySelector("#o1").setAttribute("style", "");
+            document.querySelector("#o2").setAttribute("style", "");
+            bigburger.option = [
+                [0, 0]
+            ];
+            console.log(bigburger);
+        }
+        document.querySelector("#t1").onclick = function () {
+            if (bigburger.size == undefined) {
+                alert("Выберите размер")
+            }
+            if (bigburger.fill == undefined) {
+                alert("Выберите начинку")
+            }
+            bigburger.price();
+
+            bigburger.calories();
+            console.log(bigburger);
+            alert(`Ваш бургер стоит ${bigburger.totalprice} рублей, в нем ${bigburger.totalcall} каллорий`);
+        }
+        document.querySelector("#t2").onclick = function () {
+            bigburger = new Burger();
+            let b = document.querySelectorAll("button");
+            for (i = 0; i < b.length; i++) {
+                b[i].setAttribute("style", "");
+            }
+            console.log(bigburger);
+            console.log(b);
+        }
+    </script>
+</body>
+
+</html>

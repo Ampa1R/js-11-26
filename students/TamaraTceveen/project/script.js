@@ -1,6 +1,32 @@
+const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+
+const sendRequest = new Promise((resolve, reject) => {
+  const xhr = new XMLHttpRequest();
+
+  xhr.timeout = 10000;
+
+  xhr.ontimeout = () => {
+    console.log('timeout!');
+  }
+
+  xhr.onreadystatechange = () => {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        return resolve(JSON.parse(xhr.responseText));
+      } else {
+        return reject('Error!', xhr.responseText);
+      }
+    }
+  }
+
+  xhr.open('GET', `${API}/catalogData.json`);
+
+  xhr.send();
+})
+
 class GoodsItem {
-  constructor({ title, price }) {
-    this.title = title;
+  constructor({ product_name, price }) {
+    this.title = product_name;
     this.price = price;
   }
 
@@ -22,16 +48,35 @@ class GoodsList {
   }
 
   fetchData() {
-    this.goods = [
-      { title: 'Ноутбук', price: 30000 },
-      { title: 'Клавиатура', price: 1000 },
-      { title: 'Мышь', price: 500 },
-      { title: 'Монитор', price: 10000 },
-    ];
+    sendRequest
+      .then((response) => {
+        console.log(response);
+        this.goods = response;
+        goodsList.render();
+        goodsList.sumTotal();
+      })
   }
 
-  addToBasket(item) {
-    this.basket.add(item);
+  newFetchData(callback) {
+    fetch(`${API}/catalogData.json`)
+      .then((response) => {
+        console.log(response);
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        this.goods = data;
+        callback();
+      });
+  }
+
+  addToBasket(item, price) {
+
+    const inBasket = new BasketItem(item, price);
+    console.log('In basket', inBasket);
+    const inBasketGoods = basket.basketGoods.push(inBasket);
+    return inBasketGoods;
+
   }
 
   render() {
@@ -42,7 +87,7 @@ class GoodsList {
     document.querySelector('.goods').innerHTML = goodsList.join('');
   }
 
-  sumTotal(){
+  sumTotal() {
     let total = 0;
     const sumTotal = this.goods.map(item => {
       total += item.price;
@@ -61,36 +106,42 @@ class Basket {
 
   }
 
-  removeItem() {
-
+  removeItem(title) {
+    let remove = this.basketGoods.filter(function (removeItem) { return removeItem.title !== title });
+    return this.basketGoods = remove;
   }
 
-  discountCode() {
-
-  }
-
-  order() {
+  list() {
 
   }
 }
 
 class BasketItem {
-  constructor({ title, count = 1, price, picture }) {
-    this.title = title;
-    this.count = count;
+  constructor(product_name, price) {
+    this.title = product_name;
     this.price = price;
-    this.picture = picture;
   }
 
   render() {
-
+    return `
+      <div class="basketItem">
+        <h4>${this.title}</h4>
+        // <p>${this.count}</p>
+        <p>${this.price}</p>
+        <button>Remove</button>
+      </div>
+    `;
   }
 }
 
 const basket = new Basket();
 const goodsList = new GoodsList(basket);
-goodsList.fetchData();
-goodsList.render();
-goodsList.sumTotal();
 
+goodsList.fetchData();
+goodsList.addToBasket('Мышка', 1000);
+goodsList.addToBasket('Ноутбук', 45600);
+console.log('basket', basket);
+basket.removeItem('Мышка');
+
+console.log('basket remove', basket);
 
