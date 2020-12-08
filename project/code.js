@@ -1,4 +1,4 @@
-const API = 0;
+const API = 'https://github.com/begemot39/js-11-26/tree/master/project';
 
 const sendRequest = (path, callback) => {
   const xhr = new XMLHttpRequest();
@@ -49,17 +49,9 @@ constructor(){
   this.goods = [];
   this.basket = basket;
 }
-// fetchData(){
-//   this.goods = [
-//     { title: 'Ноутбук', price: 30000 },
-//     { title: 'Клавиатура', price: 1000 },
-//     { title: 'Мышь', price: 500 },
-//     { title: 'Монитор', price: 10000 },
-//   ];
-// }
 
 fetchData(callback) {
-  sendRequest('catalogData.json', (data) => {
+  sendRequest('data.json', (data) => {
     this.goods = data;
     callback();
   });
@@ -74,10 +66,6 @@ addToBasket(item) {
 getTotalPrice() {
   const total = this.goods.reduce((acc, curVal) => acc + curVal.price, 0);
 
-  // let total=0;
-  // this.goods.forEach(item => {
-  //     total+=item.price;
-  //   });
   console.log(total);
   return total;
   
@@ -118,7 +106,7 @@ class Basket {
 //содержимое корзины
 
   fetchData(callback) {
-    fetch(`${API}/getBasket.json`)
+    fetch(`${API}/data.json`)
       .then((response) => {
         return response.json();
       })
