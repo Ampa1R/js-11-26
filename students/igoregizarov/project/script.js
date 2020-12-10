@@ -119,3 +119,5 @@ const goodsList = new GoodsList();
 goodsList.fetchData();
 goodsList.render();
 goodsList.getTotalPrice();
+
+let homework = 'Сделать ДЗ№ 3'
