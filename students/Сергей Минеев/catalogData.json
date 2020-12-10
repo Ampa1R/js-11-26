@@ -1,0 +1,62 @@
+[
+{
+"title":"Продукт 1",
+"price":100,
+"quantity":1,
+"quantityMax":0
+},
+{
+"title":"Продукт 2",
+"price":200,
+"quantity":2,
+"quantityMax":0
+},
+{
+"title":"Продукт 3",
+"price":300,
+"quantity":3,
+"quantityMax":0
+},
+{
+"title":"Продукт 4",
+"price":400,
+"quantity":4,
+"quantityMax":0
+},
+{
+"title":"Продукт 5",
+"price":500,
+"quantity":5,
+"quantityMax":0
+},
+{
+"title":"Продукт 6",
+"price":600,
+"quantity":6,
+"quantityMax":0
+},
+{
+"title":"Продукт 7",
+"price":700,
+"quantity":7,
+"quantityMax":0
+},
+{
+"title":"Продукт 8",
+"price":800,
+"quantity":8,
+"quantityMax":0
+},
+{
+"title":"Продукт 9",
+"price":900,
+"quantity":9,
+"quantityMax":0
+},
+  {
+"title":"Продукт 10",
+"price":1000,
+"quantity":10,
+"quantityMax":0
+}
+]

@@ -1,4 +1,6 @@
-*, *::after, *::before {
+*,
+*::after,
+*::before {
     box-sizing: border-box;
 }
 
@@ -17,7 +19,7 @@ header {
     background: #fff;
     justify-content: space-between;
     padding: 20px;
-    box-shadow: 0 3px 6px rgba(0,0,0,.2);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, .2);
 }
 
 .cart-button {
@@ -50,7 +52,7 @@ header {
 }
 
 .item {
-    box-shadow: 0 3px 6px rgba(0,0,0,.2);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, .2);
     flex-basis: calc(25% - 40px);
     margin: 20px;
     background-color: #fff;

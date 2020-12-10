@@ -1,41 +1,45 @@
 const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
 
-const sendRequest = new Promise((resolve, reject) => {
-  const xhr = new XMLHttpRequest();
+const sendRequest = (path) => {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
 
-  xhr.timeout = 10000;
+    xhr.timeout = 10000;
 
-  xhr.ontimeout = () => {
-    console.log('timeout!');
-  }
+    xhr.ontimeout = () => {
+      console.log('timeout!');
+    }
 
-  xhr.onreadystatechange = () => {
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
-        return resolve(JSON.parse(xhr.responseText));
-      } else {
-        return reject('Error!', xhr.responseText);
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          resolve(JSON.parse(xhr.responseText));
+        } else {
+          console.log('Error!', xhr.responseText);
+          return reject('Error!', xhr.responseText);
+        }
       }
     }
-  }
 
-  xhr.open('GET', `${API}/catalogData.json`);
+    xhr.open('GET', `${API}/${path}`);
 
-  xhr.send();
-})
+    xhr.send();
+  });
+}
 
 class GoodsItem {
-  constructor({ product_name, price }) {
+  constructor({ id_product, product_name, price }) {
+    this.id = id_product;
     this.title = product_name;
     this.price = price;
   }
 
   render() {
     return `
-      <div class="item">
+      <div class="item" data-id="${this.id}">
         <h4>${this.title}</h4>
         <p>${this.price}</p>
-        <button>Купить</button>
+        <button type="button" name="add-to-basket">Купить</button>
       </div>
     `;
   }
@@ -44,17 +48,35 @@ class GoodsItem {
 class GoodsList {
   constructor(basket) {
     this.goods = [];
+    this.filteredGoods = [];
     this.basket = basket;
+
+    document.querySelector('.goods').addEventListener('click', (event) => {
+      if (event.target.name === 'add-to-basket') {
+        const id = event.target.parentElement.dataset.id;
+        const item = this.goods.find((goodsItem) => goodsItem.id_product === parseInt(id));
+        if (item) {
+          this.addToBasket(item);
+        } else {
+          console.error(`Can't find element with id ${id}`)
+        }
+      }
+    });
+
+    document.querySelector('.search').addEventListener('input', (event) => {
+      this.search(event.target.value);
+    });
   }
 
   fetchData() {
-    sendRequest
-      .then((response) => {
-        console.log(response);
-        this.goods = response;
-        goodsList.render();
-        goodsList.sumTotal();
-      })
+    return new Promise((resolve, reject) => {
+      sendRequest('catalogData.json')
+        .then((data) => {
+          this.goods = data;
+          this.filteredGoods = data;
+          resolve();
+        });
+    });
   }
 
   newFetchData(callback) {
@@ -70,78 +92,121 @@ class GoodsList {
       });
   }
 
-  addToBasket(item, price) {
+  addToBasket(item) {
+    this.basket.addItem(item);
+  }
 
-    const inBasket = new BasketItem(item, price);
-    console.log('In basket', inBasket);
-    const inBasketGoods = basket.basketGoods.push(inBasket);
-    return inBasketGoods;
-
+  getTotalPrice() {
+    return this.goods.reduce((acc, curVal) => {
+      return acc + curVal.price;
+    }, 0);
   }
 
   render() {
-    const goodsList = this.goods.map(item => {
+    const goodsList = this.filteredGoods.map(item => {
       const goodsItem = new GoodsItem(item);
       return goodsItem.render();
     });
     document.querySelector('.goods').innerHTML = goodsList.join('');
   }
 
-  sumTotal() {
-    let total = 0;
-    const sumTotal = this.goods.map(item => {
-      total += item.price;
-      return total;
-    })
-    console.log(total);
+  search(value) {
+    const regexp = new RegExp(value.trim(), 'i');
+    this.filteredGoods = this.goods.filter((goodsItem) => regexp.test(goodsItem.product_name));
+    this.render();
   }
 }
 
 class Basket {
   constructor() {
     this.basketGoods = [];
+    this.amount = 0;
+    this.countGoods = 0;
+  }
+
+  addItem(item) {
+    const index = this.basketGoods.findIndex((basketItem) => basketItem.id_product === item.id_product);
+    if (index > -1) {
+      this.basketGoods[index].quantity += 1;
+      // this.basketGoods[index] = { ...this.basketGoods[index], quantity: this.basketGoods[index].quantity + 1 };
+    } else {
+      this.basketGoods.push(item);
+    }
+    console.log(this.basketGoods);
+  }
+
+  removeItem(id) {
+    this.basketGoods = this.basketGoods.filter((goodsItem) => goodsItem.id_product !== parseInt(id));
+    console.log(this.basketGoods);
+  }
+
+  changeQuantity() {
+
+  }
+
+  clear() {
+
+  }
+
+  fetchData() {
+    return new Promise((resolve, reject) => {
+      sendRequest('getBasket.json')
+        .then((data) => {
+          this.basketGoods = data.contents;
+          this.amount = data.amount;
+          this.countGoods = data.countGoods;
+          console.log(this);
+          resolve();
+        });
+    });
+  }
+
+  applyPromoCode() {
+
+  }
+
+  getDeliveryPrice() {
+
+  }
+
+  createOrder() {
+
+  }
+
+  getTotalPrice() {
+
   }
 
   render() {
-
-  }
-
-  removeItem(title) {
-    let remove = this.basketGoods.filter(function (removeItem) { return removeItem.title !== title });
-    return this.basketGoods = remove;
-  }
-
-  list() {
 
   }
 }
 
 class BasketItem {
-  constructor(product_name, price) {
-    this.title = product_name;
-    this.price = price;
+  constructor({ title }) {
+    this.title = title;
+  }
+
+  changeQuantity() {
+
+  }
+
+  removeItem() {
+  }
+
+  changeType() {
   }
 
   render() {
-    return `
-      <div class="basketItem">
-        <h4>${this.title}</h4>
-        // <p>${this.count}</p>
-        <p>${this.price}</p>
-        <button>Remove</button>
-      </div>
-    `;
+
   }
 }
 
 const basket = new Basket();
+basket.fetchData();
 const goodsList = new GoodsList(basket);
-
-goodsList.fetchData();
-goodsList.addToBasket('Мышка', 1000);
-goodsList.addToBasket('Ноутбук', 45600);
-console.log('basket', basket);
-basket.removeItem('Мышка');
-
-console.log('basket remove', basket);
-
+goodsList.fetchData()
+  .then(() => {
+    goodsList.render();
+    goodsList.getTotalPrice();
+  });
