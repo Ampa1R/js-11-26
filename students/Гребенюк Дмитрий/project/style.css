@@ -1,0 +1,29 @@
+.header{
+    width: 1140px;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color:lightgray;
+}
+.cart-button{
+    height: 30px;
+}
+main{
+    margin-top: 50px;
+    display: flex;
+    padding: 0;
+}
+.goods{
+    display: flex;
+     width: 1140px;
+    justify-content: space-between;
+    padding: 20px;
+   
+}
+.item{
+    background-color: gainsboro;
+    width: 250px;
+    text-align: center;
+}

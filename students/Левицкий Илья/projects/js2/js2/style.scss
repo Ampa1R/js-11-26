@@ -1,0 +1,54 @@
+* {
+  font-family: "Nerko One", cursive;
+  font-family: "Playfair Display", serif;
+  &:focus {
+    outline: none;
+  }
+}
+header {
+  border: 3px solid rgb(185, 33, 33);
+  background-color: aliceblue;
+  display: flex;
+  justify-content: space-around;
+  height: 50px;
+  align-items: center;
+  button {
+    border-radius: 5px;
+    cursor: pointer;
+    height: 40px;
+    background-color: rgb(170, 211, 248);
+  }
+  span {
+    font-size: 40px;
+    font-weight: bold;
+    color: rgb(119, 4, 4);
+  }
+}
+.goods {
+  align-content: center;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 20%));
+  gap: 32px;
+  min-height: 100vh;
+  .item {
+    border: 3px solid rgb(136, 25, 25);
+    border-radius: 15px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: aliceblue;
+    button {
+      cursor: pointer;
+      border-radius: 5px;
+      background-color: rgb(170, 211, 248);
+    }
+    img {
+      margin: 10px;
+      width: inherit;
+      height: 150px;
+      border: 1px solid #000;
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+    "name": "John",
+    "lastName": "Doe",
+    "age": 40,
+    "info": {
+        "hair-color": "brown"
+    },
+    "books": [
+        "123",
+        { "foo": "bar" },
+        1235
+    ]
+}

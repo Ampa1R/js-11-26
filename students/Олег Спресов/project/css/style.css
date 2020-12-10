@@ -1,0 +1,80 @@
+.cart-button {
+    background-color: blue; /* Blue background */
+    /*border: none; !* Remove borders *!*/
+    border-radius: 14px;
+    border: 2px solid darkblue;
+    color: white; /* White text */
+    padding: 6px 12px; /* Some padding */
+    font-size: 16px; /* Set a font size */
+    /*cursor: pointer; !* Mouse pointer on hover *!*/
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+    background: lightblue;
+    border: 1px solid darkblue;
+}
+
+.container {
+    width: 1200px;
+    height: 800px;
+    padding-left: 100px;
+    padding-right: 100px;
+
+}
+
+.logo {
+    margin-top: 18px;
+    padding-left: 50px;
+}
+
+.basket {
+    margin-top: 14px;
+    padding-right: 50px;
+
+}
+
+.item {
+    width: 210px;
+    height: 260px;
+    border: 1px solid lightblue;
+
+}
+
+.goods {
+    height: 550px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-right: 20px;
+    padding-left: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-content: space-between;
+    flex-wrap: wrap;
+
+}
+
+img[alt="product"] {
+    width: 160px;
+    height: 150px;
+    margin-left: 25px;
+    margin-top: 20px;
+}
+
+.prod_name {
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.prod_price {
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.add_cart {
+    margin-left: 54px;
+}

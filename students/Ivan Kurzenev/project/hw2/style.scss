@@ -1,0 +1,95 @@
+$pad: calc(50% - 400px);
+$colorMain: lightslategray;
+$transTime: .15s;
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+:focus,
+:active {
+    outline: none;
+}
+
+body {
+    font-family: Roboto, sans-serif;
+    font-size: 16px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.padding {
+    padding-left: $pad;
+    padding-right: $pad;
+}
+
+.marginTop {
+    margin-top: 16px;
+}
+
+.header {
+    background-color: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(236, 236, 236, 1);
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.17);
+    min-width: 160px*4;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.logo {
+    color: $colorMain;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.cart-button {
+    font-family: Roboto, sans-serif;
+    font-size: 14px;
+    border: none;
+    padding: 12px 16px;
+    color: white;
+    background-color: $colorMain;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all $transTime;
+
+    &:hover {
+        color: $colorMain - #444;
+        background-color: $colorMain + #444;
+    }
+}
+
+.main {
+    padding-top: 32px;
+}
+
+.goods {
+    min-width: 160px*4;
+    display: flex;
+    justify-content: space-between;
+}
+
+.item {
+    text-align: center;
+
+    &__link {
+        display: block;
+        height: 150px;
+        overflow: hidden;
+    }
+
+    &__image {
+        width: 160px;
+        overflow: hidden;
+    }
+
+    &__buy-button {
+        @extend.cart-button
+    }
+}
