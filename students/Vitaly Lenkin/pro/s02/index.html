@@ -5,22 +5,142 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Shop</title>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="">
-    <script src="script.js" defer></script>
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700&display=swap&subset=cyrillic" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css" />
+    <!-- <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700&display=swap&subset=cyrillic" rel="stylesheet"> -->
+    <link rel="stylesheet" href="css/main.css" />
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.10/dist/css/uikit.min.css" />
+
 </head>
 
-<body>
-    <header class="header d-flex">
-        <span class="logo">E-Shop</span>
-        <button type="button" class="cart-button">Корзина</button>
-    </header>
-    <main>
-        <section class="goods">
-        </section>
-    </main>
+<body class="fullsect">
+    <section class="mainsect">
+        <header class="container">
+
+            <div id="topbox">
+                <div id="top-logo">
+                    <!-- -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="82" height="58" viewBox="0 0 82 58">
+                        <circle fill="#d5d5d5" cx="49.7" cy="19.3" r="3.2"></circle>
+                        <circle fill="#d5d5d5" cx="30.3" cy="19.3" r="3.2"></circle>
+                        <circle fill="none" stroke="#d5d5d5" stroke-width="3" cx="40" cy="29" r="27.5"></circle>
+                        <path fill="none" stroke="#d5d5d5" stroke-width="3"
+                            d="M54.9 33.5a15.4 15.4 0 0 1-14.9 10 15.5 15.5 0 0 1-14.9-10"></path>
+                    </svg>
+                    <!-- -->
+                </div>
+                <div id="company-name" class="logo-company">E<span class="set-primary">.</span>Shop</div>
+                <!-- <span class="logo">E-Shop</span> -->
+                <nav id="top-menu">
+<!-- 
+                    <a class="menu-items" href="/">Главная</a>
+                    <a class="menu-items" href="#">Каталог</a>
+                    <div class="menu-items">
+                        <button type="button"
+                            class="cart-button uk-button uk-button-primary uk-button-small">Корзина</button>
+                    </div>
+-->
+                    <div class="menu-items">
+                        <a href="#" class="uk-icon" uk-icon="home"></a>                        
+                    </div>
+                    <div class="menu-items">
+                        <a href="#" class="uk-icon" uk-icon="search"></a>                        
+                    </div>
+                    <div class="menu-items">
+                        <a href="#" class="uk-icon" uk-icon="user"></a>                        
+                    </div><div class="menu-items">
+                        <a href="#" class="uk-icon" uk-icon="cart"></a>                        
+
+                    </div>
+                </nav>
+            </div>
+            <!--  -->
+        </header>
+    </section>
+    <!--  -->
+    <section id='promo' class="widecontent promo">
+        <div class="box-600-92-12">
+            <div class="promo-title">E<span class="set-primary">.</span>SHOP</div>
+            <div class="promo-trend">ЛУЧШИЕ <span class="set-primary">АКСЕССУАРЫ</span></div>
+        </div>
+    </section>
+
+    <!--  -->
+    <section class="gap-40"></section>
+    <!--  -->
+    <section class="widecontent product">
+        <div class="center">
+            <div class="product-header ">
+                <div class="title">Популярные товары</div>
+                <div class="text">Самые популярные товары за последний месяц</div>
+            </div>
+
+            <!-- Product 1 -->
+            <!-- ...Тестовый шаблон...
+                <div class="product-gallery">
+                <div class="card">
+                    <a class="card-link" href="#">
+                        <img src="images/nout.webp" alt="photo product-1" class="card-img">
+                    </a>
+                    <div class="card-info">
+                        <a href="" class="card-title">Ноутбук Mango</a>
+                        <div class="card-descr"></div>
+                        <div class="card-price">$52.00
+                            <img src="images/stars.png" alt="Raiting stars" class="card-stars">
+                        </div>
+                    </div>
+                    <a href="#" class="add-to-cart">Add to Cart</a>
+                </div>
+            </div> -->
+
+            <!-- Gallery -->
+            <main>
+                <div class="product-gallery goods">
+                    <!-- Подключение скрипта
+                <section class="goods">
+                </section> -->
+                </div>
+                <!--  -->
+                <section class="gap-30"></section>
+                <!--  -->
+                <div class="product-browse">
+                    <a href="#" class="button-browse">
+                        <div class="button">Browse All Product</div>
+                    </a>
+                </div>
+            </main>
+            <!--end Gallery-->
+        </div>
+    </section>
+    <!--  -->
+    <section class="gap-40"></section>
+    <!--  -->
+    <footer class="mainsect widecontent">
+        <div id="footer-box" class="center">
+            <div id="contacts">
+                <div class="contactWrap">
+                    <img src="images/envelope.svg" class="contactIcon">
+                    info@myshop.ru
+                </div>
+                <div class="contactWrap">
+                    <img src="images/phone-call.svg" class="contactIcon">
+                    8 800 555 00 00
+                </div>
+                <div class="contactWrap">
+                    <img src="images/placeholder.svg" class="contactIcon">
+                    С-Петербург, Мебельная, 1, оф. 101
+                </div>
+            </div>
+
+            <div id="footerNav">
+                <a href="/">Главная</a>
+                <a href="related-products.html">Каталог</a>
+            </div>
+        </div>
+    </footer>
+    <script src="scripts/script.js" defer></script>
+    <!-- UIkit JS -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.10/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.10/dist/js/uikit-icons.min.js"></script>
 </body>
 
 </html>

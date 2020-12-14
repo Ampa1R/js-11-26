@@ -1,0 +1,17 @@
+.products_list {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 95%;
+    margin: 0 auto;
+}
+
+.products_list .card {
+    margin: 5px;
+    width: 18rem;
+}
+
+.products_list .card .btn-primary:hover {
+    transform: scale(1.05);
+    transition: 0.5s;
+  }

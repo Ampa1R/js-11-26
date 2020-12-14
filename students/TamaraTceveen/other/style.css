@@ -1,0 +1,14 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 300px;
+    justify-content: space-between;
+    
+}
+
+.pMessage{
+    color: red;
+    font-size: 12px;
+    margin-top: -10px;
+}

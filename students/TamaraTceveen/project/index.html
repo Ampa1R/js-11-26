@@ -6,19 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Shop</title>
     <script src="script.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <header class="header center">
-        <span class="logo">E-Shop</span>
-        <input type="text" class="search" placeholder="Search..." />
-        <button type="button" class="cart-button">Корзина</button>
-    </header>
-    <main class="main center">
-        <section class="goods">
-        </section>
-    </main>
+    <div id="app">
+        <header class="header center">
+            <span class="logo">E-Shop</span>
+            <input type="text" class="search" v-model="searchValue" placeholder="Search..." />
+            <button type="button" v-on:click="isVisibleCart =!isVisibleCart" class="cart-button">Корзина</button>
+        </header>
+        <main class="main center">
+            <section class="goods">
+                <p v-if="filteredGoods.length == 0">Нет данных</p>
+                <div class="item" v-for="item in filteredGoods">
+                    <h4>{{ item.product_name }}</h4>
+                    <p>{{ item.price }}</p>
+                    <button type="button" v-on:click="addToBasket(item)">Add to basket</button>
+                </div>
+            </section>
+            <section v-show="isVisibleCart" class="basket">
+                <div v-for="item in basketGoods" class="basket_item">
+                    <h4>{{ item.product_name }}</h4>
+                    <p>Цена: {{ item.price }}</p>
+                    <p>Количество: {{ item.quantity }}</p>
+                    <button type="button" v-on:click="removeItem(item.id_product)"> Remove from basket</button>
+                </div>
+            </section>
+        </main>
+    </div>
 </body>
 
 </html>

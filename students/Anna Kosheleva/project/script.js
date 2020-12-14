@@ -1,17 +1,51 @@
 
+  const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+
+  const sendRequest = (path) => {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+  
+      xhr.timeout = 10000;
+  
+      xhr.ontimeout = () => {
+        console.log('timeout!');
+      }
+  
+      xhr.onreadystatechange = () => {
+        // console.log('ready state change', xhr.readyState);
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            resolve(JSON.parse(xhr.responseText));
+          } else {
+            console.log('Error!', xhr.responseText);
+            reject(xhr.responseText);
+          }
+        }
+      }
+  
+      xhr.open('GET', `${API}/${path}`);
+  
+      // xhr.setRequestHeader('Content-Type', 'application/json');
+  
+      xhr.send();
+    });
+  }
+  
+  
   class GoodsItem {
-    constructor({ title, price }) {
-        this.title = title;
-        this.price = price;
+    constructor({ id_product, product_name, price }) {
+      this.id = id_product;
+      this.title = product_name;
+      this.price = price;
     }
 
     render() {
         return`
-            <div class="item">
+            <div class="item" data-id="${this.id}">
                 <h4>${this.title}</h4>
                 <p>${this.price}</p>
-                <button type="button">Add to basket</button>   
-            </div>
+            <button type="button" name="add-to-basket">Add to basket</button>
+        </div>
         `; 
     }
   }
@@ -20,15 +54,42 @@
         constructor(basket) {
             this.goods = [];
             this.basket = basket;
-        }
+
+            document.querySelector('.goods').addEventListener('click', (event) => {
+                if (event.target.name === 'add-to-basket') {
+                  const id = event.target.parentElement.dataset.id;
+                  const item = this.goods.find((goodsItem) => goodsItem.id_product === parseInt(id));
+                  if (item) {
+                    this.addToBasket(item);
+                  } else {
+                    console.error(`Can't find element with id ${id}`)
+                  }
+                }
+              });
+           }
 
         fetchData() {
-            this.goods = [
-                { title: 'Ноутбук', price: 30000 },
-                { title: 'Клавиатура', price: 1000 },
-                { title: 'Мышь', price: 500 },
-                { title: 'Монитор', price: 10000 },  
-            ];
+            return new Promise((resolve, reject) => {
+              sendRequest('catalogData.json')
+                .then((data) => {
+                  this.goods = data;
+                  this.filteredGoods = data;
+                  resolve();
+                });
+            });
+        }
+
+        newFetchData(callback) {
+           fetch(`${API}/catalogData.json`)
+            .then((response) => {
+                console.log(response);
+                return response.json();
+            })
+              .then((data) => {
+                console.log(data);
+                this.goods = data;
+                callback();
+            });
         }
 
         addToBasket(item) {
@@ -58,14 +119,18 @@
     class Basket {
         constructor() {
             this.basketGoods = [];
+            this.amount = 0;
+            this.countGoods = 0;
         }
 
         addItem() {
+            this.basketGoods.push(item);
 
         }
 
-        removeItem() {
-
+        removeItem(id) {
+            this.basketGoods = this.basketGoods.filter((goodsItem) => goodsItem.id_product !== parseInt(id));
+            console.log(this.basketGoods);
         }
 
         changeQuantity() {
@@ -77,7 +142,16 @@
         }
         
         fetchData() {
-
+            return new Promise((resolve, reject) => {
+              sendRequest('getBasket.json')
+                .then((data) => {
+                  this.basketGoods = data.contents;
+                  this.amount = data.amount;
+                  this.countGoods = data.countGoods;
+                  console.log(this);
+                  resolve();
+                });
+            });
         }
 
         applyPromoCode() {
@@ -125,7 +199,11 @@
     
 
     const basket = new Basket();
+    basket.fetchData();
     const goodsList = new GoodsList(basket);
-    goodsList.fetchData();
-    goodsList.render();
-    goodsList.getTotalPrice();
+    goodsList.fetchData()
+        .then(() => {
+            goodsList.render();
+            goodsList.getTotalPrice();
+        });
+    

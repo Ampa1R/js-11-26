@@ -28,3 +28,16 @@
     align-items: center;
     padding-bottom: 20px;
 }
+.basket{
+    background-color: white;
+    width: 300px;
+    height: 600px;
+    position: absolute;
+    right: 0;
+    
+}
+
+.basket_item {
+    margin-left: 30px;
+    margin-bottom: 50px;
+}

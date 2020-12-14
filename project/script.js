@@ -31,6 +31,75 @@ const sendRequest = (path) => {
   });
 }
 
+new Vue({
+  el: '#app',
+  data: {
+    goods: [],
+    basketGoods: [],
+    searchValue: '',
+  },
+  mounted() {
+    this.fetchData();
+    this.fetchBasketData();
+  },
+  methods: {
+    fetchData() {
+      return new Promise((resolve, reject) => {
+        sendRequest('catalogData.json')
+          .then((data) => {
+            this.goods = data;
+            resolve();
+          });
+      });
+    },
+    fetchBasketData() {
+      return new Promise((resolve, reject) => {
+        sendRequest('getBasket.json')
+          .then((data) => {
+            this.basketGoods = data.contents;
+            // this.amount = data.amount;
+            // this.countGoods = data.countGoods;
+            resolve();
+          });
+      });
+    },
+    addToBasket(item) {
+      const index = this.basketGoods.findIndex((basketItem) => basketItem.id_product === item.id_product);
+      if (index > -1) {
+        this.basketGoods[index].quantity += 1;
+        // this.basketGoods[index] = { ...this.basketGoods[index], quantity: this.basketGoods[index].quantity + 1 };
+      } else {
+        this.basketGoods.push(item);
+      }
+      console.log(this.basketGoods);
+    },
+    removeItem(id) {
+      this.basketGoods = this.basketGoods.filter((goodsItem) => goodsItem.id_product !== parseInt(id));
+      console.log(this.basketGoods);
+    }
+  },
+  computed: {
+    filteredGoods() {
+      const regexp = new RegExp(this.searchValue.trim(), 'i');
+      return this.goods.filter((goodsItem) => regexp.test(goodsItem.product_name));
+    },
+    totalPrice() {
+      return this.goods.reduce((acc, curVal) => {
+        return acc + curVal.price;
+      }, 0);
+    },
+    // someComputedProp: {
+    //   get() {
+    //     return this.name.toUpperCaes();
+    //   },
+    //   set(value) {
+    //     this.name = value.split('/');
+    //   }
+    // }
+  },
+})
+
+/*
 class GoodsItem {
   constructor({ id_product, product_name, price }) {
     this.id = id_product;
@@ -211,11 +280,13 @@ class BasketItem {
   }
 }
 
-const basket = new Basket();
-basket.fetchData();
-const goodsList = new GoodsList(basket);
-goodsList.fetchData()
-  .then(() => {
-    goodsList.render();
-    goodsList.getTotalPrice();
-  });
+// const basket = new Basket();
+// basket.fetchData();
+// const goodsList = new GoodsList(basket);
+// goodsList.fetchData()
+//   .then(() => {
+//     goodsList.render();
+//     goodsList.getTotalPrice();
+//   });
+
+*/

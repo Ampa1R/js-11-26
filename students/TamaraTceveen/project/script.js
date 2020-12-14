@@ -27,7 +27,71 @@ const sendRequest = (path) => {
   });
 }
 
-class GoodsItem {
+new Vue({
+  el: '#app',
+  data: {
+    goods: [],
+    basketGoods: [],
+    searchValue: '',
+    // searchLine: ''
+    isVisibleCart: false
+  },
+  mounted() {
+    this.fetchData();
+    this.fetchBasketData();
+  },
+  methods: {
+    fetchData() {
+      return new Promise((resolve, reject) => {
+        sendRequest('catalogData.json')
+          .then((data) => {
+            this.goods = data;
+            resolve();
+          });
+      });
+    },
+    fetchBasketData() {
+      return new Promise((resolve, reject) => {
+        sendRequest('getBasket.json')
+          .then((data) => {
+            this.basketGoods = data.contents;
+            resolve();
+          });
+      });
+    },
+    addToBasket(item) {
+      const index = this.basketGoods.findIndex((basketItem) => basketItem.id_product === item.id_product);
+      if (index > -1) {
+        this.basketGoods[index].quantity += 1;
+      } else {
+        this.basketGoods.push(item);
+      }
+      console.log(this.basketGoods);
+      console.log(item);
+    },
+    removeItem(id) {
+      this.basketGoods = this.basketGoods.filter((goodsItem) => goodsItem.id_product !== parseInt(id));
+      console.log(this.id_product, this.basketGoods);
+    },
+    filterGoods(){
+      console.log('filtergoods clicked');
+      // return this.filteredGoods;
+    }
+  },
+  computed: {
+    filteredGoods() {
+      const regexp = new RegExp(this.searchValue.trim(), 'i');
+      return this.goods.filter((goodsItem) => regexp.test(goodsItem.product_name));
+    },
+    totalPrice() {
+      return this.goods.reduce((acc, curVal) => {
+        return acc + curVal.price;
+      }, 0);
+    }
+  }
+})
+
+/* class GoodsItem {
   constructor({ id_product, product_name, price }) {
     this.id = id_product;
     this.title = product_name;
@@ -209,4 +273,4 @@ goodsList.fetchData()
   .then(() => {
     goodsList.render();
     goodsList.getTotalPrice();
-  });
+  }); */

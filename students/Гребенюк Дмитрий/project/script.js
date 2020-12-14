@@ -1,9 +1,43 @@
+const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+
+const sendRequest = (path) => {
+    return new Promise((resolve, reject) => {
+
+
+        const xhr = new XMLHttpRequest();
+
+        xhr.timeout = 10000;
+
+        xhr.ontimeout = () => {
+            console.log('timeout!');
+        }
+
+        xhr.onreadystatechange = () => {
+            // console.log('ready state change', xhr.readyState);
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    resolve(JSON.parse(xhr.responseText));
+                } else {
+                    console.log('Error!', xhr.responseText);
+                }
+            }
+        }
+
+        xhr.open('GET', `${API}/${path}`);
+
+        // xhr.setRequestHeader('Content-Type', 'application/json');
+
+        xhr.send();
+    })
+}
+
+
 class GoodsItem {
     constructor({
-        title,
+        product_name,
         price
     }) {
-        this.title = title;
+        this.title = product_name;
         this.price = price;
     }
 
@@ -21,34 +55,24 @@ class GoodsItem {
 class GoodsList {
     constructor(basket) {
         this.goods = [];
-        //this.basket = basket;
+        this.basket = basket;
     }
-     
+
+    addToBasket(item) {
+        this.basket.add(item);
+    }
+
 
     fetchData() {
-        this.goods = [
-            {
-                title: 'Ноутбук',
-                price: 30000
-            },
-            {
-                title: 'Клавиатура',
-                price: 1000
-            },
-            {
-                title: 'Мышь',
-                price: 500
-            },
-            {
-                title: 'Монитор',
-                price: 10000
-            },
-    ];
+        return new Promise ((resolve, reject) => {
+            sendRequest('catalogData.json')
+            .then(
+                (data) => {
+                    resolve(this.goods = data);
+                }); 
+            
+        })
     }
-
-//    addToBasket(item) {
-//        this.basket.add(item);
-//    }
     
     render() {
         const goodsList = this.goods.map(item => {
@@ -57,54 +81,67 @@ class GoodsList {
         });
         document.querySelector('.goods').innerHTML = goodsList.join('');
     }
-    sum (){
+    sum() {
         let sum = 0;
-        const goodsList = this.goods.map(item => {
-            const goodsItem = new GoodsItem(item);
-            return sum+= goodsItem.price;
+        this.goods.map(item => {
+            return sum += item.price;
         });
-        document.querySelector('.goods').append("Итого " + sum) ;
+        document.querySelector('.goods').append("Итоговая сумма : " + sum);
     }
-    
+
 }
 
-//class Basket {
-//    constructor() {
-//        this.basketGoods = []; //товары в корзине
-//        this.basketPrice = 0; //Цена всех добалвленных товаров
-//        this.basketArrange() {};// Оформить заказ
-//        this.basketForm = {};// Форма заполнения данных Юзера
-//        this.continue(){};// Продолжить покупки
-//        this.basketPromo(){};// Промокод
-//        
-//
-//    }
-//
-//
-//    render() {
-//
-//    }
-//}
+class Basket {
+    constructor() {
+        this.basketGoods = [];
+    }
 
-//class BasketItem {
-//    constructor(
-//        title
-//    ) {
-//        this.title = title; Название
-//        this.price = price; Цена
-//        this.quantity = 0; Количество
-//        this.image = ""; Изображение
-//        this.removeItem(){}; Удаление товаров
-//    }
-//    
-//
-//    render() {
-//
-//    }
-//}
+    addItem() {
 
-//const basket = new Basket();
+    }
+
+    removeItem() {
+
+    }
+
+    changeQuantity() {
+
+    }
+
+    fetchData() {
+
+    }
+
+    getTotalPrice() {
+
+    }
+
+    render() {
+
+    }
+}
+
+class BasketItem {
+    constructor({
+        title
+    }) {
+        this.title = title;
+    }
+
+    changeQuantity() {
+
+    }
+
+    removeItem() {}
+
+    render() {
+
+    }
+}
+
+const basket = new Basket();
 const goodsList = new GoodsList();
-goodsList.fetchData();
-goodsList.render();
-goodsList.sum();
+goodsList.fetchData().then(() => {
+    goodsList.render();
+    goodsList.sum();
+});

@@ -1,14 +1,39 @@
-const goods = [
-    { title: 'Ноутбук', price: 30000 },
-    { title: 'Клавиатура', price: 1000 },
-    { title: 'Мышь', price: 500 },
-    { title: 'Монитор', price: 10000 },
-];
+const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+
+const sendRequest = (path) => {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+  
+    xhr.timeout = 10000;
+  
+    xhr.ontimeout = () => {
+      console.log('timeout!');
+    }
+  
+    xhr.onreadystatechange = () => {
+      // console.log('ready state change', xhr.readyState);
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          resolve(JSON.parse(xhr.responseText));
+        } else {
+          console.log('Error!', xhr.responseText);
+          reject(xhr.responseText);
+        }
+      }
+    }
+  
+    xhr.open('GET', `${API}/${path}`);
+  
+    // xhr.setRequestHeader('Content-Type', 'application/json');
+  
+    xhr.send();
+  });
+}
 
 class GoodsItem {
-    constructor({ title, price }) {
-        this.title = title;
-        this.price = price;
+    constructor({ product_name, price }) {
+      this.title = product_name;
+      this.price = price;
     }
 
     render() {
@@ -19,37 +44,37 @@ class GoodsItem {
                 <div class="item-text">
                     <h4>${this.title}</h4>
                     <p>${this.price}</p>
+                    <button type="button">Add to basket</button>
                 </div>
             </div>
             `
     }
 }
 
-const renderGoodsItem = (title = 'Товар отсутствует на складе', price = 'Для уточнения цены свяжитесь с менеджером') => {
-    return `
-        <div class="item">
-            <div class="item-img">
-            </div>
-            <div class="item-text">
-                <h4>${title}</h4>
-                <p>${price}</p>
-            </div>
-        </div>
-        `;
-}
-
 class GoodsList {
-    constructor() {
+    constructor(basket) {
         this.goods = [];
+        this.basket = basket;
     }
 
-    fetchData() {
-        this.goods = [
-            { title: 'Ноутбук', price: 30000 },
-            { title: 'Клавиатура', price: 1000 },
-            { title: 'Мышь', price: 500 },
-            { title: 'Монитор', price: 10000 },
-        ];
+    fetchData(callback) {
+        sendRequest('catalogData.json', (data) => {
+            this.goods = data;
+            callback();
+        });
+    }
+
+    newFetchData(callback) {
+        fetch(`${API}/catalogData.json`)
+            .then((response) => {
+                console.log(response);
+                return response.json();
+        })
+            .then((data) => {
+                console.log(data);
+                this.goods = data;
+                callback();
+        });
     }
 
     addToBasket(item) {
@@ -65,18 +90,12 @@ class GoodsList {
     }
 
     getTotalPrice() {
-        let totalPrice = 0;
-        this.goods.map(item => {
-            totalPrice += item.price;
-        });
-        console.log(`Общая сумма всех товаров составляет: ${totalPrice} рублей`);
+        return this.goods.reduce((acc, curVal) => {
+            return acc + curVal.price;
+        }, 0);
     }
 }
 
-const goodsList = new GoodsList();
-goodsList.fetchData();
-goodsList.render();
-goodsList.getTotalPrice();
 
 class Basket {
     constructor() {
@@ -117,3 +136,13 @@ class BasketItem {
 
     }
 }
+
+const basket = new Basket();
+const goodsList = new GoodsList(basket);
+//goodsList.fetchData();
+//goodsList.render();
+//goodsList.getTotalPrice();
+goodsList.fetchData(() => {
+    goodsList.render();
+    goodsList.getTotalPrice();
+});
