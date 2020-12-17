@@ -5,21 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Shop</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="script.js" defer></script>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700&display=swap&subset=cyrillic" rel="stylesheet">
     <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-    <header class="header d-flex">
-        <span class="logo">E-Shop</span>
-        <input type="text" class="search" placeholder="Search..." />
-        <button type="button" class="cart-button">Корзина</button>
-    </header>
-    <main>
-        <section class="goods">
-        </section>
-    </main>
+    <div id="app">
+        <v-header
+            v-bind:search="searchValue"
+            :is-cart-visible="isVisible"
+            :cart-goods="basketGoods"
+            @change-is-cart-visible="isVisible = !isVisible"
+        ></v-header>
+        <v-goods
+            v-bind:goods="filteredGoods"
+            v-on:add="addToBasket"
+        ></v-goods>
+    </div>
 </body>
 
 </html>

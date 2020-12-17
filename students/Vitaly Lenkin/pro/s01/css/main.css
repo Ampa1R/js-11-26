@@ -13,7 +13,8 @@
 *::after {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 body {
@@ -64,7 +65,8 @@ section.gap-100 {
   width: 100%;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .widecontent {
@@ -90,9 +92,15 @@ section.gap-100 {
 }
 
 #topbox {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   align-items: center;
   position: relative;
   width: 100%;
@@ -115,7 +123,14 @@ section.gap-100 {
   stroke-width: 6px;
   stroke-dasharray: 175;
   stroke-dashoffset: 170;
-  animation: logos 2s linear forwards;
+  -webkit-animation: logos 2s linear forwards;
+          animation: logos 2s linear forwards;
+}
+
+@-webkit-keyframes logos {
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 
 @keyframes logos {
@@ -138,10 +153,19 @@ section.gap-100 {
 #topbox #top-menu {
   height: 40px;
   line-height: 40px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
 }
 
 #topbox #top-menu a {
@@ -175,9 +199,15 @@ footer {
 }
 
 footer #footer-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   position: relative;
   margin: 0 auto;
 }
@@ -227,8 +257,12 @@ footer #footer-box #footerNav a:hover {
   background-image: url("../images/promo.jpg");
   background-repeat: no-repeat;
   background-position: -50px -510px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
 }
 
 .promo .box-600-92-12 {
@@ -237,8 +271,13 @@ footer #footer-box #footerNav a:hover {
   padding-left: 12px;
   padding-right: 12px;
   margin-top: 330px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   border-left: 12px solid #f16d7f;
 }
 
@@ -259,8 +298,12 @@ footer #footer-box #footerNav a:hover {
 }
 
 .product {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .product-header {
@@ -294,10 +337,18 @@ footer #footer-box #footerNav a:hover {
 
 .product-gallery {
   margin-top: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: space-between;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .product-gallery .card {
@@ -320,8 +371,10 @@ footer #footer-box #footerNav a:hover {
   height: 259px;
   width: 100%;
   background-color: #e9e9e9;
-  object-fit: cover;
-  object-position: center;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
 }
 
 .product-gallery .card-info {
@@ -348,9 +401,15 @@ footer #footer-box #footerNav a:hover {
   color: #f16d7f;
   text-align: left;
   text-transform: uppercase;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .product-gallery .card-stars {
@@ -361,19 +420,25 @@ footer #footer-box #footerNav a:hover {
 }
 
 .product-gallery .card:hover {
-  box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.16);
+  -webkit-box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.16);
+          box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.16);
 }
 
 .product-gallery .card:hover .card-img {
-  filter: brightness(60%);
+  -webkit-filter: brightness(60%);
+          filter: brightness(60%);
 }
 
 .product-gallery .card:hover .add-to-cart {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   text-decoration: none;
 }
 
 .product-gallery .card:hover .card-stars {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
 }
 
@@ -387,14 +452,24 @@ footer #footer-box #footerNav a:hover {
   left: 70px;
   font-weight: bold;
   display: none;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .product-browse {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 100%;
 }
 
@@ -404,9 +479,15 @@ footer #footer-box #footerNav a:hover {
   font-weight: bold;
   color: white;
   background-color: #f16d7f;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .product-browse .button-browse button {

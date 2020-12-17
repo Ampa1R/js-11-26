@@ -7,13 +7,25 @@
     padding: 20px;
     background-color:lightgray;
 }
-.cart-button{
-    height: 30px;
+.basketButton{
+    height: 40px;
+    width: 160px;
+   
+}
+.basketGoods{
+    background-color: lightgray;
+    width: 250px;
+    height: 600px;
+    position: absolute;
+    right: 42px;
+    top: -50px;
 }
 main{
+    width: 1220px;
     margin-top: 50px;
     display: flex;
     padding: 0;
+    position: relative;
 }
 .goods{
     display: flex;

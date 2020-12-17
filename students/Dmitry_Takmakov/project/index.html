@@ -11,22 +11,57 @@
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
     </script>
     <script src="static/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
     <script defer src="script.js"></script>
     <title>Vinyl Webshop</title>
 </head>
 
 <body>
-    <header>
-        <nav class="navbar navbar-light bg-light">
-            <a class="navbar-brand">Vinyl Webshop</a>
-            <form class="form-inline">
-                <button type="submit"><i class="fas fa-shopping-cart"></i></button>
-            </form>
-        </nav>
-    </header>
-    <main>
-        <div class="products_list"></div>
-    </main>
+    <div id="app">
+        <header>
+            <nav class="navbar navbar-light d-flex bg-light">
+                <a class="navbar-brand flex-grow-1">Vinyl Webshop</a>
+                <form class="d-flex searchbar">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                        v-model="searchLine">
+                    <!-- <button class="btn btn-outline-success searchbutton" type="submit">Go!</button> -->
+                </form>
+                <button @click="isCartVisible = !isCartVisible" type="submit"><i
+                        class="fas fa-shopping-cart"></i></button>
+                <div v-if="isCartVisible" class="cart">
+                    <ul class="list-group mb-3">
+                        <li class="d-flex justify-content-between lh-sm cart-item"
+                            v-for="item in cartItemsList">
+                            <div>
+                                <img :src="item.cover" :alt="item.title">
+                            </div>
+                            <div>
+                                <h6 class="my-0">{{ item.title }}</h6>
+                            </div>
+                            <span class="text-muted">{{ item.quantity }}</span> x
+                            <span class="text-muted">${{ item.price }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <main>
+            <div class="products_list">
+                <div class="card" v-for="product in filteredProducts">
+                    <img :src="product.cover" class="card-img-top" :alt="product.product_id">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.title }}</h5>
+                        <p class="card-text">Record price: ${{ product.price }}</p>
+                        <button type="button" class="btn btn-primary" @click="addProductToCart(product)"><i
+                                class="fas fa-cart-plus"></i> Add to cart</button>
+                    </div>
+                </div>
+                <div v-if="!filteredProducts.length" class="empty-products">
+                    Ничего не найдено :(
+                </div>
+            </div>
+        </main>
+    </div>
 </body>
 
 </html>

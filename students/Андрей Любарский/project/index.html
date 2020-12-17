@@ -5,21 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Shop</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="script.js" defer></script>
 </head>
 <body>
+<main id="app">
     <header>
         <span class="logo">E-Shop</span>
-        <button type="button" class="cart-button">Очистить корзину</button>
+        <section class="searchLine">
+            <label for="search">Поиск</label>
+            <input type="text" id="search" v-model="searchInputValue">
+            <button @click="handleSearchButton">Найти</button>
+        </section>
+        <button type="button" class="cart-button" v-on:click="handleShowHideButton" v-if="isVisibleCart">Скрыть
+            корзину
+        </button>
+        <button type="button" class="cart-button" v-on:click="handleShowHideButton" v-if="!isVisibleCart">Показать
+            корзину
+        </button>
     </header>
-    <main>
 
-        <section class="catalogue"></section>
+    <section class="catalogue">
+        <h3 v-if="!filteredGoods.length">Нет Данных</h3>
+        <div class="item" v-for="el in filteredGoods">
+            <div class="pic"></div>
+            <h4>{{ el.title }}</h4>
+            <p>Цена: {{ el.price }}</p>
+            <button class="add-button">Купить</button>
+        </div>
+    </section>
+    <hr>
+    <div class="cart" v-show="isVisibleCart">
+        <div class="item" v-for="el in cart">
+            <div class="pic"></div>
+            <h4>{{ el.title }}</h4>
+            <p>Цена: {{ el.price }}</p>
+            <p>В корзине: {{ el.quantity }}</p>
+        </div>
+    </div>
 
-        <hr>
-
-        <section class="cart"></section>
-
-    </main>
+</main>
 </body>
 </html>

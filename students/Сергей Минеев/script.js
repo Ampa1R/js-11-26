@@ -133,35 +133,6 @@ addProduct(products, "Продукт 6", 600, 6);
 addProduct(products, "Продукт 7", 700, 7);
 addProduct(products, "Продукт 8", 800, 8);*/
 const API = 'https://raw.githubusercontent.com/programmer-tm/js-11-26/master/students/%D0%A1%D0%B5%D1%80%D0%B3%D0%B5%D0%B9%20%D0%9C%D0%B8%D0%BD%D0%B5%D0%B5%D0%B2/catalogData.json';
-/*
-const getData = () => {
-    const xhr = new XMLHttpRequest();
-
-    xhr.timeout = 10000;
-
-    xhr.ontimeout = () => {
-        console.log('timeout!');
-    }
-
-    xhr.onreadystatechange = () => {
-        console.log('ready state change', xhr.readyState);
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                console.log(JSON.parse(xhr.responseText));
-            } else {
-                console.log('Error!', xhr.responseText);
-            }
-        }
-    }
-
-    xhr.open('GET', `${API}/catalogData.json`);
-
-    // xhr.setRequestHeader('Content-Type', 'application/json');
-
-    xhr.send();
-}
-
-getData(API);*/
 
 function httpGet(url) {
     return new Promise(function(resolve, reject) {
@@ -191,10 +162,20 @@ httpGet(API)
         error => alert(`Rejected: ${error}`)
     );
 function message(){
-    if (index == ""){
-        z = 0;
-    } else {
-        z = index.length;
-    }
-    alert("Товаров в корзине:" + z);
+	if ((document.querySelector(".basket").style.display) == "flex"){
+		if (index == ""){
+			alert("Товаров в корзине: 0, скрывать неча... И выводить я те ниче не обязан, редиска)");			
+		} else {
+			document.querySelector(".basket").style.display = "none";
+			document.querySelector(".cart-button").innerText = ("Корзина (" + index.length + ")");
+		}
+	} else {
+		document.querySelector(".basket").style.display = "flex";
+		document.querySelector(".cart-button").innerText = "Корзина";
+	}
 }
+
+document.querySelector('.search').addEventListener('input', (event) => {
+	const regexp = new RegExp((event.target.value).trim(), 'i');
+	renderProducts(products.filter((productsItem) => regexp.test(productsItem.title)));
+});

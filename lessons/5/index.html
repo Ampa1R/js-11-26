@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <div id="app">
+        <h1 v-bind:title="name">Hi, {{ name }} {{ lastName }}</h1>
+        <h2 :data-something="name">{{ upperCasedName }}, {{ fullName }}</h2>
+        <input type="text" v-model="name" />
+        <input type="text" v-model="lastName" />
+        <hr />
+        <p v-if="name === 'John'">
+            Hello, John!
+        </p>
+        <p v-else-if="name === 'Geek'">
+            <i>Hello, Geek!</i>
+        </p>
+        <p v-else>
+            <b>Hello, someone else!</b>
+        </p>
+        <p v-show="name === 'Show'">
+            Show
+        </p>
+        <hr />
+        <ul>
+            <li v-for="name in names" @click="handleClick">
+                <b>{{ name }}</b>
+            </li>
+        </ul>
+        <ul>
+            <li v-for="value, key in user" v-on:click="handleClick" >
+                <b>{{ key }}:</b> {{ value }}
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

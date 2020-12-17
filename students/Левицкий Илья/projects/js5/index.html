@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-shop</title>
+    <script src="script.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nerko+One&family=Playfair+Display:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+</head>
+
+<body>
+    <div id="app">
+        <header>
+            <span class="logo">E-Shop</span>
+            <input v-model="searchValue" type="text" class="search" placeholder="Search..." />
+            <button v-on:click="show = !show" type=" button" class="cart-buttons">КОРЗИНА
+            </button>
+        </header>
+        <main>
+            <section v-if="show" class="cart">
+                <h1 v-if="basketGoods.length==0">НЕТ ТОВАРОВ В КОРЗИНЕ </h1>
+
+                <div v-for="item in basketGoods">
+                    <h4>{{item.title}}</h4>
+                    <p>{{item.price}} рублей за шт.</p>
+                    <p>{{item.quantity}} шт.</p>
+
+                </div>
+                <div>
+                    <h4 v-if="basketGoods.length!==0">Общая стоимость:{{this.amount}}</h4>
+                    <h4 v-if=" basketGoods.length!==0">Общее количество:{{this.countGoods}}</h4>
+                </div>
+            </section>
+            <section class=" goods">
+                <div class="item" v-for="item in filteredGoods">
+                    <img v-bind:src="item.image" />
+                    <h4>{{item.title}}</h4>
+                    <p>{{item.price}}</p>
+                    <button type=" button" v-on:click="addToBasket(item)">Добавить в корзину</button>
+                    <button type=" button" v-on:click="removeItem(item.id_product)">Убрать из корзины</button>
+                </div>
+            </section>
+    </div>
+    </main>
+    </div>
+</body>
+
+</html>

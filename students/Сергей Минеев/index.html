@@ -8,14 +8,15 @@
     <script src="script.js" defer></script>
 
     <body>
-        <div style="display: flex; flex-direction: column; width: 800px; margin: 0 auto;">
+        <div style="display: flex; flex-direction: column; width: 800px; margin: 0 auto;" id="app">
             <header style="display: flex; justify-content: space-between;align-items: center; margin-bottom: 40px;">
                 <span class="logo" style="font-size: 36px;">E-Shop</span>
-                <button type="button" class="cart-button" style="width: 120px; font-size: 24px; border-radius: 5px;" onclick="message();">Корзина</button>
+                <input type="text" class="search" placeholder="Search..." />
+                <button type="button" class="cart-button" style="width: 170px; font-size: 24px; border-radius: 5px;" onclick="message();">Корзина</button>
             </header>
             <main>
                 <h4 style="text-align: center; font-size: 16;">Состав корзины:</h4>
-                <section class="basket"></section>
+                <section class="basket" style="display: flex;"></section>
                 <h4 style="text-align: center; font-size: 14;">Список товаров:</h4>
                 <section class="goods" style="display: flex; flex-wrap: wrap;"></section>
             </main>

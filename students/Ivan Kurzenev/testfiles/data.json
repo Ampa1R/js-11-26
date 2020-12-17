@@ -1,0 +1,6 @@
+[
+    { "id_product": 1, "title": "Наушники", "price": 5000 },
+    { "id_product": 2, "title": "Клавиатура", "price": 3000 },
+    { "id_product": 3, "title": "Мышь", "price": 2500 },
+    { "id_product": 4, "title": "Монитор", "price": 18000 }
+]

@@ -1,0 +1,10 @@
+{
+    "amount": 0,
+    "countGoods": 0,
+    "contents": [
+        { "title": "Наушники", "price": 5000, "quantity": 0 },
+        { "title": "Клавиатура", "price": 3000, "quantity": 0 },
+        { "title": "Мышь", "price": 2500, "quantity": 0 },
+        { "title": "Монитор", "price": 18000, "quantity": 0 }
+    ]
+}
