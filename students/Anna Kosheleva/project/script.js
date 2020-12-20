@@ -53,6 +53,7 @@
   class GoodsList {
         constructor(basket) {
             this.goods = [];
+            this.filteredGoods = [];
             this.basket = basket;
 
             document.querySelector('.goods').addEventListener('click', (event) => {
@@ -65,6 +66,10 @@
                     console.error(`Can't find element with id ${id}`)
                   }
                 }
+              });
+
+            document.querySelector('.search').addEventListener('input', (event) => {
+                this.search(event.target.value);
               });
            }
 
@@ -93,7 +98,7 @@
         }
 
         addToBasket(item) {
-            this.basket.add(item);
+            this.basket.addItem(item);
         }
 
         getTotalPrice() {
@@ -107,11 +112,17 @@
         }
 
         render() {
-            const goodsList = this.goods.map(item => {
+            const goodsList = this.filteredGoods.map(item => {
                 const goodsItem = new GoodsItem(item);
                 return goodsItem.render();
             });
             document.querySelector('.goods').innerHTML = goodsList.join(''); 
+        }
+
+        search(value) {
+          const regexp = new RegExp(value.trim(), 'i');
+          this.filteredGoods = this.goods.filter((goodsItem) => regexp.test(goodsItem.product_name));
+          this.render();
         }
     } 
   
@@ -123,9 +134,15 @@
             this.countGoods = 0;
         }
 
-        addItem() {
+        addItem(item) {
+          const index = this.basketGoods.findIndex((basketItem) => basketItem.id_product === item.id_product);
+          if (index > -1) {
+            this.basketGoods[index].quantity += 1;
+            // this.basketGoods[index] = { ...this.basketGoods[index], quantity: this.basketGoods[index].quantity + 1 };
+          } else {
             this.basketGoods.push(item);
-
+          }
+          console.log(this.basketGoods);
         }
 
         removeItem(id) {

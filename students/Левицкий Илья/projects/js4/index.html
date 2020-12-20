@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REGEXP</title>
+</head>
+
+<body>
+    <p> 'The side bar includes',-Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.: 'The side bar includes'.
+        'Lorem ipsum dolor sit amet, - Lorem ipsum dolor sit amet,- Lorem ipsum dolor sit ametка'. </p>
+    <form action="#">
+        <h2>Форма обратной связи</h2> <input class="name" type="text" placeholder="Введите Имя"> <input class="phone"
+            type="text" placeholder="Введите номер телефона"> <input class="email" type="text"
+            placeholder="Введите e-mail"> <input type="text" placeholder="Просто текст"> <input class="ok" type="submit"
+            placeholder="ОТПРАВИТЬ"> <input type="reset" value="ОТМЕНА">
+    </form>
+    <script defer>
+        const regexp = /'\w.+'[, -].+\w/gmi;
+        const regexp2 = /\w.+[: ][ '].+'/gmi;
+        const regexp3 = /'\w.+[, !?]-.+-.+'/gmi;
+        let str = document.querySelector("p");
+        var text = str.textContent;
+        console.log(text);
+        console.log(text.match(regexp));
+        console.log(text.match(regexp2));
+        console.log(text.match(regexp3));
+        var text2 = (text.match(regexp));
+        text2 = text2.toString(text2);
+        console.log(text2.replace(new RegExp("\'", 'g'), "\""));
+        var text3 = (text.match(regexp2));
+        text3 = text3.toString(text3);
+        console.log(text3.replace(new RegExp("\'", 'g'), "\""));
+        var text4 = (text.match(regexp3));
+        text4 = text4.toString(text4);
+        console.log(text4.replace(new RegExp("\'", 'g'), "\""));
+        const submit = document.querySelector(".ok");
+        submit.addEventListener("click", function () {
+            var name = document.querySelector(".name");
+            console.log(name.value);
+            regexpp2 = /^[a-zA-Zа-яА-Я]+$/g;
+            if (name.value.match(regexpp2)) {
+                alert("Имя ok");
+                name.setAttribute("style", "");
+            } else {
+                alert("Введите норм имя");
+                name.setAttribute("style", "color:red");
+            }
+            var phone = document.querySelector(".phone");
+            console.log(phone.value);
+            regexpp = /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/g;
+            if (phone.value.match(regexpp)) {
+                alert("Телефон ok");
+                phone.setAttribute("style", "");
+            } else {
+                alert("Введите норм тел");
+                phone.setAttribute("style", "color:red");
+            }
+            var email = document.querySelector(".email");
+            console.log(email.value);
+            regexpp3 = /my([- .]|)mail@mail.ru/g;
+            if (email.value.match(regexpp3)) {
+                alert("Почта ok");
+                email.setAttribute("style", "");
+            } else {
+                alert("Введите норм почту");
+                email.setAttribute("style", "color:red");
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -62,6 +62,7 @@ class Products {
 class ProductsList {
     constructor(basket) {
         this.products = [];
+        this.filteredProducts = [];
         this.basket = basket;
         this.getData()
             .then(() => {
@@ -80,6 +81,17 @@ class ProductsList {
                 }
             }
         });
+
+        document.querySelector('.searchbar').addEventListener('input', (event) => {
+            let filterValue = event.target.value;
+            this.filterProducts(filterValue);
+        });
+    }
+
+    filterProducts(value) {
+        const regularExpression = new RegExp(value.trim(), 'i');
+        this.filteredProducts = this.products.filter(product => regularExpression.test(product.title));
+        this.renderProductsList();
     }
 
     getData() {
@@ -87,6 +99,7 @@ class ProductsList {
             makeGETRequest('products.json')
                 .then((data) => {
                     this.products = data;
+                    this.filteredProducts = data;
                     resolve();
                 });
         });
@@ -97,7 +110,7 @@ class ProductsList {
     }
 
     renderProductsList() {
-        let productsList = this.products.map(product => {
+        let productsList = this.filteredProducts.map(product => {
             let productItem = new Products(product);
             return productItem.renderProduct();
         });
@@ -147,7 +160,7 @@ class Basket {
 
     removeProductFromBasket(product_id) {
         this.basketItemsList = this.basketItemsList.filter((product) => product.product_id !== parseInt(product_id));
-    } 
+    }
 
     getTotalBasketItemsPrice() {
 

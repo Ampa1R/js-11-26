@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		function check(){
+			let data = {};
+			if ((document.querySelector("#name").value).match(/[\d,\s,(\<(/?\[^\>\]+)\>)\!]*/gi).join('')==""){
+				if ((document.querySelector("#name").value) !== ""){
+                			data.name = (document.querySelector("#name").value);
+					document.querySelector("#name").style.outline = "none";
+				} else {
+					document.querySelector("#name").style.outline = "4px solid red";
+					document.querySelector("#name").placeholder = "NameNotFound!";
+				}
+            		} else {
+                		document.querySelector("#name").style.outline = "4px solid red";
+				document.querySelector("#name").placeholder = "Don`tName!";
+				document.querySelector("#name").value = "";
+            		}
+			for (let i=0; i<=12; i++){
+				if (((document.querySelector("#phone")).value)[i] === undefined){
+					if (((document.querySelector("#phone")).value) == ""){
+						document.querySelector("#phone").style.outline = "4px solid red";
+						document.querySelector("#phone").placeholder = "PhoneNotFound!";
+						break;
+					} else if (i=="11"){
+						data.phone = ("+"+((document.querySelector("#phone")).value)[0]+"(" + ((document.querySelector("#phone")).value)[1] + ((document.querySelector("#phone")).value)[2] + ((document.querySelector("#phone")).value)[3] + ")" + ((document.querySelector("#phone")).value)[4] + ((document.querySelector("#phone")).value)[5] + ((document.querySelector("#phone")).value)[6] + "-" + ((document.querySelector("#phone")).value)[7] + ((document.querySelector("#phone")).value)[8] + "-" +((document.querySelector("#phone")).value)[9] + ((document.querySelector("#phone")).value)[10]);
+						document.querySelector("#phone").style.outline = "none";
+						break;
+					} else {
+						document.querySelector("#phone").style.outline = "4px solid red";
+						document.querySelector("#phone").placeholder = "Don`t Phone!";
+						document.querySelector("#phone").value = "";
+						break;
+					}
+				}
+			}
+			if (((document.querySelector("#text")).value) == ""){
+				document.querySelector("#text").style.outline = "4px solid red";
+				document.querySelector("#text").placeholder = "TextNotFound!";
+			} else {
+				data.text = ((document.querySelector("#text")).value);
+				document.querySelector("#text").style.outline = "none";
+			}
+			if (((document.querySelector("#mail")).value) == ""){
+				document.querySelector("#mail").style.outline = "4px solid red";
+				document.querySelector("#mail").placeholder = "MailNotFound!";
+			} else {
+				if(((document.querySelector("#mail")).value).match(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i) === null){
+					document.querySelector("#mail").style.outline = "4px solid red";
+					document.querySelector("#mail").placeholder = "Don`tMail!";
+					document.querySelector("#mail").value = "";				
+				} else if (((document.querySelector("#mail")).value).match(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i)[5] == "mail.ru"){
+					data.mail = ((document.querySelector("#mail")).value);
+					document.querySelector("#mail").style.outline = "none";
+				} else {
+					document.querySelector("#mail").style.outline = "4px solid red";
+					document.querySelector("#mail").placeholder = "Don`tMail!";
+					document.querySelector("#mail").value = "";
+				}
+			}
+			if (data.name !== undefined && data.phone !== undefined && data.mail !== undefined && data.text !== undefined){
+				alert("Параметры для почтовика:\n\n" + "От кого: " + data.mail + "\n" + "Тема письма: Вам написал: " + data.name + " его телефон (" + data.phone + ")\n" + "Текст сообщения: " + data.text);
+				clearForm();		
+			} else {
+				alert("Check text input!");
+			}
+		}
+		function clearForm(){
+			document.querySelector("#name").style.outline = "none";
+			document.querySelector("#name").placeholder = "YouName";
+			document.querySelector("#phone").style.outline = "none";
+			document.querySelector("#phone").placeholder = "79991234567";
+			document.querySelector("#text").style.outline = "none";
+			document.querySelector("#text").placeholder = "YourText";
+			document.querySelector("#mail").style.outline = "none";
+			document.querySelector("#mail").placeholder = "YourName@mail.ru";
+			document.querySelector("#text").value = "";
+			document.querySelector("#name").value = "";
+			document.querySelector("#mail").value = "";
+			document.querySelector("#phone").value = "";
+		}
+	</script>
+	<form action="" style="display: flex; flex-direction: column; width: 300px;">
+		<p>Name:<input type="text" id="name" placeholder="YouName"></p>
+		<p>Phone: +<input type="number" id="phone" maxLength='10' placeholder="79991234567"></p>
+		<p>Email:<input type="text" id="mail" placeholder="YourName@mail.ru"></p>
+		<p>Text:</p><input type="text" id="text" style="width: 192px; height: 200px;" placeholder="YourText"></br>
+    	</form>
+		<button style="width: 200px; height: 40px;" onclick="check()">Заслать!</button></br>
+		<button style="width: 200px; height: 40px;" onclick="clearForm()">Сбросить</button>
+</body>
+</html>

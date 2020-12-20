@@ -11,7 +11,6 @@ const sendRequest = (path) => {
     }
   
     xhr.onreadystatechange = () => {
-      // console.log('ready state change', xhr.readyState);
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
           resolve(JSON.parse(xhr.responseText));
@@ -24,16 +23,15 @@ const sendRequest = (path) => {
   
     xhr.open('GET', `${API}/${path}`);
   
-    // xhr.setRequestHeader('Content-Type', 'application/json');
-  
     xhr.send();
   });
 }
 
 class GoodsItem {
-    constructor({ product_name, price }) {
-      this.title = product_name;
-      this.price = price;
+    constructor({ id_product, product_name, price }) {
+        this.id = id_product;
+        this.title = product_name;
+        this.price = price;
     }
 
     render() {
@@ -41,10 +39,10 @@ class GoodsItem {
             <div class="item">
                 <div class="item-img">
                 </div>
-                <div class="item-text">
+                <div class="item-text" data-id="${this.id}">
                     <h4>${this.title}</h4>
                     <p>${this.price}</p>
-                    <button type="button">Add to basket</button>
+                    <button type="button" name="add-to-basket">Add to basket</button>
                 </div>
             </div>
             `
@@ -54,13 +52,43 @@ class GoodsItem {
 class GoodsList {
     constructor(basket) {
         this.goods = [];
+        this.filteredGoods = [];
         this.basket = basket;
+
+        //По клику на кнопку Добавить в корзину запускается функция добавления в корзину addToBasket
+        document.querySelector('.goods').addEventListener('click', (event) => {
+            if (event.target.name === 'add-to-basket') {
+                //console.log(event);
+                const id = event.target.parentElement.dataset.id;
+                const item = this.goods.find((goodsItem) => goodsItem.id_product === parseInt(id));
+                if (item) {
+                    this.addToBasket(item);
+                } else {
+                    console.error (`Can't find element with id ${id}`);
+                }
+            }
+        });
+
+        // при вводе в поле input запускается функция search, которая сравнивает введеное 
+        //значение с названием товара, отфильтровывает подходящие товары и выводит их на экран
+        document.querySelector('.search').addEventListener('input', (event) => {
+            this.search(event.target.value);
+        });
+
+        /*document.querySelector('.search').addEventListener('keydown', (event) => {
+            console.log(event);
+            this.search(event.target.value);
+        });*/
     }
 
-    fetchData(callback) {
-        sendRequest('catalogData.json', (data) => {
-            this.goods = data;
-            callback();
+    fetchData() {
+        return new Promise((resolve, reject) => {
+            sendRequest('catalogData.json')
+                .then((data) => {
+                    this.goods = data;
+                    this.filteredGoods = data;
+                    resolve();
+                });
         });
     }
 
@@ -78,11 +106,11 @@ class GoodsList {
     }
 
     addToBasket(item) {
-        this.basket.add(item);
+        this.basket.addItem(item);
     }
 
-    render () {
-        const goodsList = this.goods.map(item => {
+    render() {
+        const goodsList = this.filteredGoods.map(item => {
             const goodsItem = new GoodsItem(item);
             return goodsItem.render();
         });
@@ -94,12 +122,38 @@ class GoodsList {
             return acc + curVal.price;
         }, 0);
     }
+
+    search(value) {
+        const regexp = new RegExp(value.trim(), 'i');
+        this.filteredGoods = this.goods.filter((goodsItem) => regexp.test(goodsItem.product_name));
+        this.render();
+    }
 }
 
 
 class Basket {
     constructor() {
         this.basketGoods = [];
+        this.amount = 0;
+        this.countGoods = 0;
+    }
+
+    addItem(item) {
+        //проверка на то, включает ли уже корзина товар, если да, то просто увеличивается кол-во
+        const index =  this.basketGoods.findIndex((basketItem) => basketItem.id_product === item.id_product);
+        if (index > -1) {
+            this.basketGoods[index].quantity += 1;
+            //this.basketGoods[index] = { ...this.basketGoods[index], quantity: this.basketGoods[index] + 1}
+        // если в корзине такого товара еще нет, то добавляем его
+        } else {
+            this.basketGoods.push(item);
+            console.log(this.basketGoods);
+        }
+    }
+
+    removeItem(id) {
+        this.basketGoods = this.basketGoods.filter((goodsItem) => goodsItem.id_product !== parseInt(id));
+        console.log(this.basketGoods);
     }
 
     render() {
@@ -112,6 +166,19 @@ class Basket {
 
     makeOrder() {
 
+    }
+
+    fetchData() {
+        return new Promise((resolve, reject) => {
+            sendRequest('getBasket.json')
+                .then((data) => {
+                    this.basketGoods = data.contents;
+                    this.amount = data.amount;
+                    this.countGoods = data.countGoods;
+                    console.log(this);
+                    resolve();
+                });
+        });
     }
 
     addPromocode() {
@@ -138,11 +205,10 @@ class BasketItem {
 }
 
 const basket = new Basket();
+basket.fetchData();
 const goodsList = new GoodsList(basket);
-//goodsList.fetchData();
-//goodsList.render();
-//goodsList.getTotalPrice();
-goodsList.fetchData(() => {
-    goodsList.render();
-    goodsList.getTotalPrice();
-});
+goodsList.fetchData()
+    .then(() => {
+        goodsList.render();
+        goodsList.getTotalPrice();
+    });

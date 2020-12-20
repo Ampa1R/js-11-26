@@ -28,16 +28,22 @@
     align-items: center;
     padding-bottom: 20px;
 }
-.basket{
+.cart{
     background-color: white;
     width: 300px;
     height: 600px;
     position: absolute;
-    right: 0;
-    
+    right: 347px;
+    top: 44px;
 }
 
-.basket_item {
+.cart-item {
     margin-left: 30px;
     margin-bottom: 50px;
+}
+
+.search {
+    position: relative;
+    top: -30px;
+    left: 706px;
 }

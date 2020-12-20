@@ -37,7 +37,7 @@ function checkAll() {
     document.querySelector('#buttonForm').addEventListener('click', (event) => {
         for(let i = 0; i<inputs.length; i++){
             if(inputs[i].type=='text' && inputs[i].id == regexps[i][0]){    
-                console.log('!',inputs[i],regexps[i]);
+                // console.log('!',inputs[i],regexps[i]);
                 check(inputs[i],regexps[i]);
             } 
         }

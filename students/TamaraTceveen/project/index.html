@@ -12,29 +12,16 @@
 
 <body>
     <div id="app">
-        <header class="header center">
-            <span class="logo">E-Shop</span>
-            <input type="text" class="search" v-model="searchValue" placeholder="Search..." />
-            <button type="button" v-on:click="isVisibleCart =!isVisibleCart" class="cart-button">Корзина</button>
-        </header>
-        <main class="main center">
-            <section class="goods">
-                <p v-if="filteredGoods.length == 0">Нет данных</p>
-                <div class="item" v-for="item in filteredGoods">
-                    <h4>{{ item.product_name }}</h4>
-                    <p>{{ item.price }}</p>
-                    <button type="button" v-on:click="addToBasket(item)">Add to basket</button>
-                </div>
-            </section>
-            <section v-show="isVisibleCart" class="basket">
-                <div v-for="item in basketGoods" class="basket_item">
-                    <h4>{{ item.product_name }}</h4>
-                    <p>Цена: {{ item.price }}</p>
-                    <p>Количество: {{ item.quantity }}</p>
-                    <button type="button" v-on:click="removeItem(item.id_product)"> Remove from basket</button>
-                </div>
-            </section>
-        </main>
+        <v-header
+        @change-is-cart-visible="isVisible = !isVisible"
+        ></v-header>
+        <v-search v-model="searchValue"></v-search>
+        
+        <v-basket :cart-goods="basketGoods" :is-cart-visible="isVisible"></v-basket>
+        <v-goods v-bind:goods="filteredGoods" 
+        v-on:add="addToBasket">
+        </v-goods>
+        
     </div>
 </body>
 

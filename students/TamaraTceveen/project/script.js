@@ -27,14 +27,91 @@ const sendRequest = (path) => {
   });
 }
 
+Vue.component('v-header', {
+  template: `
+    <header class="header center">
+      <span class="logo">E-shop</span>
+      
+      <button @click="handleClick" type="button" class="cart-button">Корзина</button>
+    </header>
+  `,
+  methods: {
+    handleClick() {
+      this.$emit('change-is-cart-visible');
+    }
+  }
+});
+
+Vue.component('v-search', {
+  props: ['searchValue'],
+  template: `
+    <input type="text" 
+    v-bind:value="searchValue"
+    v-on:input="$emit('input', $event.target.value)" 
+    class="search" placeholder="Search..." />
+  `,
+})
+
+Vue.component('v-basket', {
+  props: ['isCartVisible', 'cartGoods'],
+  template: `
+    <div v-if="isCartVisible" class="cart">
+      <div class="cart-item" v-for="item in cartGoods">
+        <p class="cart-item__title">{{item.product_name}}</p>
+        <p>{{item.quantity}} x {{item.price}}</p>
+      </div>
+    </div>
+  `,
+})
+
+Vue.component('v-goods', {
+  props: ['goods'],
+  template: `
+  <main class="center">
+    <section class="goods">
+      <v-item
+        v-for="item in goods"
+        v-bind:element="item"
+        v-on:addToBasket="handleAddToBasket"
+      />
+      <div v-if="!goods.length" class="goods-empty">
+        Нет данных
+      </div>
+    </section>
+  </main>
+  `,
+  methods: {
+    handleAddToBasket(data) {
+      this.$emit('add', data);
+    },
+  },
+});
+
+Vue.component('v-item', {
+  props: ['element'],
+  template: `
+    <div class="item">
+      <h4>{{element.product_name}}</h4>
+      <p>{{element.price}}</p>
+      <button type="button" v-on:click="addToBasket">Add to basket</button>
+    </div>
+  `,
+  methods: {
+    addToBasket() {
+      this.$emit('addToBasket', this.element);
+    }
+  },
+  
+});
+
 new Vue({
   el: '#app',
   data: {
     goods: [],
     basketGoods: [],
     searchValue: '',
-    // searchLine: ''
-    isVisibleCart: false
+    isVisible: false,
+    findName:'',
   },
   mounted() {
     this.fetchData();
@@ -73,13 +150,10 @@ new Vue({
       this.basketGoods = this.basketGoods.filter((goodsItem) => goodsItem.id_product !== parseInt(id));
       console.log(this.id_product, this.basketGoods);
     },
-    filterGoods(){
-      console.log('filtergoods clicked');
-      // return this.filteredGoods;
-    }
   },
   computed: {
     filteredGoods() {
+      console.log("awww");
       const regexp = new RegExp(this.searchValue.trim(), 'i');
       return this.goods.filter((goodsItem) => regexp.test(goodsItem.product_name));
     },

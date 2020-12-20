@@ -1,17 +1,10 @@
 'use strict';
 
-const goods = [
-    {title: 'Ноутбук', price: 30000},
-    {title: 'Клавиатура', price: 1000},
-    {title: 'Мышь', price: 500},
-    {title: 'Монитор', price: 10000},
-];
-
 
 class Item {
 
     constructor(itm) {
-        this.title = itm.title;
+        this.product_name = itm.product_name;
         this.price = itm.price;
         this.id = 0;
     }
@@ -20,7 +13,7 @@ class Item {
         return `
             <div class="item">
                 <div class="pic"></div>
-                <h4>${this.title}</h4>
+                <h4>${this.product_name}</h4>
                 <p>Цена: ${this.price}</p>
                 <button class="add-button" id="${this.id}">Купить</button>
             </div>
@@ -31,31 +24,68 @@ class Item {
 class CatalogueGoods {
     constructor() {
         this.goods = [];
-        this.fetchGoods(goods);
+        this.API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+        this.fetchGoods();
     }
 
-    fetchGoods(goods) {
-        goods.forEach((el, i) => {
-            el.id = i + 1;
-            this.goods.push(el);
+
+    fetchGoods() {
+        return new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+
+            xhr.open('GET', `${this.API}/catalogData.json`);
+            xhr.onload = function () {
+                if (this.readyState === 4 && this.status >= 200 && this.status < 300) {
+                    resolve(JSON.parse(xhr.responseText));
+                } else {
+                    reject({
+                        status: this.status,
+                        statusText: xhr.statusText
+                    });
+                }
+            };
+
+            xhr.onerror = function () {
+                reject({
+                    status: this.status,
+                    statusText: xhr.statusText
+                });
+            }
+
+            xhr.send();
+
         });
+
     }
 
-    //
 
     render() {
-        const items = this.goods.map((itm, i) => {
+        const items = this.goods.map( itm => {
             const item = new Item(itm);
             return item.render();
         });
         document.querySelector('.catalogue').insertAdjacentHTML('beforeend', items.join(''));
     }
+
+
+    init() {
+        this.fetchGoods()
+            .then((res) => {
+                res.forEach((el) => {
+                    this.goods.push(el);
+                })
+            })
+            .then(() => this.render())
+            .catch(err => console.log(err));
+        this.render();
+    }
+
 }
 
 
 class CartItem extends Item {
     constructor(itm) {
-        super(title, price);
+        super(product_name, price);
         this.id = itm.id;
         this.quantity = 0;
     }
@@ -64,7 +94,7 @@ class CartItem extends Item {
         return `
             <div class="item">
                 <div class="pic"></div>
-                <h4>${itm.title}</h4>
+                <h4>${itm.product_name}</h4>
                 <p>Цена: ${itm.price}</p>
                 <p>Количество: ${itm.quantity}</p>
                 <button class="remove-button" id="${itm.id}">Не покупать</button>
@@ -132,126 +162,10 @@ class Cart {
 
 
 const catalogue = new CatalogueGoods();
-catalogue.render();
+catalogue.init();
 
 const cart = new Cart();
 // cart.render();
 
 
-/***************************************************************************************************************/
-/*Задача со звёздочкой довольно скучная, в условии ни разу не прописано, что начинок несколько, так что везде
-справляемся свитчами, верифицируем данные на этапе ввода. Итог выводим в строку. */
-/***************************************************************************************************************/
-
-
-class Hamburger {
-    size;
-    filling;
-    isSpiced;
-    isWithSauce;
-    price = 0;
-    calories = 0;
-
-    constructor() {
-        let size = +prompt(`Выберите размер гамбургера, 1 - маленький, 2 - большой`);
-        if (size === 1) {
-            this.size = this.chooseSize(1);
-        } else if (size === 2) {
-            this.size = this.chooseSize(2);
-        } else {
-            alert('Неправильный размер, на выбор варианты 1 и 2');
-            size = +prompt(`Выберите размер гамбургера, 1 - маленький, 2 - большой`);
-        }
-
-
-        let filling = +prompt(`Выберите начинку гамбургера, 1 - сыр, 2 - салат, 3 - картофель`);
-        if (filling === 1) {
-            this.filling = this.chooseFilling(1);
-        } else if (filling === 2) {
-            this.filling = this.chooseFilling(2);
-        } else if (filling === 3) {
-            this.filling = this.chooseFilling(3);
-        } else {
-            alert('Неправильная начинка, на выбор варианты 1, 2 и 3');
-            filling = +prompt(`Выберите начинку гамбургера, 1 - сыр, 2 - салат, 3 - картофель`);
-        }
-
-
-        let spice = +prompt('Посыпать гамбургер специями? 1 - да, 2 - нет');
-        if (spice === 1) {
-            this.isSpiced = this.chooseSpice(1);
-        } else if (spice === 2) {
-            this.isSpiced = this.chooseSpice(2);
-        } else {
-            alert('Неправильный выбор, варианты 1 и 2');
-            spice = +prompt('Посыпать гамбургер специями? 1 - да, 2 - нет');
-        }
-
-
-        let sauce = +prompt('Полить гамбургер соусом? 1 - да, 2 - нет');
-        if (sauce === 1) {
-            this.isWithSauce = this.chooseSauce(1);
-        } else if (sauce === 2) {
-            this.isWithSauce = this.chooseSauce(2);
-        } else {
-            alert('Неправильный выбор, варианты 1 и 2');
-            sauce = +prompt('Полить гамбургер соусом? 1 - да, 2 - нет');
-        }
-
-        alert(`Вы купили ${this.size} гамбургер, начинка ${this.filling}, ${this.isSpiced ? 'со специями' : ''} ${this.isWithSauce ? 'с соусом' : ''}. 
-        Общая цена: ${this.price}, общая калорийность: ${this.calories}`)
-    }
-
-    chooseSize(a) {
-        switch (a) {
-            case 1:
-                this.price += 50;
-                this.calories += 20;
-                return 'маленький';
-            case 2:
-                this.price += 100;
-                this.calories += 40;
-                return 'большой';
-        }
-    }
-
-    chooseFilling(a) {
-        switch (a) {
-            case 1:
-                this.price += 10;
-                this.calories += 20;
-                return 'сыр';
-            case 2:
-                this.price += 20;
-                this.calories += 5;
-                return 'салат';
-            case 3:
-                this.price += 15;
-                this.calories += 10;
-                return 'картофель'
-        }
-    }
-
-    chooseSpice(a) {
-        switch (a) {
-            case 1:
-                this.price += 15;
-                return true;
-            case 0:
-                return false;
-        }
-    }
-
-    chooseSauce(a) {
-        switch (a) {
-            case 1:
-                this.price += 20;
-                this.calories += 5;
-                return true;
-            case 2:
-                return false;
-        }
-    }
-
-}
 

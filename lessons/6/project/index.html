@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Shop</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="script.js" defer></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700&display=swap&subset=cyrillic" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <div id="app">
+        <header class="header d-flex">
+            <span class="logo">E-Shop</span>
+            <input type="text" v-model="searchValue" class="search" placeholder="Search..." />
+            <button @click="isVisible = !isVisible" type="button" class="cart-button">Корзина</button>
+            <div v-if="isVisible" class="cart">
+                <div class="cart-item" v-for="item in basketGoods">
+                    <p class="cart-item__title">{{item.product_name}}</p>
+                    <p>{{item.quantity}} x {{item.price}}</p>
+                </div>
+            </div>
+        </header>
+        <main>
+            <section class="goods">
+                <div class="item" v-for="item in filteredGoods">
+                    <h4>{{item.product_name}}</h4>
+                    <p>{{item.price}}</p>
+                    <button type="button" v-on:click="addToBasket(item)">Add to basket</button>
+                </div>
+                <div v-if="!filteredGoods.length" class="goods-empty">
+                    Нет данных
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+
+</html>
