@@ -1,6 +1,6 @@
-const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+const API = 'http://localhost:3000/api';
 
-const sendRequest = (path) => {
+const sendRequest = (path, method = 'GET', body = {}) => {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
 
@@ -15,24 +15,36 @@ const sendRequest = (path) => {
         if (xhr.status === 200) {
           resolve(JSON.parse(xhr.responseText));
         } else {
-          console.log('Error!', xhr.responseText);
-          return reject('Error!', xhr.responseText);
+          console.log('Error! not 200', xhr.responseText, xhr.status);
+          reject('Error!', xhr.responseText);
         }
       }
     }
 
-    xhr.open('GET', `${API}/${path}`);
+    xhr.open(method, `${API}/${path}`);
 
-    xhr.send();
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    xhr.send(JSON.stringify(body));
   });
 }
+
+Vue.component('v-error', {
+  props: ['message'],
+  template: `
+    <div class="error">
+    Ошибка! {{message}}
+    </div>
+  `
+});
 
 Vue.component('v-header', {
   template: `
     <header class="header center">
       <span class="logo">E-shop</span>
-      
+      <slot />
       <button @click="handleClick" type="button" class="cart-button">Корзина</button>
+      <slot name="basket" />
     </header>
   `,
   methods: {
@@ -52,13 +64,15 @@ Vue.component('v-search', {
   `,
 })
 
+
 Vue.component('v-basket', {
-  props: ['isCartVisible', 'cartGoods'],
+  props: ['goods'],
   template: `
-    <div v-if="isCartVisible" class="cart">
-      <div class="cart-item" v-for="item in cartGoods">
-        <p class="cart-item__title">{{item.product_name}}</p>
+    <div class="cart">
+      <div class="cart-item" v-for="item in goods">
+        <p>{{item.title}}</p>
         <p>{{item.quantity}} x {{item.price}}</p>
+        <button @click="$emit('delete', item.id)">Удалить</button>
       </div>
     </div>
   `,
@@ -91,7 +105,7 @@ Vue.component('v-item', {
   props: ['element'],
   template: `
     <div class="item">
-      <h4>{{element.product_name}}</h4>
+      <h4>{{element.title}}</h4>
       <p>{{element.price}}</p>
       <button type="button" v-on:click="addToBasket">Add to basket</button>
     </div>
@@ -101,7 +115,7 @@ Vue.component('v-item', {
       this.$emit('addToBasket', this.element);
     }
   },
-  
+
 });
 
 new Vue({
@@ -111,7 +125,7 @@ new Vue({
     basketGoods: [],
     searchValue: '',
     isVisible: false,
-    findName:'',
+    errorMessage: '',
   },
   mounted() {
     this.fetchData();
@@ -120,42 +134,68 @@ new Vue({
   methods: {
     fetchData() {
       return new Promise((resolve, reject) => {
-        sendRequest('catalogData.json')
+        sendRequest('catalog')
           .then((data) => {
             this.goods = data;
             resolve();
+          })
+          .catch((error) => {
+            this.errorMessage = 'Не удалось получить список товаров'
           });
       });
     },
     fetchBasketData() {
       return new Promise((resolve, reject) => {
-        sendRequest('getBasket.json')
+        sendRequest('basket')
           .then((data) => {
-            this.basketGoods = data.contents;
+            this.basketGoods = data;
             resolve();
+          })
+          .catch((error) => {
+            this.errorMessage = 'Не удалось получить список товаров'
           });
       });
     },
     addToBasket(item) {
-      const index = this.basketGoods.findIndex((basketItem) => basketItem.id_product === item.id_product);
-      if (index > -1) {
-        this.basketGoods[index].quantity += 1;
-      } else {
-        this.basketGoods.push(item);
-      }
-      console.log(this.basketGoods);
-      console.log(item);
+      sendRequest('basket', 'POST', item)
+        .then((result) => {
+          console.log('Result', result);
+          if (!result.success) {
+            console.log('addToBasket Error');
+            return;
+          }
+
+          const index = this.basketGoods.findIndex((basketItem) => basketItem.id === item.id);
+          if (index > -1) {
+            this.basketGoods[index].quantity += 1;
+          } else {
+            this.basketGoods.push({ ...item, quantity: 1 });
+          }
+        })
+        .catch((error) => {
+          this.errorMessage = 'Не удалось добавить список товаров!';
+        });
     },
     removeItem(id) {
-      this.basketGoods = this.basketGoods.filter((goodsItem) => goodsItem.id_product !== parseInt(id));
-      console.log(this.id_product, this.basketGoods);
+      sendRequest(`basket/${id}`, 'DELETE')
+        .then((result) => {
+          console.log('Result', result);
+          if (!result.success) {
+            console.log('addToBasket Error');
+            return;
+          }
+          this.basketGoods = this.basketGoods.filter((goodsItem) => goodsItem.id !== parseInt(id));
+          console.log(this.basketGoods);
+        })
+        .catch((error) => {
+          this.errorMessage = 'Не удалось удалить элемент из корзины'
+        });
     },
   },
   computed: {
     filteredGoods() {
-      console.log("awww");
       const regexp = new RegExp(this.searchValue.trim(), 'i');
-      return this.goods.filter((goodsItem) => regexp.test(goodsItem.product_name));
+      return this.goods.filter((goodsItem) => regexp.test(goodsItem.title));
     },
     totalPrice() {
       return this.goods.reduce((acc, curVal) => {
@@ -166,9 +206,9 @@ new Vue({
 })
 
 /* class GoodsItem {
-  constructor({ id_product, product_name, price }) {
-    this.id = id_product;
-    this.title = product_name;
+  constructor({ id, title, price }) {
+    this.id = id;
+    this.title = title;
     this.price = price;
   }
 
@@ -192,7 +232,7 @@ class GoodsList {
     document.querySelector('.goods').addEventListener('click', (event) => {
       if (event.target.name === 'add-to-basket') {
         const id = event.target.parentElement.dataset.id;
-        const item = this.goods.find((goodsItem) => goodsItem.id_product === parseInt(id));
+        const item = this.goods.find((goodsItem) => goodsItem.id === parseInt(id));
         if (item) {
           this.addToBasket(item);
         } else {
@@ -250,7 +290,7 @@ class GoodsList {
 
   search(value) {
     const regexp = new RegExp(value.trim(), 'i');
-    this.filteredGoods = this.goods.filter((goodsItem) => regexp.test(goodsItem.product_name));
+    this.filteredGoods = this.goods.filter((goodsItem) => regexp.test(goodsItem.title));
     this.render();
   }
 }
@@ -263,7 +303,7 @@ class Basket {
   }
 
   addItem(item) {
-    const index = this.basketGoods.findIndex((basketItem) => basketItem.id_product === item.id_product);
+    const index = this.basketGoods.findIndex((basketItem) => basketItem.id === item.id);
     if (index > -1) {
       this.basketGoods[index].quantity += 1;
       // this.basketGoods[index] = { ...this.basketGoods[index], quantity: this.basketGoods[index].quantity + 1 };
@@ -274,7 +314,7 @@ class Basket {
   }
 
   removeItem(id) {
-    this.basketGoods = this.basketGoods.filter((goodsItem) => goodsItem.id_product !== parseInt(id));
+    this.basketGoods = this.basketGoods.filter((goodsItem) => goodsItem.id !== parseInt(id));
     console.log(this.basketGoods);
   }
 

@@ -1,0 +1,28 @@
+[
+    {
+        "type": "REMOVE",
+        "productId": 124,
+        "time": "2020-12-23T21:40:15.826Z"
+    },
+    {
+        "type": "REMOVE",
+        "productId": 123,
+        "time": "2020-12-23T21:50:39.950Z"
+    },
+    {
+        "type": "REMOVE",
+        "productId": 124,
+        "time": "2020-12-23T21:50:40.646Z"
+    },
+    {
+        "type": "REMOVE",
+        "productId": 126,
+        "time": "2020-12-23T21:51:01.604Z"
+    },
+    {
+        "type": "ADD",
+        "productId": 126,
+        "productTitle": "Mouse V",
+        "time": "2020-12-23T21:51:17.548Z"
+    }
+]

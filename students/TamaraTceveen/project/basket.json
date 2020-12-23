@@ -1,0 +1,14 @@
+[
+    {
+        "id": 127,
+        "title": "Keyboard J",
+        "price": 800,
+        "quantity": 2
+    },
+    {
+        "id": 126,
+        "title": "Mouse V",
+        "price": 600,
+        "quantity": 1
+    }
+]

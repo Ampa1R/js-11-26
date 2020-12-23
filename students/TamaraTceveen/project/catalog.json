@@ -1,0 +1,27 @@
+[
+    {
+        "id": 123,
+        "title": "Mouse",
+        "price": 100
+    },
+    {
+        "id": 124,
+        "title": "Keyboard",
+        "price": 300
+    },
+    {
+        "id": 125,
+        "title": "Display",
+        "price": 800
+    },
+    {
+        "id": 126,
+        "title": "Mouse V",
+        "price": 600
+    },
+    {
+        "id": 127,
+        "title": "Keyboard J",
+        "price": 800
+    }
+]
