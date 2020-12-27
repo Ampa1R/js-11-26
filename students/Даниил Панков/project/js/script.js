@@ -2,6 +2,74 @@
 
 const API_URL = 'https://raw.githubusercontent.com/Tippman/js-11-26/master/students/%D0%94%D0%B0%D0%BD%D0%B8%D0%B8%D0%BB%20%D0%9F%D0%B0%D0%BD%D0%BA%D0%BE%D0%B2/other';
 
+Vue.component('v-header', {
+    props: ['search'],
+    template: `
+        <header class="main-header">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="#">L-Shop</a>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Future Link</a>
+                        </li>
+                    </ul>
+                    <div class="input-group input-group-sm mb-3">
+                        <input type="text" class="form-control col-3" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" @input="search"
+                        >
+                    </div>
+                    <button class="btn btn-outline-success my-2 my-sm-0 cart-button basket-toggle" type="button" @click="isBasketActive = !isBasketActive"><span>Корзина</span></button>
+                </div>
+                <v-basket></v-basket>
+            </nav>
+        </header>
+    `
+});
+
+Vue.component('v-basket', {
+    template: `
+            <div class="basket-container" v-bind:class="{visually_hidden: isBasketActive}">
+                <p class="h6" v-if="basketGoods.length === 0">Корзина пуста</p>
+                <p class="h6" v-else>Стоимость корзины: {{ totalPrice }}$</p>
+                <ul id="basket-list" class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center" v-for="basketItem in basketGoods">{{basketItem.title}}<a class="remove-item" :data-product_id="basketItem.product_id" @click="removeFromBasket(basketItem)">Удалить</a></li>
+                </ul>
+                <button type="button" id="clear-basket" class="btn btn-secondary btn-sm" v-if="basketGoods.length !== 0" @click="clearBasket">Очистить корзину</button>
+            </div>
+    `
+});
+
+Vue.component('v-goods-list', {
+    props: ['goods'],
+    template: `
+        <main class="main-content">
+            <section class="goods-list">
+                <p v-if="goods.length === 0">Список товаров пуст</p>
+                <v-goods-item v-for="item in goods" :elem="item"></v-goods-item>
+            </section>
+        </main>
+    `
+});
+
+
+Vue.component('v-goods-item', {
+    props: ['elem'],
+    template: `
+        <div class="card mt-3 mr-3 mb-3 ml-3">
+            <img :src="item.cover" class="card-img-top item-preview" :alt="elem.title">
+            <div class="card-body">
+                <span class="card-subtitle font-weight-lighter font-italic text-muted float-right">{{ elem.product_id }}</span>
+                <h5 class="card-title">{{ elem.title }}</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <h6 class="card-subtitle mb-2 text-muted">Цена: {{ elem.price}}$</h6>
+                <a href="#" class="btn btn-primary float-right" :data-product_id="elem.product_id" @click="addToBasket">Добавить</a>
+            </div>
+        </div>
+    `
+});
+
+
+
 new Vue({
     el: '#shop',
     data: {
@@ -14,18 +82,18 @@ new Vue({
     },
 
     computed: {
+        search(event) {
+            // this.searchLine = event.target.value;
+            const regExp = new RegExp(this.searchLine, 'i')
+            this.filteredGoods = this.goods.filter(goodsItem => regExp.test(goodsItem.title));
+        },
+
         totalPrice() {
             return this.basketGoods.reduce((totalPrice, current) => totalPrice + current.price, 0);
         }
     },
 
     methods: {
-        search(event) {
-            this.searchLine = event.target.value;
-            const regExp = new RegExp(this.searchLine, 'i')
-            this.filteredGoods = this.goods.filter(goodsItem => regExp.test(goodsItem.title));
-        },
-
         makeGetRequest(url) {
             return new Promise((resolve, reject) => {
                 const xhr = new XMLHttpRequest();
@@ -62,7 +130,13 @@ new Vue({
         },
 
         addToBasket(item) {
-            this.basketGoods.push(item);
+            const index = this.basketGoods.findIndex((basketItem) => basketItem.product_id === item.product_id);
+            if (index > -1) {
+                this.basketGoods[index].quantity += 1;
+            } else {
+                this.basketGoods.push(item);
+            }
+            console.log(this.basketGoods);
         },
 
         removeFromBasket(item) {
@@ -79,154 +153,3 @@ new Vue({
         this.fetchbasket();
     }
 });
-
-
-// class GoodsItem {
-//     constructor({ product_id, title, price, cover }) {
-//         this.product_id = product_id;
-//         this.title = title;
-//         this.price = price;
-//         this.cover = cover;
-//     }
-
-//     render() {
-//         return `
-//             <div class="card mt-3 mr-3 mb-3 ml-3">
-//                 <img src=${this.cover} class="card-img-top item-preview" alt="${this.title}">
-//                 <div class="card-body">
-//                     <span class="card-subtitle font-weight-lighter font-italic text-muted float-right">#${this.product_id}</span>
-//                     <h5 class="card-title">${this.title}</h5>
-//                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-//                     <h6 class="card-subtitle mb-2 text-muted">Цена: ${this.price}$</h6>
-//                     <a href="#" class="btn btn-primary float-right" data-product_id="${this.product_id}">Добавить</a>
-//                 </div>
-//             </div>
-//     `;
-//     }
-// }
-
-// class GoodsList {
-//     constructor(basket) {
-//         this.goods = [];
-//         this.basket = basket;
-//         this.goodsContainer = document.querySelector('.goods-list');
-//     }
-
-//     init() {
-//         this.goodsContainer.addEventListener('click', (event) => {
-//             this.containerClickHandler(event);
-//         });
-//     }
-
-//     containerClickHandler(event) {
-//         if (event.target.tagName !== 'A') return;
-//         this.addToBasket(+event.target.dataset.product_id);
-
-//     }
-
-//     addToBasket(productId) {
-//         this.basket.basketGoods.push(this.getProductById(productId));
-//         this.basket.render();
-//     }
-
-//     getProductById(productId) {
-//         return this.goods.find(i => i.product_id === productId);
-//     }
-
-//     fetchData() {
-//         return makeGetRequest(`${API_URL}/products_list.json`)
-//             .then((data) => {
-//                 this.goods = data;
-//             });
-//     }
-
-//     render() {
-//         const goodsList = this.goods.map(item => {
-//             const goodsItem = new GoodsItem(item);
-//             return goodsItem.render();
-//         });
-//         document.querySelector('.goods-list').innerHTML = goodsList.join('');
-//     }
-// }
-
-// class Basket {
-//     constructor() {
-//         this.basketGoods = [];
-//         this.basketToggle = document.querySelector('.basket-toggle');
-//         this.basketContainer = document.querySelector('.basket-container');
-//         this.init();
-//     }
-
-//     init() {
-//         this.render();
-//         this.basketToggle.addEventListener('click', () => this.basketContainer.classList.toggle('visually-hidden'));
-//         this.basketContainer.addEventListener('click', (event) => this.containerClickHandler(event));
-//     }
-
-// обработчик кликов по карзине
-// containerClickHandler(event) {
-//     // удалить объект из корзины
-//     if (event.target.classList.value.split(' ').find(i => i === 'remove-item') !== -1) this.removeItem(+event.target.dataset.product_id);
-
-//     // очистить корзину
-//     if (event.target.id === 'clear-basket') this.clear();
-// }
-
-// removeItem(productId) {
-//     // пока удаляет все объекты из корзины по ИД
-//     this.basketGoods = this.basketGoods.filter(n => n.product_id !== productId);
-//     this.render();
-// }
-
-// changeQuantity() {
-
-// }
-
-// clear() {
-//     this.basketGoods = [];
-//     this.render();
-// }
-
-// fetchData() {
-
-// }
-
-
-
-//     render() {
-//         this.basketContainer.innerHTML = `<p class="h6">${this.getTotalPrice()}</p>
-//             <ul id="basket-list" class="list-group"></ul>`;
-//         const basketListContainer = document.querySelector('#basket-list');
-//         if (this.basketGoods.length > 0) {
-//             const basketGoodsList = this.basketGoods.map(item => {
-//                 const basketItem = new BasketItem(item);
-//                 return basketItem.render();
-//             });
-//             basketListContainer.innerHTML = basketGoodsList.join(' ');
-//             this.basketContainer.insertAdjacentHTML("beforeend", `<button type="button" id="clear-basket" class="btn btn-secondary btn-sm">Очистить корзину</button>`);
-//         };
-//     }
-// }
-
-// class BasketItem {
-//     constructor(item) {
-//         this.product_id = item.product_id;
-//         this.title = item.title;
-//     }
-
-//     changeQuantity() {
-
-//     }
-
-//     render() {
-//         return `
-//         <li class="list-group-item d-flex justify-content-between align-items-center">${this.title}<a class="remove-item" data-product_id="${this.product_id}">Удалить</a></li>`;
-//     }
-// }
-
-// const basket = new Basket();
-// const goodsList = new GoodsList(basket);
-
-// goodsList.fetchData()
-//     .then(() => goodsList.render())
-//     .then(() => goodsList.init());

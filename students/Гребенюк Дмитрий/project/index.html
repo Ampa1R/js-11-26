@@ -13,26 +13,16 @@
 
 <body>
     <div id="app">
-        <header class="header d-flex">
-            <span class="logo">E-Shop</span>
-            <input type="text" v-model="searchValue" class="search" placeholder="Search..." />
-            <button type="button" class="basketButton" @click="visible=!visible">{{visible?'Скрыть':'Отобразить'}} корзину</button>
+        <v-header @show-basket="visible = !visible">
+            <template v-slot:default>
+                <v-search v-model="searchValue" />
+            </template>
 
-        </header>
-
-        <main>
-            <div v-show="visible" v-model = "basketGoods" class="basketGoods">
-                
-            </div>
-            <section class="goods">
-                <div class="item" v-for="item in filteredGoods">
-                    <h4>{{item.product_name}}</h4>
-                    <p>{{item.price}}</p>
-                    <button type="button" @click="addToBasket(item)">Add to basket</button>
-                </div>
-            </section>
-        </main>
+            <template v-slot:basket>
+                <v-basket v-if="visible" :goods="basketGoods" />
+            </template>
+        </v-header>
+        <v-goods v-bind:goods="filteredGoods" v-on:add="addToBasket"></v-goods>
+        <v-error v-if="errorMessage.length" :message="errorMessage" />
     </div>
-</body>
-
-</html>
+</body></html>

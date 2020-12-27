@@ -62,3 +62,22 @@ header {
 h4, p {
     background-color: #fff;
 }
+
+.cart {
+    position: absolute;
+    right: 30px;
+    top: 70px;
+    background: white;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 3px 6px rgba(0,0,0,.2);   
+    width: 300px;
+}
+
+.cart-item {
+    margin-bottom: 20px;
+}
+
+.cart-item__title {
+    font-weight: bold;
+}

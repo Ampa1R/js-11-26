@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Shop</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="script.js" defer></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700&display=swap&subset=cyrillic" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <div id="app">
+        <v-header @change-is-cart-visible="isVisible = !isVisible">
+            <template v-slot:default>
+                <v-search v-model="searchValue"/>
+            </template>
+
+            <template v-slot:basket>
+                <v-basket v-if="isVisible" :goods="basketGoods" />
+            </template>
+        </v-header>
+        <v-goods
+            v-bind:goods="filteredGoods"
+            v-on:add="addToBasket"
+        ></v-goods>
+        <v-error v-if="errorMessage.length" :message="errorMessage" />
+    </div>
+</body>
+
+</html>

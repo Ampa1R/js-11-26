@@ -132,3 +132,60 @@ const getData = () => {
 
     xhr.send();
 }
+
+
+/*
+async function foo() {
+    getData('htts://ya.ru')
+        .then((data) => {
+            console.log('another promise data', data);
+        })
+
+    const data = await getData();
+    console.log('another promise data', data);
+}
+*/
+
+async function foo2() {
+    try {
+        try {
+            const data = await getData('https://google.com/some-data-resource');
+            console.log('promise 1 resolved', data);
+        } catch (innerErr) {
+            console.log('promise 1 caught');
+            if (innerErr.data) {
+                throw new Error('some message');
+            }
+        }
+        const anotherData = await getData('https://google.com/some-data-resource');
+        console.log('promise 2 resolved', anotherData);
+        const yetAnotherData = await getData('https://google.com/some-data-resource');
+        console.log('promise 3 resolved', yetAnotherData);
+    } catch (err) {
+        console.log('Promise caught', err);
+    }
+
+    getData('https://google.com/some-data-resource')
+        .then(
+            (data) => {
+                console.log('promise 1 resolved', data);
+                return getData('https://google.com/some-data-resource');
+            },
+            (err) => {
+                console.log('promise 1 caught');
+                if (err.data) {
+                    throw new Error('some message');
+                }
+            }
+        )
+        .then((anotherData) => {
+            console.log('promise 2 resolved', anotherData);
+            return getData('https://google.com/some-data-resource');
+        })
+        .then((anotherData) => {
+            console.log('promise 3 resolved', anotherData);
+        })
+        .catch((err) => {
+            console.log('Promise caught', err);
+        });
+}

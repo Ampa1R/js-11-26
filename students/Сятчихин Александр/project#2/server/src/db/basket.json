@@ -1,0 +1,27 @@
+{
+ "totalAmount": 3,
+ "totalPrice": 203,
+ "content": [
+  {
+   "productName": "MANGO PEOPLE T-SHIRT",
+   "productPrice": 52,
+   "productImg": "https://raw.githubusercontent.com/kellolo/static/master/img/JS1_shop/featuredItem1.jpg",
+   "productId": "prod_0",
+   "amount": 1
+  },
+  {
+   "productName": "PINEAPPLE PEOPLE T-SHIRT",
+   "productPrice": 94,
+   "productImg": "https://raw.githubusercontent.com/kellolo/static/master/img/JS1_shop/featuredItem6.jpg",
+   "productId": "prod_5",
+   "amount": 1
+  },
+  {
+   "productName": "TOMATO PEOPLE T-SHIRT",
+   "productPrice": 45,
+   "productImg": "https://raw.githubusercontent.com/kellolo/static/master/img/JS1_shop/featuredItem8.jpg",
+   "productId": "prod_7",
+   "amount": 3
+  }
+ ]
+}

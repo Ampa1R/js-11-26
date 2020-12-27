@@ -2,10 +2,12 @@
     "product_id": 1,
     "title": "ACUVUE OASYS",
     "price": 25,
+    "quantity": 1,
     "cover": "img/ac_oasys.jpeg"
 }, {
     "product_id": 2,
     "title": "ACUVUE Moist",
     "price": 20,
+    "quantity": 3,
     "cover": "img/acuvue-moist.png"
 }]

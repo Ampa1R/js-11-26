@@ -18,49 +18,18 @@
 
 <body>
     <div id="app">
-        <header>
-            <nav class="navbar navbar-light d-flex bg-light">
-                <a class="navbar-brand flex-grow-1">Vinyl Webshop</a>
-                <form class="d-flex searchbar">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
-                        v-model="searchLine">
-                    <!-- <button class="btn btn-outline-success searchbutton" type="submit">Go!</button> -->
-                </form>
-                <button @click="isCartVisible = !isCartVisible" type="submit"><i
-                        class="fas fa-shopping-cart"></i></button>
-                <div v-if="isCartVisible" class="cart">
-                    <ul class="list-group mb-3">
-                        <li class="d-flex justify-content-between lh-sm cart-item"
-                            v-for="item in cartItemsList">
-                            <div>
-                                <img :src="item.cover" :alt="item.title">
-                            </div>
-                            <div>
-                                <h6 class="my-0">{{ item.title }}</h6>
-                            </div>
-                            <span class="text-muted">{{ item.quantity }}</span> x
-                            <span class="text-muted">${{ item.price }}</span>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </header>
-        <main>
-            <div class="products_list">
-                <div class="card" v-for="product in filteredProducts">
-                    <img :src="product.cover" class="card-img-top" :alt="product.product_id">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ product.title }}</h5>
-                        <p class="card-text">Record price: ${{ product.price }}</p>
-                        <button type="button" class="btn btn-primary" @click="addProductToCart(product)"><i
-                                class="fas fa-cart-plus"></i> Add to cart</button>
-                    </div>
-                </div>
-                <div v-if="!filteredProducts.length" class="empty-products">
-                    Ничего не найдено :(
-                </div>
-            </div>
-        </main>
+        <v-header
+            :cart-visible="isCartVisible"
+            :cart-items="cartItemsList"
+            :error="isError"
+            @search="setNewSearchValue"
+            @change-cart-visibility="isCartVisible = !isCartVisible"
+        ></v-header>
+        <v-product-list
+            :error="isError"
+            :products="filteredProducts"
+            @add="addProductToCart"
+        ></v-product-list>
     </div>
 </body>
 

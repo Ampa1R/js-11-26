@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CheckOut</title>
+    <link rel="stylesheet" href="../src/layout/css/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+</head>
+<body>
+<div class="header container">
+    <div class="header__left">
+        <a class="header__logo" href="index.html">
+            <img src="../src/assets/img/logo.png" alt="logo">bran <span>d</span>
+        </a>
+        <form class="header__search">
+            <a href="#" class="header__browse">Browse <i class="fas fa-caret-down"></i></a>
+            <input type="text" placeholder="Search for item">
+            <button class="header__search-button"><i class="fas fa-search"></i></button>
+        </form>
+    </div>
+    <div class="header__right">
+        <a href="cart.html">
+            <img src="../src/assets/img/kart.png" alt="order">
+            <div class="header__right-qty">2</div>
+        </a>
+        <a href="#">My Account <i class="fas fa-caret-down"></i></a>
+    </div>
+</div>
+<div class="header_line"></div>
+<div class="topNav">
+    <a href="product.html">Home</a>
+    <a href="product.html">Man</a>
+    <a href="product.html">Women</a>
+    <a href="product.html">Kids</a>
+    <a href="product.html">Accessories</a>
+    <a href="product.html">Featured</a>
+    <a href="product.html">Hot Deals </a>
+</div>
+<div class="new-arrivals">
+    <div class="container new-arrivals__inside">
+        <h1><a href="#">new arrivals</a></h1>
+        <ul class="bread-crumps">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Men</a></li>
+            <li><a href="#" class="bread-crumps__active">New Arrivals</a></li>
+        </ul>
+    </div>
+</div>
+<main class="container checkout-main">
+    <ol>
+        <li class="shipping-details">
+            <label for="check-shipping-1">Shipping Address</label>
+            <input type="checkbox" id="check-shipping-1">
+            <article>
+                <div class="checkout-content-left">
+                    <h3>Check as a guest or register</h3>
+                    <p>Register with us for future convenience</p>
+                    <form action="">
+                        <p>
+                            <input type="radio" name="who-are-u" id="who-are-u">
+                            <label for="who-are-u">checkout as guest</label>
+                        </p>
+                        <p>
+                            <input type="radio" name="who-are-u" id="who-are-u2">
+                            <label for="who-are-u2">register</label>
+                        </p>
+                        <h3>register and save time!</h3>
+                        <p>Register with us for future convenience</p>
+                        <ul>
+                            <li><i class="fas fa-angle-double-right"></i> Fast and easy checkout</li>
+                            <li><i class="fas fa-angle-double-right"></i> Easy access to your order history and status</li>
+                        </ul>
+                        <input type="submit" value="continue">
+                    </form>
+                </div>
+                <div class="checkout-content-right">
+                    <h3>Already registed?</h3>
+                    <p>Please log in below</p>
+                    <form action="">
+                        <label for="email">EMAIL ADDRESS <sup>*</sup></label>
+                        <input type="email" placeholder="e@ma.il" id="email">
+                        <label for="password">PASSWORD <sup>*</sup></label>
+                        <input type="password" placeholder="password" id="password">
+                        <p class="required-fields"><sup>*</sup> Required Fields</p>
+                        <p>
+                            <input type="submit" value="LOG IN">
+                            <span>Forgot Password ?</span>
+                        </p>
+                    </form>
+                </div>
+            </article>
+        </li>
+        <li class="shipping-details">
+            <label for="check-shipping-2">BILLING INFORMATION</label>
+            <input type="checkbox" id="check-shipping-2">
+            <article>
+                <div class="checkout-content-left">
+                    <h3>Check as a guest or register</h3>
+                    <p>Register with us for future convenience</p>
+                    <form action="">
+                        <p>
+                            <input type="radio" name="who-are-u" id="who-are-u-2">
+                            <label for="who-are-u-2">checkout as guest</label>
+                        </p>
+                        <p>
+                            <input type="radio" name="who-are-u" id="who-are-u2-2">
+                            <label for="who-are-u2-2">register</label>
+                        </p>
+                        <h3>register and save time!</h3>
+                        <p>Register with us for future convenience</p>
+                        <ul>
+                            <li><i class="fas fa-angle-double-right"></i> Fast and easy checkout</li>
+                            <li><i class="fas fa-angle-double-right"></i> Easy access to your order history and status</li>
+                        </ul>
+                        <input type="submit" value="continue">
+                    </form>
+                </div>
+                <div class="checkout-content-right">
+                    <h3>Already registed?</h3>
+                    <p>Please log in below</p>
+                    <form action="">
+                        <label for="email">EMAIL ADDRESS <sup>*</sup></label>
+                        <input type="email" placeholder="e@ma.il" id="email">
+                        <label for="password">PASSWORD <sup>*</sup></label>
+                        <input type="password" placeholder="password" id="password">
+                        <p class="required-fields"><sup>*</sup> Required Fields</p>
+                        <p>
+                            <input type="submit" value="LOG IN">
+                            <span>Forgot Password ?</span>
+                        </p>
+                    </form>
+                </div>
+            </article>
+        </li>
+        <li class="shipping-details">
+            <label for="check-shipping-3">SHIPPING INFORMATION</label>
+            <input type="checkbox" id="check-shipping-3">
+            <article>
+                <div class="checkout-content-left">
+                    <h3>Check as a guest or register</h3>
+                    <p>Register with us for future convenience</p>
+                    <form action="">
+                        <p>
+                            <input type="radio" name="who-are-u" id="who-are-u-3">
+                            <label for="who-are-u-3">checkout as guest</label>
+                        </p>
+                        <p>
+                            <input type="radio" name="who-are-u" id="who-are-u2-3">
+                            <label for="who-are-u2-3">register</label>
+                        </p>
+                        <h3>register and save time!</h3>
+                        <p>Register with us for future convenience</p>
+                        <ul>
+                            <li><i class="fas fa-angle-double-right"></i> Fast and easy checkout</li>
+                            <li><i class="fas fa-angle-double-right"></i> Easy access to your order history and status</li>
+                        </ul>
+                        <input type="submit" value="continue">
+                    </form>
+                </div>
+                <div class="checkout-content-right">
+                    <h3>Already registed?</h3>
+                    <p>Please log in below</p>
+                    <form action="">
+                        <label for="email">EMAIL ADDRESS <sup>*</sup></label>
+                        <input type="email" placeholder="e@ma.il" id="email">
+                        <label for="password">PASSWORD <sup>*</sup></label>
+                        <input type="password" placeholder="password" id="password">
+                        <p class="required-fields"><sup>*</sup> Required Fields</p>
+                        <p>
+                            <input type="submit" value="LOG IN">
+                            <span>Forgot Password ?</span>
+                        </p>
+                    </form>
+                </div>
+            </article>
+        </li>
+        <li class="shipping-details">
+            <label for="check-shipping-4">SHIPPING METHOD</label>
+            <input type="checkbox" id="check-shipping-4">
+            <article>
+                <div class="checkout-content-left">
+                    <h3>Check as a guest or register</h3>
+                    <p>Register with us for future convenience</p>
+                    <form action="">
+                        <p>
+                            <input type="radio" name="who-are-u" id="who-are-u-4">
+                            <label for="who-are-u-4">checkout as guest</label>
+                        </p>
+                        <p>
+                            <input type="radio" name="who-are-u" id="who-are-u2-4">
+                            <label for="who-are-u2-4">register</label>
+                        </p>
+                        <h3>register and save time!</h3>
+                        <p>Register with us for future convenience</p>
+                        <ul>
+                            <li><i class="fas fa-angle-double-right"></i> Fast and easy checkout</li>
+                            <li><i class="fas fa-angle-double-right"></i> Easy access to your order history and status</li>
+                        </ul>
+                        <input type="submit" value="continue">
+                    </form>
+                </div>
+                <div class="checkout-content-right">
+                    <h3>Already registed?</h3>
+                    <p>Please log in below</p>
+                    <form action="">
+                        <label for="email">EMAIL ADDRESS <sup>*</sup></label>
+                        <input type="email" placeholder="e@ma.il" id="email">
+                        <label for="password">PASSWORD <sup>*</sup></label>
+                        <input type="password" placeholder="password" id="password">
+                        <p class="required-fields"><sup>*</sup> Required Fields</p>
+                        <p>
+                            <input type="submit" value="LOG IN">
+                            <span>Forgot Password ?</span>
+                        </p>
+                    </form>
+                </div>
+            </article>
+        </li>
+        <li class="shipping-details">
+            <label for="check-shipping-5">PAYMENT METHOD</label>
+            <input type="checkbox" id="check-shipping-5">
+            <article>
+                <div class="checkout-content-left">
+                    <h3>Check as a guest or register</h3>
+                    <p>Register with us for future convenience</p>
+                    <form action="">
+                        <p>
+                            <input type="radio" name="who-are-u" id="who-are-u-5">
+                            <label for="who-are-u-5">checkout as guest</label>
+                        </p>
+                        <p>
+                            <input type="radio" name="who-are-u" id="who-are-u2-5">
+                            <label for="who-are-u2-5">register</label>
+                        </p>
+                        <h3>register and save time!</h3>
+                        <p>Register with us for future convenience</p>
+                        <ul>
+                            <li><i class="fas fa-angle-double-right"></i> Fast and easy checkout</li>
+                            <li><i class="fas fa-angle-double-right"></i> Easy access to your order history and status</li>
+                        </ul>
+                        <input type="submit" value="continue">
+                    </form>
+                </div>
+                <div class="checkout-content-right">
+                    <h3>Already registed?</h3>
+                    <p>Please log in below</p>
+                    <form action="">
+                        <label for="email">EMAIL ADDRESS <sup>*</sup></label>
+                        <input type="email" placeholder="e@ma.il" id="email">
+                        <label for="password">PASSWORD <sup>*</sup></label>
+                        <input type="password" placeholder="password" id="password">
+                        <p class="required-fields"><sup>*</sup> Required Fields</p>
+                        <p>
+                            <input type="submit" value="LOG IN">
+                            <span>Forgot Password ?</span>
+                        </p>
+                    </form>
+                </div>
+            </article>
+        </li>
+        <li class="shipping-details">
+            <label for="check-shipping-6">ORDER REVIEW</label>
+            <input type="checkbox" id="check-shipping-6">
+            <article>
+                <div class="checkout-content-left">
+                    <h3>Check as a guest or register</h3>
+                    <p>Register with us for future convenience</p>
+                    <form action="">
+                        <p>
+                            <input type="radio" name="who-are-u" id="who-are-u-6">
+                            <label for="who-are-u-6">checkout as guest</label>
+                        </p>
+                        <p>
+                            <input type="radio" name="who-are-u" id="who-are-u2-6">
+                            <label for="who-are-u2-6">register</label>
+                        </p>
+                        <h3>register and save time!</h3>
+                        <p>Register with us for future convenience</p>
+                        <ul>
+                            <li><i class="fas fa-angle-double-right"></i> Fast and easy checkout</li>
+                            <li><i class="fas fa-angle-double-right"></i> Easy access to your order history and status</li>
+                        </ul>
+                        <input type="submit" value="continue">
+                    </form>
+                </div>
+                <div class="checkout-content-right">
+                    <h3>Already registed?</h3>
+                    <p>Please log in below</p>
+                    <form action="">
+                        <label for="email">EMAIL ADDRESS <sup>*</sup></label>
+                        <input type="email" placeholder="e@ma.il" id="email">
+                        <label for="password">PASSWORD <sup>*</sup></label>
+                        <input type="password" placeholder="password" id="password">
+                        <p class="required-fields"><sup>*</sup> Required Fields</p>
+                        <p>
+                            <input type="submit" value="LOG IN">
+                            <span>Forgot Password ?</span>
+                        </p>
+                    </form>
+                </div>
+            </article>
+        </li>
+    </ol>
+</main>
+<div class="subscibe"><div class="subscibe-shadow">
+    <div class="container subscibe_wrapper">
+        <div class="subscribe-left">
+            <img src="../src/assets/img/subsribe-face.png" alt="face">
+            <div>
+                <p>“Vestibulum quis porttitor dui! Quisque viverra nunc mi,
+                    a pulvinar purus condimentum a. Aliquam condimentum mattis neque sed pretium”</p>
+                <h4>Bin Burhan</h4>
+                <p>Dhaka, Bd</p>
+                <div class="subscribe-pagination">
+                    <a href="#"></a>
+                    <a href="#"></a>
+                    <a href="#"></a>
+                </div>
+            </div>
+        </div>
+        <div class="subscribe-border"></div>
+        <div class="subscribe-right">
+            <h3>subscribe</h3>
+            <h4>for our newletter and promotion</h4>
+            <form action="">
+                <input type="text" placeholder="Enter your Email">
+                <button>Subscribe</button>
+            </form>
+        </div>
+    </div> <!-- End of .subscibe_wrapper -->
+</div></div> <!-- End of .subscibe -->
+<div class="container footer-menu">
+    <div class="footer-menu__left">
+        <a class="header__logo" href="index.html">
+            <img src="../src/assets/img/logo.png" alt="logo">bran <span>d</span>
+        </a>
+        <p>
+            Objectively transition extensive data rather than cross functional solutions. Monotonectally syndicate multidisciplinary materials before go forward benefits. Intrinsicly syndicate an expanded array of processes and cross-unit partnerships.
+        </p>
+        <p>
+            Efficiently plagiarize 24/365 action items and focused infomediaries. Distinctively seize superior initiatives for wireless technologies. Dynamically optimize.
+        </p>
+
+    </div>
+    <div class="footer-menu__right">
+        <div class="footer-menu__right-item">
+            <h3>company</h3>
+            <a href="#">Home</a>
+            <a href="#">Shop</a>
+            <a href="#">About</a>
+            <a href="#">How It Works</a>
+            <a href="#">Contact</a>
+        </div>
+        <div class="footer-menu__right-item">
+            <h3>information</h3>
+            <a href="#">Terms and Conditions</a>
+            <a href="#">Privacy Polocy</a>
+            <a href="#">How to Buy</a>
+            <a href="#">How to Sell</a>
+            <a href="#">Promotion</a>
+        </div>
+        <div class="footer-menu__right-item">
+            <h3>shop category</h3>
+            <a href="#">Men</a>
+            <a href="#">Women</a>
+            <a href="#">Child</a>
+            <a href="#">Apparel</a>
+            <a href="#">Browse All</a>
+        </div>
+    </div>  <!-- End of footer-menu__right -->
+</div> <!-- End of footer-menu -->
+<div class="footer">
+    <div class="container footer_center">
+        <div>
+            &copy; 2017  Brand  All Rights Reserved.
+        </div>
+        <div>
+            <a href="#" class="footer__social"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="footer__social"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="footer__social"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="footer__social"><i class="fab fa-pinterest-p"></i></a>
+            <a href="#" class="footer__social"><i class="fab fa-google-plus-g"></i></a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

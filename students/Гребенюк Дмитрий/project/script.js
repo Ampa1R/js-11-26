@@ -29,7 +29,87 @@ const sendRequest = (path) => {
 
         xhr.send();
     })
-}
+};
+Vue.component('v-error', {
+  props: ['message'],
+  template: `
+    <div class="error">
+      Ошибка! {{ message }}
+    </div>
+  `,
+});
+Vue.component('v-header', {
+    template: `
+        <header class="header d-flex">
+            <span class="logo">E-Shop</span>
+             <slot/>
+            <button type="button" class="basketButton" @click="basketClick">Корзина</button>
+            <slot name="basket" />
+        </header>
+    `,
+    methods: {
+        basketClick() {
+            this.$emit('show-basket')
+        },
+    },
+});
+Vue.component('v-search', {
+    props : ['value'],
+    template: `
+        <input type="text" :value="value" @input="$emit('input', $event.target.value)"  class="search" placeholder="Search..." />
+    `,
+});
+Vue.component('v-goods', {
+    props: ['goods'],
+    template: `
+    <main>
+        <section class="goods">
+            <v-item
+              v-for="item in goods"
+              v-bind:element="item"
+              v-on:addToBasket="handleAddToBasket"
+            />
+            <div v-if="!goods.length" class="goods-empty">
+                Нет данных
+            </div>
+        </section>
+    </main>         
+    `,
+    methods: {
+        handleAddToBasket(data) {
+            this.$emit('add', data);
+        },
+    }
+});
+Vue.component('v-basket', {
+    props: ['goods'],
+    template: `
+            <div class="basketGoods">
+                <div class="basketItem" v-for="item in goods">
+                        <p> {{item.product_name}} </p>
+                        <p>{{item.quantity}} </p>
+                </div>
+            </div>
+        `,
+});
+Vue.component('v-item', {
+    props: ['element'],
+    template: `
+        <div class="item">
+            <h4>{{element.product_name}}</h4>
+            <p>{{element.price}}</p>
+            <button type @click="addToBasket(item)">Addtobasket</button>
+        </div>
+    `,
+    methods: {
+        addToBasket() {
+            this.$emit('addToBasket', this.element);
+        }
+    }
+
+
+});
+
 
 new Vue({
     el: '#app',
@@ -37,7 +117,8 @@ new Vue({
         goods: [],
         basketGoods: [],
         searchValue: '',
-        visible: true,
+        visible: false,
+         errorMessage: '',
     },
     mounted() {
         this.fetchData();
@@ -75,21 +156,21 @@ new Vue({
             console.log(this.basketGoods);
         },
         removeItem(item) {
-             const index = this.basketGoods.findIndex((basketItem) => basketItem.id_product === item.id_product);
-            if(this.basketGoods[index].quantity > 1){
+            const index = this.basketGoods.findIndex((basketItem) => basketItem.id_product === item.id_product);
+            if (this.basketGoods[index].quantity > 1) {
                 this.basketGoods[index].quantity -= 1;
-            }
-            else {
+            } else {
                 const id = this.basketGoods.findIndex((basketItem) => basketItem.id_product === item.id_product);
                 this.basketGoods = this.basketGoods.filter((goodsItem) => goodsItem.id_product !== item.id_product);
-                
-            }console.log(this.basketGoods);
+
+            }
+            console.log(this.basketGoods);
         },
     },
     computed: {
-        filteredGoods(value) {
+        filteredGoods() {
             const regexp = new RegExp(this.searchValue.trim(), 'i');
-            return this.goods = this.goods.filter((goodsItem) => regexp.test(goodsItem.product_name));
+            return this.goods.filter((goodsItem) => regexp.test(goodsItem.product_name));
         },
         getSum() {
             let sum = 0;
@@ -99,183 +180,3 @@ new Vue({
         },
     },
 })
-
-//class GoodsItem {
-//    constructor({
-//        id_product,
-//        product_name,
-//        price
-//    }) {
-//        this.id = id_product;
-//        this.title = product_name;
-//        this.price = price;
-//    }
-//
-//    render() {
-//        return `
-//      <div class="item" data-id="${this.id}">
-//        <h4>${this.title}</h4>
-//        <p>${this.price}</p>
-//        <button type="button" name="add-to-basket">Add to basket</button>
-//      </div>
-//    `;
-//    }
-//}
-
-//class GoodsList {
-//    constructor(basket) {
-//        this.goods = [];
-//        this.filteredGoods = [];
-//        this.basket = basket;
-//
-//
-//        document.querySelector('.goods').addEventListener('click', (event) => {
-//            if (event.target.name === 'add-to-basket') {
-//                const id = event.target.parentElement.dataset.id;
-//                const item = this.goods.find((goodsItem) => goodsItem.id_product === parseInt(id));
-//                if (item) {
-//                    this.addToBasket(item);
-//                } else {
-//                    console.error(`Can't find element with id ${id}`)
-//                }
-//            }
-//        });
-//
-//        document.querySelector('.search').addEventListener('input', (event) => {
-//            this.search(event.target.value);
-//        });
-
-// document.querySelector('.search').addEventListener('keydown', (event) => {
-//   console.log(event);
-//   this.search(event.target.value);
-// });
-//    }
-
-//    fetchData() {
-//        return new Promise((resolve, reject) => {
-//            sendRequest('catalogData.json')
-//                .then((data) => {
-//                    this.goods = data;
-//                    this.filteredGoods = data;
-//                    resolve();
-//                });
-//        });
-//    }
-
-//    addToBasket(item) {
-//        this.basket.addItem(item);
-//    }
-
-//    render() {
-//        const goodsList = this.filteredGoods.map(item => {
-//            const goodsItem = new GoodsItem(item);
-//            return goodsItem.render();
-//        });
-//        document.querySelector('.goods').innerHTML = goodsList.join('');
-//    }
-//    getSum() {
-//        let sum = 0;
-//        this.goods.map(item => {
-//            return sum += item.price;
-//        });
-//        document.querySelector('.goods').append("Итоговая сумма : " + sum);
-//    }
-//search(value) {
-//    const regexp = new RegExp(value.trim(), 'i');
-//    this.filteredGoods = this.goods.filter((goodsItem) => regexp.test(goodsItem.product_name));
-//    this.render();
-//}
-
-
-//class Basket {
-//    constructor() {
-//        this.basketGoods = [];
-//        this.amount = 0;
-//        this.countGoods = 0;
-//    }
-//
-//    addItem(item) {
-//        const index = this.basketGoods.findIndex((basketItem) => basketItem.id_product === item.id_product);
-//        if (index > -1) {
-//            this.basketGoods[index].quantity += 1;
-//            // this.basketGoods[index] = { ...this.basketGoods[index], quantity: this.basketGoods[index].quantity + 1 };
-//        } else {
-//            this.basketGoods.push(item);
-//        }
-//        console.log(this.basketGoods);
-//    }
-
-//    removeItem(id) {
-//        this.basketGoods = this.basketGoods.filter((goodsItem) => goodsItem.id_product !== parseInt(id));
-//        console.log(this.basketGoods);
-//    }
-//
-//    changeQuantity() {
-//
-//    }
-//
-//    clear() {
-//
-//    }
-//
-//    fetchData() {
-//        return new Promise((resolve, reject) => {
-//            sendRequest('getBasket.json')
-//                .then((data) => {
-//                    this.basketGoods = data.contents;
-//                    this.amount = data.amount;
-//                    this.countGoods = data.countGoods;
-//                    console.log(this);
-//                    resolve();
-//                });
-//        });
-//    }
-
-//    applyPromoCode() {
-//
-//    }
-//
-//    getDeliveryPrice() {
-//
-//    }
-//
-//    createOrder() {
-//
-//    }
-//
-//    getTotalPrice() {
-//
-//    }
-//
-//    render() {
-//
-//    }
-//}
-//
-//class BasketItem {
-//    constructor({
-//        title
-//    }) {
-//        this.title = title;
-//    }
-//
-//    changeQuantity() {
-//
-//    }
-//
-//    removeItem() {}
-//
-//    changeType() {}
-//
-//    render() {
-//
-//    }
-//}
-//
-//const basket = new Basket();
-//basket.fetchData();
-//const goodsList = new GoodsList(basket);
-//goodsList.fetchData().then(() => {
-//    goodsList.render();
-//    goodsList.sum();
-//});

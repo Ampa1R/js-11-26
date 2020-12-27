@@ -45,39 +45,31 @@ const goods = [{
    title: 'Монитор',
 }, ];
 
-
 //
 //... Declarations
+var itemList = document.querySelector('.goods');
+var filter = document.getElementById('filter');
+var user = document.getElementById('user');
+filter.addEventListener('keyup', filterItems);
+user.addEventListener('click', login);
 
-/*
-//... Old school
-//для теста
-const eachGoodsItem = (title, price = 'Под заказ', image = '') =>
-   `
-<!-- Product -->
-<div class="card">
-<a class="card-link" href="#">
-<img src="images/${(image) ? image: 'nophoto.png'}" alt="photo product-1" class="card-img">
-</a>
-<div class="card-info">
-<a href="" class="card-title">${title}</a>
-<div class="card-descr"></div>
-<div class="card-price">${price}
-<img src="images/stars.png" alt="Raiting stars" class="card-stars">
-</div>
-</div>
-<a href="#" class="add-to-cart">Add to Cart</a>
-</div>
-`;
-
-const renderGoods = (list = []) => {
-   const goodsList = list.map(item => eachGoodsItem(item.title, item.price, item.image));
-   document.querySelector('.goods').innerHTML = goodsList.join('');
-};
-
-renderGoods(goods);
-
-*/
+// Filter Items
+function filterItems(e){
+   // Convert to lowercase
+   var text = e.target.value.toLowerCase();
+   // Get list
+   var items = itemList.querySelectorAll('.card');
+   // Convert to an array
+   Array.from(items).forEach(function(item){
+      var itemName = item.querySelector('.card-title').textContent;
+      if(itemName.toLowerCase().indexOf(text) != -1){
+         item.style.display = 'block';
+         // item.style.display = '';
+      } else {
+         item.style.display = 'none';
+      }
+   });
+}
 
 //
 //... класс Продукт
@@ -144,12 +136,12 @@ const
 
 class Cart {
    constructor() {
-     this.list = [];
-     this.total = 0;
-     this.pos = 0;
-     this.id = null;   //reserved
-     this.orderNo = null;
-     this.orderId = null;
+      this.list = [];
+      this.total = 0;
+      this.pos = 0;
+      this.id = null;   //reserved
+      this.orderNo = null;
+      this.orderId = null;
    }
  
    render() {}
@@ -167,14 +159,18 @@ class Cart {
    sortItems() {}
  }
  
- class CartItem {
+class CartItem {
    constructor(product, qty) {
-     this.product = product;
-     this.qty = qty;
+      this.product = product;
+      this.qty = qty;
    }
    stockLimit() {}
    stockQty() {}
    stockDelay() {}
    stockCheck() {} 
    render() {}
- }
+}
+
+function login(e) {
+
+}

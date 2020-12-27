@@ -1,0 +1,132 @@
+@keyframes myCollapse {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+main.checkout-main {
+  margin-top: 70px;
+  margin-bottom: -50px; }
+  main.checkout-main ol {
+    list-style-type: decimal-leading-zero;
+    list-style-position: inside;
+    width: 100%;
+    padding: 0; }
+    main.checkout-main ol > li.shipping-details {
+      text-transform: uppercase;
+      font-size: 16px;
+      font-weight: 900;
+      padding-bottom: 25px;
+      margin-bottom: 27px;
+      border-bottom: 1px solid #e8e8e8;
+      width: inherit; }
+      main.checkout-main ol > li.shipping-details > label {
+        color: #222222;
+        margin-left: 6px; }
+        main.checkout-main ol > li.shipping-details > label:hover {
+          cursor: pointer;
+          color: #ef5b70; }
+      main.checkout-main ol > li.shipping-details > article {
+        margin-top: 39px;
+        margin-left: 33px;
+        display: none;
+        text-transform: initial;
+        justify-content: space-between;
+        max-width: 940px;
+        animation: myCollapse 0.5s; }
+      main.checkout-main ol > li.shipping-details > input[type="checkbox"] {
+        position: absolute;
+        left: -2000px; }
+      main.checkout-main ol > li.shipping-details > input[type="checkbox"]:checked ~ article {
+        display: flex; }
+      main.checkout-main ol > li.shipping-details .checkout-content-left, main.checkout-main ol > li.shipping-details .checkout-content-right {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; }
+        main.checkout-main ol > li.shipping-details .checkout-content-left form input[type="submit"], main.checkout-main ol > li.shipping-details .checkout-content-right form input[type="submit"] {
+          outline: none;
+          border: none;
+          font-size: 14px;
+          font-weight: bold;
+          color: #4a4a4a;
+          text-transform: uppercase;
+          width: 180px;
+          height: 50px;
+          background-color: #ffffff;
+          border: 1px solid #eaeaea;
+          box-sizing: border-box; }
+          main.checkout-main ol > li.shipping-details .checkout-content-left form input[type="submit"]:hover, main.checkout-main ol > li.shipping-details .checkout-content-right form input[type="submit"]:hover {
+            cursor: pointer;
+            color: #ef5b70;
+            border-color: #ef5b70;
+            transform: scale(1.1); }
+          main.checkout-main ol > li.shipping-details .checkout-content-left form input[type="submit"]:active, main.checkout-main ol > li.shipping-details .checkout-content-right form input[type="submit"]:active {
+            transform: scale(0.9); }
+        main.checkout-main ol > li.shipping-details .checkout-content-left h3, main.checkout-main ol > li.shipping-details .checkout-content-right h3 {
+          margin: 0;
+          font-size: 13px;
+          font-weight: 700;
+          text-transform: uppercase; }
+          main.checkout-main ol > li.shipping-details .checkout-content-left h3 ~ p, main.checkout-main ol > li.shipping-details .checkout-content-right h3 ~ p {
+            font-size: 13px;
+            color: #b3b2b2;
+            margin: 15px 0 0 0; }
+      main.checkout-main ol > li.shipping-details .checkout-content-left input[type='radio'] {
+        margin: 0; }
+        main.checkout-main ol > li.shipping-details .checkout-content-left input[type='radio'] ~ label {
+          cursor: pointer;
+          text-transform: uppercase;
+          font-size: 12px; }
+      main.checkout-main ol > li.shipping-details .checkout-content-left form > p:first-child, main.checkout-main ol > li.shipping-details .checkout-content-left form > p:nth-child(2) {
+        margin: 0; }
+      main.checkout-main ol > li.shipping-details .checkout-content-left form > p:first-child {
+        margin-top: 31px; }
+      main.checkout-main ol > li.shipping-details .checkout-content-left form > p:nth-child(2) {
+        margin-top: 11px;
+        margin-bottom: 31px; }
+      main.checkout-main ol > li.shipping-details .checkout-content-left form > ul {
+        margin-top: 30px;
+        padding: 0; }
+        main.checkout-main ol > li.shipping-details .checkout-content-left form > ul li {
+          list-style-type: none;
+          font-size: 13px;
+          color: #b3b2b2; }
+        main.checkout-main ol > li.shipping-details .checkout-content-left form > ul li:first-child {
+          margin-bottom: 6px; }
+        main.checkout-main ol > li.shipping-details .checkout-content-left form > ul li:nth-child(2) {
+          margin-bottom: 35px; }
+      main.checkout-main ol > li.shipping-details .checkout-content-right form {
+        display: flex;
+        flex-direction: column; }
+        main.checkout-main ol > li.shipping-details .checkout-content-right form label {
+          font-size: 12px; }
+        main.checkout-main ol > li.shipping-details .checkout-content-right form label:first-child {
+          margin-top: 25px;
+          margin-bottom: 15px; }
+        main.checkout-main ol > li.shipping-details .checkout-content-right form label:nth-child(3) {
+          margin-top: 20px;
+          margin-bottom: 15px; }
+        main.checkout-main ol > li.shipping-details .checkout-content-right form sup {
+          color: #ff0d0d;
+          font-size: 17px; }
+        main.checkout-main ol > li.shipping-details .checkout-content-right form p.required-fields {
+          color: #ff0d0d;
+          font-size: 13px; }
+        main.checkout-main ol > li.shipping-details .checkout-content-right form input[type="email"], main.checkout-main ol > li.shipping-details .checkout-content-right form input[type="password"] {
+          width: 390px;
+          height: 45px;
+          box-sizing: border-box;
+          padding-left: 10px;
+          padding-right: 10px;
+          border: 1px solid #eaeaea; }
+          main.checkout-main ol > li.shipping-details .checkout-content-right form input[type="email"] ::placeholder, main.checkout-main ol > li.shipping-details .checkout-content-right form input[type="password"] ::placeholder {
+            color: #b3b2b2; }
+        main.checkout-main ol > li.shipping-details .checkout-content-right form p:last-child {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          margin-bottom: 0; }
+          main.checkout-main ol > li.shipping-details .checkout-content-right form p:last-child span {
+            font-size: 14px;
+            margin-left: 32px; }
+
+/*# sourceMappingURL=checkout.css.map */

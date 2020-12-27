@@ -1,0 +1,20 @@
+{
+  "amount": 16000,
+  "countGoods": 2,
+  "contents": [
+    {
+      "id_product": 1,
+      "title": "Лампа",
+      "price": 3000,
+      "image": "img/lamp.jpg",
+      "quantity": 1
+    },
+    {
+      "id_product": 2,
+      "title": "Кресло",
+      "price": 13000,
+      "image": "img/arm-chair.jpg",
+      "quantity": 1
+    }
+  ]
+}

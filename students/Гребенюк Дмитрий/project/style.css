@@ -6,6 +6,7 @@
     align-items: center;
     padding: 20px;
     background-color:lightgray;
+    position: relative;
 }
 .basketButton{
     height: 40px;
@@ -17,15 +18,15 @@
     width: 250px;
     height: 600px;
     position: absolute;
-    right: 42px;
-    top: -50px;
+    right: 0px;
+    top: 70px;
 }
 main{
     width: 1220px;
     margin-top: 50px;
     display: flex;
     padding: 0;
-    position: relative;
+   
 }
 .goods{
     display: flex;
@@ -35,6 +36,11 @@ main{
    
 }
 .item{
+    background-color: gainsboro;
+    width: 250px;
+    text-align: center;
+}
+.basketItem{
     background-color: gainsboro;
     width: 250px;
     text-align: center;

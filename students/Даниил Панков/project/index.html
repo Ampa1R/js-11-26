@@ -4,56 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-    <script src="js/script.js" defer></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Контактные линзы</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="style/style.css">
+    <script src="https://kit.fontawesome.com/86d8a78820.js" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script defer src="script.js"></script>
+    <title>L-Shop</title>
 </head>
 
 <body>
-
-    <div id="shop">
-        <header class="main-header">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="#">L-Shop</a>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Future Link</a>
-                        </li>
-                    </ul>
-                    <div class="input-group input-group-sm mb-3">
-                        <input type="text" class="form-control col-3" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" @input="search">
-                    </div>
-                    <button class="btn btn-outline-success my-2 my-sm-0 cart-button basket-toggle" type="button" @click="isBasketActive = !isBasketActive"><span>Корзина</span></button>
-                </div>
-            </nav>
-        </header>
-        <main class="main-content">
-
-            <section class="goods-list">
-                <p v-if="filteredGoods.length === 0">Список товаров пуст</p>
-                <div class="card mt-3 mr-3 mb-3 ml-3" v-for="item in filteredGoods">
-                    <img :src="item.cover" class="card-img-top item-preview" :alt="item.title">
-                    <div class="card-body">
-                        <span class="card-subtitle font-weight-lighter font-italic text-muted float-right">{{ item.product_id }}</span>
-                        <h5 class="card-title">{{ item.title }}</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <h6 class="card-subtitle mb-2 text-muted">Цена: {{ item.price}}$</h6>
-                        <a href="#" class="btn btn-primary float-right" :data-product_id="item.product_id" @click="addToBasket(item)">Добавить</a>
-                    </div>
-                </div>
-            </section>
-            <section class="basket-container" v-bind:class="{visually_hidden: isBasketActive}">
-                <p class="h6" v-if="basketGoods.length === 0">Корзина пуста</p>
-                <p class="h6" v-else>Стоимость корзины: {{ totalPrice }}$</p>
-                <ul id="basket-list" class="list-group">
-                    <li class="list-group-item d-flex justify-content-between align-items-center" v-for="basketItem in basketGoods">{{basketItem.title}}<a class="remove-item" :data-product_id="basketItem.product_id" @click="removeFromBasket(basketItem)">Удалить</a></li>
-                </ul>
-                <button type="button" id="clear-basket" class="btn btn-secondary btn-sm" v-if="basketGoods.length !== 0" @click="clearBasket">Очистить корзину</button>
-            </section>
-        </main>
+    <div id="app">
+        <v-header :cart-visible="isCartVisible" :cart-items="cartItemsList" :error="isError" @search="setNewSearchValue" @change-cart-visibility="isCartVisible = !isCartVisible"></v-header>
+        <v-product-list :error="isError" :products="filteredProducts" @add="addProductToCart"></v-product-list>
     </div>
 </body>
 

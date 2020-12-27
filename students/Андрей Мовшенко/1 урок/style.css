@@ -10,7 +10,7 @@ header {
     height: 100px;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
     background-color: lightgray;
 }
 
@@ -38,4 +38,23 @@ img {
 h3,
 p {
     margin: 10px 0px;
+}
+
+.cart {
+    position: absolute;
+    right: 370px;
+    top: 65px;
+    background: white;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 3px 6px black;
+    width: 300px;
+}
+
+.cart_item {
+    margin-bottom: 20px;
+}
+
+.cart-item__title {
+    font-weight: bold;
 }

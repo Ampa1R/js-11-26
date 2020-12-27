@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Shop</title>
+    <!-- <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700&display=swap&subset=cyrillic" rel="stylesheet"> -->
+    <link rel="stylesheet" href="css/main.css" />
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.10/dist/css/uikit.min.css" />
+
+</head>
+
+<body class="fullsect">
+    <section class="mainsect">
+        <header class="container">
+
+            <div id="topbox">
+                <div id="top-logo">
+                    <!-- -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="82" height="58" viewBox="0 0 82 58">
+                        <circle fill="#d5d5d5" cx="49.7" cy="19.3" r="3.2"></circle>
+                        <circle fill="#d5d5d5" cx="30.3" cy="19.3" r="3.2"></circle>
+                        <circle fill="none" stroke="#d5d5d5" stroke-width="3" cx="40" cy="29" r="27.5"></circle>
+                        <path fill="none" stroke="#d5d5d5" stroke-width="3"
+                            d="M54.9 33.5a15.4 15.4 0 0 1-14.9 10 15.5 15.5 0 0 1-14.9-10"></path>
+                    </svg>
+                    <!-- -->
+                </div>
+                <div id="company-name" class="logo-company">E<span class="set-primary">.</span>Shop</div>
+                <nav id="top-menu">
+
+                    <div id='home' class="menu-items">
+                        <a href="index.html" class="uk-icon" uk-icon="home" title="Главная"></a>                        
+                    </div>
+                    <div class="menu-items">
+                        <a href="#" class="uk-icon" uk-icon="menu" title="Буфет"></a>                        
+                    </div>
+                    <div id='user' class="menu-items">
+                        <a class="uk-icon" uk-icon="user" title="Личный кабинет" href="#modal-full-form" uk-toggle></a>                        
+                    </div><div class="menu-items">
+                        <a href="#" class="uk-icon" uk-icon="cart" title="Корзина"></a>                        
+
+                    </div>
+                </nav>
+            </div>
+            <!--  -->
+        </header>
+    </section>
+    
+    <!--  -->
+    <section class="gap-40"></section>
+    <!--  -->
+    <section class="widecontent product">
+        <div class="center hamburger">
+            <h2 class="title">Создай свой гамбургер</h2>
+            <form id="addForm" class="form-inline mb-3">
+                <label class="uk-margin"> Выбери размер
+                    <select id='size' class='uk-margin uk-select'>
+    
+                    </select>
+                </label>
+                <label class="uk-margin"> Выбери начинку
+                    <select id='stuffing' class='uk-margin uk-select'>
+    
+                    </select>
+                </label>
+                <label class="uk-margin"> Выбери приправу
+                    <select id='topping' class='uk-margin uk-select'>
+    
+                    </select>
+                </label>
+                <input id='create' type="submit" class="uk-margin uk-button uk-button-default" value="Создать" style="background-color: lightcoral;
+                color: white;">
+            </form>
+            <ol id='items' class="uk-container uk-flex items" style="display:flex; flex-direction: column;"></ol>
+            <!--    -->
+        </div>
+    </section>
+    <!--  -->
+    <section class="gap-40"></section>
+    <!--  -->
+    <footer class="mainsect widecontent">
+        <div id="footer-box" class="center">
+            <div id="contacts">
+                <div class="contactWrap">
+                    <img src="images/envelope.svg" class="contactIcon">
+                    info@myshop.ru
+                </div>
+                <div class="contactWrap">
+                    <img src="images/phone-call.svg" class="contactIcon">
+                    8 800 555 00 00
+                </div>
+                <div class="contactWrap">
+                    <img src="images/placeholder.svg" class="contactIcon">
+                    С-Петербург, Мебельная, 1, оф. 101
+                </div>
+            </div>
+
+            <div id="footerNav">
+                <a href="/">Главная</a>
+                <a href="related-products.html">Каталог</a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="modal-full-form" class="uk-modal-full" uk-modal>
+        <div class="uk-modal-dialog">
+            <button class="uk-modal-close-full uk-close-large" type="button" uk-close></button>
+            <div data-uk-img="" data-src="images/promo.jpg"
+                class="uk-flex uk-flex-center uk-flex-middle uk-background-cover" uk-height-viewport>
+                <div class="uk-overlay-primary uk-position-cover"></div>
+                <div class="uk-overlay uk-position-center uk-light">
+                    <form>
+                        <div class="uk-margin">
+                            <div class="uk-inline">
+                                <span class="uk-form-icon" uk-icon="icon: user"></span>
+                                <input class="uk-input" type="text" placeholder="Логин">
+                            </div>
+                        </div>
+                        <div class="uk-margin">
+                            <div class="uk-inline">
+                                <span class="uk-form-icon" uk-icon="icon: lock"></span>
+                                <input class="uk-input" type="text" placeholder="Пароль">
+                            </div>
+                        </div>
+                        <div class="uk-margin">
+                            <button class="uk-button uk-button-default">Войти</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="scripts/hamburger.js" defer></script>
+    <!-- UIkit JS -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.10/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.10/dist/js/uikit-icons.min.js"></script>
+</body>
+
+</html>

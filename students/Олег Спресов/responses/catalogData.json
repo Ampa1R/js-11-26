@@ -1,0 +1,72 @@
+[
+  {
+    "id_product": 1,
+    "title": "Лампа",
+    "price": 3000,
+    "image": "img/lamp.jpg"
+  },
+
+  {
+    "id_product": 2,
+    "title": "Кресло",
+    "price": 13000,
+    "image": "img/arm-chair.jpg"
+  },
+
+  {
+    "id_product": 3,
+    "title": "Диван",
+    "price": 25000,
+    "image": "img/divan.jpg"
+  },
+
+  {
+    "id_product": 4,
+    "title": "Торшер",
+    "price": 9500,
+    "image": "img/torsher.jpg"
+  },
+
+  {
+    "id_product": 5,
+    "title": "Ваза",
+    "price": 2000,
+    "image": "img/vase.jpg"
+  },
+
+  {
+    "id_product": 6,
+    "title": "Часы",
+    "price": 2700,
+    "image": "img/clock.jpg"
+  },
+
+  {
+    "id_product": 7,
+    "title": "Ступка керамическая",
+    "price": 4300,
+    "image": "img/stupka.jpg"
+  },
+
+  {
+    "id_product": 8,
+    "title": "Чайник",
+    "price": 1350,
+    "image": "img/kettle.jpg"
+  },
+
+  {
+    "id_product": 9,
+    "title": "Стул",
+    "price": 2700,
+    "image": "img/chair.jpg"
+  },
+
+  {
+    "id_product": 10,
+    "title": "Подвесная лампа",
+    "price": 7230,
+    "image": "img/suspended_lamp.jpg"
+  }
+
+  ]
