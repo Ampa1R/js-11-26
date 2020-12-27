@@ -1,4 +1,4 @@
-const API = 'https://raw.githubusercontent.com/ybuzolev/js-11-26/tree/master/students/Yulia%20Buzoleva/project/';
+const API = 'http://localhost:3000/api';
 
 const sendRequest = (path) => {
   return new Promise((resolve, reject) => {
@@ -50,7 +50,7 @@ Vue.component('v-basket', {
     template:`
         <div class="cart">
             <div class="cart-item" v-for="item in goods">
-                <p class="cart-item__title">{{item.product_name}}</p>
+                <p class="cart-item__title">{{item.title}}</p>
                 <p>{{item.quantity}} x {{item.price}}</p>
             </div>
         </div>
@@ -103,7 +103,7 @@ Vue.component('v-item', {
     props: ['element','title'],
     template:`
         <div class="item">
-            <h4>{{element.product_name}}</h4>
+            <h4>{{element.title}}</h4>
             <p>{{element.price}}</p>
             <button type="button" v-on:click="addToBasket(item)">Add to basket</button>
         </div>
@@ -131,7 +131,7 @@ new Vue({
     methods: {
       fetchData() {
         return new Promise((resolve, reject) => {
-          sendRequest('catalog')
+          sendRequest('catalog.json')
             .then((data) => {
               this.goods = data;
               resolve();
@@ -142,9 +142,9 @@ new Vue({
       },
       fetchBasketData() {
         return new Promise((resolve, reject) => {
-          sendRequest('getBasket.json')
+          sendRequest('basket.json')
             .then((data) => {
-              this.basketGoods = data;
+              this.basketGoods = data.contents;
               // this.amount = data.amount;
               // this.countGoods = data.countGoods;
               resolve();
@@ -154,7 +154,7 @@ new Vue({
         });
       },
       addToBasket(item) {
-        const index = this.basketGoods.findIndex((basketItem) => basketItem.id_product === item.id_product);
+        const index = this.basketGoods.findIndex((basketItem) => basketItem.id === item.id);
         if (index > -1) {
           this.basketGoods[index].quantity += 1;
           // this.basketGoods[index] = { ...this.basketGoods[index], quantity: this.basketGoods[index].quantity + 1 };
@@ -164,14 +164,14 @@ new Vue({
         console.log(this.basketGoods);
       },
       removeItem(id) {
-        this.basketGoods = this.basketGoods.filter((goodsItem) => goodsItem.id_product !== parseInt(id));
+        this.basketGoods = this.basketGoods.filter((goodsItem) => goodsItem.id !== parseInt(id));
         console.log(this.basketGoods);
       }
     },
     computed: {
       filteredGoods() {
         const regexp = new RegExp(this.searchValue.trim(), 'i');
-        return this.goods.filter((goodsItem) => regexp.test(goodsItem.product_name));
+        return this.goods.filter((goodsItem) => regexp.test(goodsItem.title));
       },
       totalPrice() {
         return this.goods.reduce((acc, curVal) => {
