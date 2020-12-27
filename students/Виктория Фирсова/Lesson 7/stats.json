@@ -1,0 +1,23 @@
+[
+ {
+  "dateTime": "2020-12-24T13:05:24.861Z",
+  "action": "addToBasket",
+  "url": "/api/addToBasket",
+  "data": {
+   "id": 1234512,
+   "title": "Mouse",
+   "price": 1000
+  }
+ },
+ {
+  "dateTime": "2020-12-24T13:05:51.599Z",
+  "action": "removeFromBasket",
+  "url": "/api/removeFromBasket",
+  "data": {
+   "id": 123451534,
+   "title": "Keyboard",
+   "price": 5000,
+   "quantity": 1
+  }
+ }
+]

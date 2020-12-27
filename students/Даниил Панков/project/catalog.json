@@ -1,0 +1,31 @@
+[{
+    "id": 1,
+    "title": "ACUVUE OASYS",
+    "price": 25,
+    "image": "img/ac_oasys.jpeg",
+    "quantity": 5
+}, {
+    "id": 2,
+    "title": "ACUVUE Moist",
+    "price": 20,
+    "image": "img/acuvue-moist.png",
+    "quantity": 5
+}, {
+    "id": 3,
+    "title": "Cooper Vision",
+    "price": 28,
+    "image": "img/cooper_vision.png",
+    "quantity": 5
+}, {
+    "id": 4,
+    "title": "CooperVision Biofinity",
+    "price": 28,
+    "image": "img/biofinity.png",
+    "quantity": 5
+}, {
+    "id": 5,
+    "title": "CooperVision XR toric",
+    "price": 35,
+    "image": "img/XR.jpg",
+    "quantity": 5
+}]

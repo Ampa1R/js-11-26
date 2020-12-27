@@ -1,0 +1,141 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+:focus,
+:active {
+  outline: none;
+}
+
+body {
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.padding {
+  padding-left: calc(50% - 400px);
+  padding-right: calc(50% - 400px);
+}
+
+.container {
+  width: 800px;
+  margin: 0 auto;
+}
+
+.marginTop {
+  margin-top: 16px;
+}
+
+.header {
+  background-color: white;
+  border: 1px solid #ececec;
+  -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.17);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.17);
+  min-width: 640px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  position: relative;
+}
+
+.logo {
+  color: lightslategray;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.cart-button,
+.item__buy-button {
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  border: none;
+  padding: 12px 16px;
+  color: white;
+  background-color: lightslategray;
+  border-radius: 30px;
+  cursor: pointer;
+  -webkit-transition: all 0.15s;
+  transition: all 0.15s;
+}
+
+.cart-button:hover,
+.item__buy-button:hover {
+  color: #334455;
+  background-color: #bbccdd;
+}
+
+.main {
+  position: relative;
+  padding-top: 32px;
+}
+
+.goods {
+  min-width: 640px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.item {
+  text-align: center;
+}
+
+.item__link {
+  display: block;
+  height: 150px;
+  overflow: hidden;
+}
+
+.item__image {
+  width: 160px;
+  overflow: hidden;
+}
+
+.cart {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 16px;
+  background-color: #fff;
+}
+
+.cartItem {
+  display: flex;
+  justify-content: space-between;
+  width: 230px;
+  padding: 10px 0;
+}
+
+.cartItem__right {
+  align-items: center;
+  display: flex;
+}
+
+.emptyGoods {
+  text-align: center;
+  width: 100%;
+}
+
+.error {
+  margin-top: 16px;
+  text-align: center;
+  width: 100%;
+  text-transform: uppercase;
+  font-weight: bold;
+}

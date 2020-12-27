@@ -1,0 +1,10 @@
+<script>
+    let str =
+        "So here and now there is a fish text in it there is 'direct speech', as well as 'again direct speech', well, the fish did not stop there and added 'more direct speech', and there, to the heap, there is also 'inside direct speech, wow, aren't can't and isn't, just watch!' Point.";
+
+    str = str.replace(/'/g, '\"'); // Задача 1. Меняем ' на "
+    str = str.replace(/n"t/g,
+        'n\'t'); // Задача 2. Да, это сомнительный костыль, но в задании другие варианты не предусмотрены.
+
+    alert(str);
+</script>

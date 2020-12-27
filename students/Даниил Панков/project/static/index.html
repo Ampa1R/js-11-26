@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="style/style.css">
+    <script src="https://kit.fontawesome.com/86d8a78820.js" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script defer src="script.js"></script>
+    <title>L-Shop</title>
+</head>
+
+<body>
+    <div id="app">
+        <v-header>
+            <search-good v-model="searchValue"></search-good>
+            <v-cart :amount2="this.amount" :count-goods2="this.countGoods" :is-cart-show="show" :cart-goods="basketGoods" @reverse="show = !show">
+            </v-cart>
+        </v-header>
+        <v-goods v-bind:goods=" filteredGoods" v-on:add="addToBasket" v-on:remove="removeItem">
+        </v-goods>
+        <v-error v-if="errorMessage.length" :message="errorMessage" />
+    </div>
+
+    </div>
+</body>
+
+</html>

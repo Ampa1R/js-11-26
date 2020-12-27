@@ -29,25 +29,17 @@
                     <!-- -->
                 </div>
                 <div id="company-name" class="logo-company">E<span class="set-primary">.</span>Shop</div>
-                <!-- <span class="logo">E-Shop</span> -->
                 <nav id="top-menu">
-<!-- 
-                    <a class="menu-items" href="/">Главная</a>
-                    <a class="menu-items" href="#">Каталог</a>
-                    <div class="menu-items">
-                        <button type="button"
-                            class="cart-button uk-button uk-button-primary uk-button-small">Корзина</button>
-                    </div>
--->
+
                     <div id='home' class="menu-items">
-                        <a href="#" class="uk-icon" uk-icon="home" title="Главная"></a>                        
+                        <a href="index.html" class="uk-icon" uk-icon="home" title="Главная"></a>                        
                     </div>
-                    <div id="hamburger"lass="menu-items">
-                        <a href="hamburger.html" class="uk-icon" uk-icon="menu" title="Буфет"></a>                        
+                    <div class="menu-items">
+                        <a href="#" class="uk-icon" uk-icon="menu" title="Буфет"></a>                        
                     </div>
                     <div id='user' class="menu-items">
-                        <a href="#modal-full-form" class="uk-icon" uk-icon="user" title="Личный кабинет" uk-toggle></a>                        
-                    </div><div id="cart"class="menu-items">
+                        <a class="uk-icon" uk-icon="user" title="Личный кабинет" href="#modal-full-form" uk-toggle></a>                        
+                    </div><div class="menu-items">
                         <a href="#" class="uk-icon" uk-icon="cart" title="Корзина"></a>                        
 
                     </div>
@@ -56,62 +48,34 @@
             <!--  -->
         </header>
     </section>
-    <!--  -->
-    <section id='promo' class="widecontent promo">
-        <div class="box-600-92-12">
-            <div class="promo-title">E<span class="set-primary">.</span>SHOP</div>
-            <div class="promo-trend">ЛУЧШИЕ <span class="set-primary">АКСЕССУАРЫ</span></div>
-        </div>
-    </section>
-
+    
     <!--  -->
     <section class="gap-40"></section>
     <!--  -->
     <section class="widecontent product">
-        <div class="center">
-            <div class="product-header ">
-                <div class="title">Популярные товары</div>
-                <div class="text">Самые популярные товары за последний месяц</div>
-            </div>
-
-            <input type="text" class="uk-input uk-width-medium form-control" id="filter" placeholder="Поиск...">
-
-
-            <!-- Product 1 -->
-            <!-- ...Тестовый шаблон...
-                <div class="product-gallery">
-                <div class="card">
-                    <a class="card-link" href="#">
-                        <img src="images/nout.webp" alt="photo product-1" class="card-img">
-                    </a>
-                    <div class="card-info">
-                        <a href="" class="card-title">Ноутбук Mango</a>
-                        <div class="card-descr"></div>
-                        <div class="card-price">$52.00
-                            <img src="images/stars.png" alt="Raiting stars" class="card-stars">
-                        </div>
-                    </div>
-                    <a href="#" class="add-to-cart">Add to Cart</a>
-                </div>
-            </div> -->
-
-            <!-- Gallery -->
-            <main>
-                <div class="product-gallery goods">
-                    <!-- Подключение скрипта
-                <section class="goods">
-                </section> -->
-                </div>
-                <!--  -->
-                <section class="gap-30"></section>
-                <!--  -->
-                <div class="product-browse">
-                    <a href="#" class="button-browse">
-                        <div class="button">Browse All Product</div>
-                    </a>
-                </div>
-            </main>
-            <!--end Gallery-->
+        <div class="center hamburger">
+            <h2 class="title">Создай свой гамбургер</h2>
+            <form id="addForm" class="form-inline mb-3">
+                <label class="uk-margin"> Выбери размер
+                    <select id='size' class='uk-margin uk-select'>
+    
+                    </select>
+                </label>
+                <label class="uk-margin"> Выбери начинку
+                    <select id='stuffing' class='uk-margin uk-select'>
+    
+                    </select>
+                </label>
+                <label class="uk-margin"> Выбери приправу
+                    <select id='topping' class='uk-margin uk-select'>
+    
+                    </select>
+                </label>
+                <input id='create' type="submit" class="uk-margin uk-button uk-button-default" value="Создать" style="background-color: lightcoral;
+                color: white;">
+            </form>
+            <ol id='items' class="uk-container uk-flex items" style="display:flex; flex-direction: column;"></ol>
+            <!--    -->
         </div>
     </section>
     <!--  -->
@@ -140,8 +104,7 @@
             </div>
         </div>
     </footer>
-    
-    <!-- Логин -->
+
     <div id="modal-full-form" class="uk-modal-full" uk-modal>
         <div class="uk-modal-dialog">
             <button class="uk-modal-close-full uk-close-large" type="button" uk-close></button>
@@ -170,8 +133,7 @@
             </div>
         </div>
     </div>
-
-    <script src="scripts/script.js" defer></script>
+    <script src="scripts/hamburger.js" defer></script>
     <!-- UIkit JS -->
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.10/dist/js/uikit.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.10/dist/js/uikit-icons.min.js"></script>

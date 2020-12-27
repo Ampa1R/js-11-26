@@ -16,12 +16,11 @@ html {
 }
 
 .header {
-    max-width: 1366px;
-    margin: 0 auto;
-    min-width: 800px;
-    /*height: 50px;*/
-    padding-top: 20px;
-    padding-bottom: 30px;
+    display: flex;
+    background: #fff;
+    justify-content: space-between;
+    padding: 20px;
+    box-shadow: 0 3px 6px rgba(0,0,0,.2);
 }
 
 .logo {
@@ -72,4 +71,23 @@ html {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+}
+
+.cart {
+    position: absolute;
+    right: 30px;
+    top: 70px;
+    background: white;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 3px 6px grey;
+    width: 300px;
+}
+
+.cart-item {
+    margin-bottom: 20px;
+}
+
+.cart-item__title {
+    font-weight: bold;
 }

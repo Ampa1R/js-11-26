@@ -1,3 +1,4 @@
+
 const API = 'http://localhost:3000/api';
 
 const sendRequest = (path, method = 'GET', body = {}) => {
@@ -51,27 +52,34 @@ Vue.component('v-search', {
 Vue.component('v-basket', {
   props: ['goods'],
   template: `
-
     <div class="cart">
         <div class="cart-item" v-for="item in goods">
-            <img :src="item.image" alt="product_basket">
             <p class="cart-item__title">{{item.title}}</p>
             <p>{{item.quantity}} x {{item.price}}</p>
-            <button @click="$emit('delete', item.id)">Удалить</button>
-        </div>
+            <button type="button" :data-itemid="item.id" v-on:click="removeFromBasket">Delete</button>
+            </div>
     </div>
   `,
+  methods: {
+    removeFromBasket(sender) {
+      console.log("removeFromBasket", sender.srcElement.dataset.itemid);
+      this.$emit('remove',sender.srcElement.dataset.itemid);
+      
+      //let idToDelete = sender.srcElement.dataset.itemid;
+      //console.log(this.goods);
+      //this.goods.basketGoods.filter(x=>x.id == idToDelete).forEach(x=> goods.removeFromBasket(x));
+    }
+  }
+
 });
 
 
 Vue.component('v-header', {
   template: `
-    <header class="header">
-        <a class="logo" href="#"><img src="img/logo.svg" alt="logo"></a>
+    <header class="header d-flex">
+        <span class="logo">E-Shop</span>
         <slot />
-        <div class="basket">
-            <button @click="handleClick" type="button" class="cart-button">Корзина <i class="fa fa-shopping-cart"></i></button>
-        </div>
+        <button @click="handleClick" type="button" class="cart-button">Корзина</button>
         <slot name="basket" />
     </header>
   `,
@@ -109,11 +117,9 @@ Vue.component('v-item', {
   props: ['element'],
   template: `
     <div class="item">
-        <img :src="element.image" alt="product">
-        <h4 class="prod_name">{{element.title}}</h4>
-        <p class="prod_price">{{element.price}}</p>
-        <button type="button" v-on:click="addToBasket" class="add_cart">
-                        Добавить в <i class="fa fa-shopping-cart"></i></button>
+        <h4>{{element.title}}</h4>
+        <p>{{element.price}}</p>
+        <button type="button" v-on:click="addToBasket">Add to basket</button>
     </div>
   `,
   methods: {
@@ -154,8 +160,6 @@ new Vue({
         sendRequest('basket')
           .then((data) => {
             this.basketGoods = data;
-            // this.amount = data.amount;
-            // this.countGoods = data.countGoods;
             resolve();
           })
           .catch((error) => {
@@ -163,9 +167,8 @@ new Vue({
           });
       });
     },
-
     addToBasket(item) {
-      sendRequest('basket', 'POST', item)
+      sendRequest('addToBasket', 'POST', item)
         .then((result) => {
           console.log('Result', result);
           if (!result.success) {
@@ -182,25 +185,27 @@ new Vue({
           }
         })
         .catch((error) => {
-          this.errorMessage = 'Не удалось добавить элемент в корзину!';
+          this.errorMessage = 'Не удалось добавить список товаров!';
         });
     },
-    removeItem(id) {
-      sendRequest(`basket/${id}`, 'DELETE')
+    removeFromBasket(id) {
+      console.log('removeFromBasket', id);
+      const index = this.basketGoods.findIndex((basketItem) => basketItem.id == id);
+      if (index == -1) return;
+      var item = this.basketGoods[index];
+      sendRequest('removeFromBasket', 'POST', item)
         .then((result) => {
           console.log('Result', result);
           if (!result.success) {
-            console.log('addToBasket Error');
+            console.log('removeItem Error');
             return;
           }
 
           this.basketGoods = this.basketGoods.filter((goodsItem) => goodsItem.id !== parseInt(id));
-          console.log(this.basketGoods);
         })
         .catch((error) => {
-          this.errorMessage = 'Не удалось удалить элемент из корзины!';
-        });
-    },
+          this.errorMessage = 'Не удалось удалить товар!';
+        });    },
   },
   computed: {
     filteredGoods() {

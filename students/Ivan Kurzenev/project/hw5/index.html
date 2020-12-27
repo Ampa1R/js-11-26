@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Shop</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <div id="app">
+        <header class="header padding">
+            <a href="index.html"><span class="logo">E-Shop</span></a>
+            <input v-model="searchValue" type="search" class="search" placeholder="Search...">
+            <button @click="isVisibleCartToggler" type="button" class="cart-button">Корзина</button>
+        </header>
+        <main class="main container">
+            <section class="goods">
+                <div class="item" v-for="item in filteredGoods">
+                    <a class="item__link" href="#">
+                        <img class="item__image" :src="item.path" :alt="item.title">
+                    </a>
+                    <h4 class="item__title marginTop">{{item.title}}</h4>
+                    <p class="item__price marginTop">Цена: {{item.price}} &#8381;</p>
+                    <button @click="addToCart(item)" type="button" class="item__buy-button marginTop">В
+                        корзину</button>
+                </div>
+                <section v-if="isVisibleCart" class="cart">
+                    <div class="cartItem" v-for="item in cartGoods">
+                        <div class="cartItem__left">
+                            <h4 class="item__title">{{item.title}} x{{item.quantity}}</h4>
+                            <p class="item__price marginTop">Цена: {{item.price}} &#8381;</p>
+                        </div>
+                        <div class="cartItem__right">
+                            <button @click="deleteFromCart(item)" type="button"
+                                class="item__buy-button">Удалить</button>
+                        </div>
+                    </div>
+                    <p v-if="cartGoods.length <= 0" class="emptyGoods">
+                        Корзина пуста
+                    </p>
+                    <p class=" item__price marginTop">Общая цена: {{totalPrice}} &#8381;</p>
+                    <button @click="cleatCart" type="button" class="item__buy-button marginTop">Очистить
+                        корзину</button>
+                </section>
+                <p v-if=" filteredGoods.length <=0" class="emptyGoods">
+                    Нет данных
+                </p>
+            </section>
+        </main>
+    </div>
+</body>
+
+</html>

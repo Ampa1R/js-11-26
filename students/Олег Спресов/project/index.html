@@ -18,7 +18,7 @@
             </template>
 
             <template v-slot:basket>
-                <v-basket v-if="isVisible" :goods="basketGoods" />
+                <v-basket v-if="isVisible" :goods="basketGoods" @delete="removeItem" />
             </template>
         </v-header>
         <v-goods
@@ -29,44 +29,4 @@
     </div>
 </body>
 
-<!--Код к ДЗ_5-->
-<!--<body>-->
-
-    <!--<div id="app">-->
-        <!--<div class="header">-->
-            <!--<a class="logo" href="#"><img src="img/logo.svg" alt="logo"></a>-->
-            <!--<input type="text" v-model="searchValue" class="search" placeholder="Search..." />-->
-            <!--&lt;!&ndash;<input type="text" class="search" placeholder="Search..." />&ndash;&gt;-->
-            <!--<div class="basket">-->
-                <!--<button @click="isVisible = !isVisible" type="button" class="cart-button">Корзина <i class="fa fa-shopping-cart"></i></button>-->
-            <!--</div>-->
-            <!--<div v-if="isVisible" class="cart">-->
-                <!--<div class="cart-item" v-for="item in basketGoods">-->
-                    <!--<img :src="item.image" alt="product_basket">-->
-                    <!--<p class="cart-item__title">{{item.title}}</p>-->
-                    <!--<p>{{item.quantity}} x {{item.price}}</p>-->
-                <!--</div>-->
-            <!--</div>-->
-
-        <!--</div>-->
-        <!--<main>-->
-            <!--&lt;!&ndash;<section class="goods">&ndash;&gt;-->
-            <!--&lt;!&ndash;</section>&ndash;&gt;-->
-            <!--<section class="goods">-->
-                <!--<div class="item" v-for="item in filteredGoods">-->
-                    <!--<img :src="item.image" alt="product">-->
-                    <!--<h4 class="prod_name">{{item.title}}</h4>-->
-                    <!--<p class="prod_price">{{item.price}}</p>-->
-                    <!--<button type="button" v-on:click="addToBasket(item)" class="add_cart">-->
-                        <!--Добавить в <i class="fa fa-shopping-cart"></i></button>-->
-                    <!--&lt;!&ndash;<button type="button" v-on:click="addToBasket(item)">Add to basket</button>&ndash;&gt;-->
-                <!--</div>-->
-                <!--<div v-if="!filteredGoods.length" class="goods-empty">-->
-                    <!--Нет данных-->
-                <!--</div>-->
-            <!--</section>-->
-        <!--</main>-->
-    <!--</div>-->
-
-<!--</body>-->
 </html>
