@@ -1,4 +1,4 @@
-const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+const API = 'https://raw.githubusercontent.com/ybuzolev/js-11-26/tree/master/students/Yulia%20Buzoleva/project/';
 
 const sendRequest = (path) => {
   return new Promise((resolve, reject) => {
@@ -27,11 +27,20 @@ const sendRequest = (path) => {
   });
 }
 
+Vue.component('v-error', {
+    props: ['message'],
+    template:`
+        <div class="error">
+            Ошибка! {{ message }}
+        </div>
+    `,
+});
+
 Vue.component('v-search', {
     props: ['value'],
     template:`
         <div>
-            <input type="text" v-model="search" class="search" placeholder="Search...">
+            <input type="text" :value="value" @input="$emit('input', $event.target.value)" class="search" placeholder="Search...">
         </div>
     `,
 });
@@ -91,11 +100,11 @@ Vue.component('v-goods', {
 })
 
 Vue.component('v-item', {
-    props: ['element'],
+    props: ['element','title'],
     template:`
         <div class="item">
-            <h4>${this.title}</h4>
-            <p>${this.price}</p>
+            <h4>{{element.product_name}}</h4>
+            <p>{{element.price}}</p>
             <button type="button" v-on:click="addToBasket(item)">Add to basket</button>
         </div>
     `,
@@ -113,6 +122,7 @@ new Vue({
       basketGoods: [],
       searchValue: '',
       isVisible: false,
+      errorMessage: [],
     },
     mounted() {
       this.fetchData();
@@ -121,22 +131,26 @@ new Vue({
     methods: {
       fetchData() {
         return new Promise((resolve, reject) => {
-          sendRequest('catalogData.json')
+          sendRequest('catalog')
             .then((data) => {
               this.goods = data;
               resolve();
-            });
+            }).catch((error) => {
+                this.errorMessage = 'Не удалось получить список товаров!';
+            })
         });
       },
       fetchBasketData() {
         return new Promise((resolve, reject) => {
           sendRequest('getBasket.json')
             .then((data) => {
-              this.basketGoods = data.contents;
+              this.basketGoods = data;
               // this.amount = data.amount;
               // this.countGoods = data.countGoods;
               resolve();
-            });
+            }).catch((error) => {
+                this.errorMessage = 'Не удалось получить содержимое корзины!';
+            })
         });
       },
       addToBasket(item) {

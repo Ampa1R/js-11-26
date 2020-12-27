@@ -20,17 +20,18 @@
             @change-is-cart-visible="isVisible = !isVisible"
         >
             <template v-slot:default>
-                <v-search :value="searchValue" />
+                <v-search v-model="searchValue" />
             </template>
-            
+
             <template v-slot:basket>
-                <v-basket :goods="basketGoods" />
+                <v-basket v-if="isVisible" :goods="basketGoods" />
             </template>
         </v-header>
         <v-goods 
             v-bind:goods="filteredGoods"
             v-on:add="addToBasket"
         ></v-goods>
+        <v-error v-if="errorMessage.length" :message="errorMessage" />
     </div>
 </body>
 
