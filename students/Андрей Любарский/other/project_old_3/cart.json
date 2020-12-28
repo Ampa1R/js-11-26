@@ -1,0 +1,18 @@
+{
+  "amount": 30500,
+  "countGoods": 2,
+  "contents": [
+    {
+      "id_product": 1,
+      "product_name": "Ноутбук",
+      "price": "30000",
+      "quantity": 1
+    },
+    {
+      "id_product": 3,
+      "product_name": "Мышь",
+      "price": "500",
+      "quantity": 1
+    }
+  ]
+}
