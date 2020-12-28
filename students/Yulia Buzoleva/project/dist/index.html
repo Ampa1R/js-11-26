@@ -24,7 +24,7 @@
             </template>
 
             <template v-slot:basket>
-                <v-basket v-if="isVisible" :goods="basketGoods" />
+                <v-basket v-if="isVisible" :goods="basketGoods" @delete="removeItem" />
             </template>
         </v-header>
         <v-goods 

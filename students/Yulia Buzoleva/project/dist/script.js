@@ -1,4 +1,4 @@
-const API = 'http://localhost:3000/api';
+const API = 'https://raw.githubusercontent.com/ybuzolev/js-11-26/master/students/Yulia%20Buzoleva/project/';
 
 const sendRequest = (path) => {
   return new Promise((resolve, reject) => {
@@ -52,6 +52,7 @@ Vue.component('v-basket', {
             <div class="cart-item" v-for="item in goods">
                 <p class="cart-item__title">{{item.title}}</p>
                 <p>{{item.quantity}} x {{item.price}}</p>
+                <button @click="$emit('delete', item.id)">Удалить</button>
             </div>
         </div>
     `,
