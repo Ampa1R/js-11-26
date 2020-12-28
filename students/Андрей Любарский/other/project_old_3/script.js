@@ -1,6 +1,105 @@
 'use strict';
 
+
 const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+
+
+Vue.component('v-search', {
+    template: `
+        <section class="searchLine">
+            <label for="search">Поиск</label>
+            <input type="text" id="search" v-model="searchInput">
+            <button @click="handleSearchButton">Найти</button>
+        </section>
+    `,
+    data(){
+        return {
+            searchInput:''
+        }
+    },
+    methods: {
+        handleSearchButton() {
+            this.$emit('btn-srch', this.searchInput)
+        }
+    }
+})
+
+
+Vue.component('v-cart', {
+    template: `      
+        <section class="cart" v-show="isVisibleCart">
+        <h3 v-if="!cart.length">Нет Данных</h3>
+        <v-cart-item v-for="el in cart" v-bind:item="el" />
+        </section>
+    `,
+
+    props: {
+        isVisibleCart: Boolean,
+        cart: Array
+    }
+})
+
+Vue.component('v-cart-item', {
+    template: `
+        <div class="item">
+            <div class="pic"></div>
+            <h4>{{ item.product_name }}</h4>
+            <p v-if="item.price">Цена: {{ item.price }}</p>
+            <p> В корзине: {{ item.quantity }}</p>
+            <button class="cart-button">Убрать из корзины</button>
+        </div>
+    `,
+    props: {
+        item: Object
+    }
+})
+
+
+Vue.component('v-catalogue', {
+    template: `
+        <section class="catalogue">
+            <h3 v-if="!goods.length">Нет Данных</h3>
+            <v-catalogue-item v-if="goods.length" v-for="el in goods" v-bind:item="el" v-on:addToCart="handleAddToCart" />
+        </section>    
+    `,
+
+    props: {
+        goods: Array
+    },
+
+    methods: {
+        handleAddToCart(data) {
+            this.$emit('add', data)
+        }
+    }
+})
+
+
+Vue.component('v-catalogue-item', {
+    template: `
+        <div class="item">
+            <div class="pic"></div>
+            <h4>{{ item.product_name }}</h4>
+            <p v-if="item.price">Цена: {{ item.price }}</p>
+            <p v-else>Цена по запросу</p>
+            <button class="add-button" v-on:click="handleClick">Купить</button>
+        </div>
+    `,
+
+    props: {
+        item: Object
+    },
+
+
+    methods: {
+        handleClick() {
+            console.log('button clicked');
+            this.$emit('addToCart', this.item)
+        }
+    }
+
+})
+
 
 const app = new Vue({
     el: '#app',
@@ -11,12 +110,7 @@ const app = new Vue({
         cartTotalPrice: 0,
         cartTotalGoods: 0,
         isVisibleCart: true,
-        searchInputValue: '',
         searchValue: ''
-    },
-
-
-    beforeMount() {
     },
 
 
@@ -41,7 +135,6 @@ const app = new Vue({
                     });
                 })
                 .catch(e => console.log(e));
-
         },
 
         fetchCartData() {
@@ -93,9 +186,14 @@ const app = new Vue({
             return this.isVisibleCart = !this.isVisibleCart;
         },
 
-        handleSearchButton(){
-            this.searchValue = this.searchInputValue;
+        handleSearchButton(input) {
+            this.searchValue = input;
+        },
+
+        handleAdd() {
+
         }
+
 
     },
 
@@ -103,7 +201,6 @@ const app = new Vue({
         filteredGoods() {
             const regexp = new RegExp(this.searchValue.trim(), 'i');
             return this.goods.filter((goodsItem) => regexp.test(goodsItem.product_name));
-
         },
 
         totalPrice() {

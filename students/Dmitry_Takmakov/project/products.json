@@ -3,54 +3,54 @@
         "product_id": 1,
         "title": "Alphazone - Rockin'",
         "price": 8,
-        "cover": "static/images/alphazone-rockin.jpg"
+        "cover": "images/alphazone-rockin.jpg"
     },
     {
         "product_id": 2,
         "title": "Mayhem - Distorted Soul",
         "price": 6,
-        "cover": "static/images/mayhem-distorted_soul.jpg"
+        "cover": "images/mayhem-distorted_soul.jpg"
     },
     {
         "product_id": 3,
         "title": "Marcos & J K Walker - DayKeeper",
         "price": 10,
-        "cover": "static/images/marcos_jk_walker-daykeeper.jpg"
+        "cover": "images/marcos_jk_walker-daykeeper.jpg"
     },
     {
         "product_id": 4,
         "title": "Planet Punk - Troja.wav",
         "price": 6,
-        "cover": "static/images/planet_punk-trojawav.jpg"
+        "cover": "images/planet_punk-trojawav.jpg"
     },
     {
         "product_id": 5,
         "title": "Cominotto - Species",
         "price": 5,
-        "cover": "static/images/cominotto-species.jpg"
+        "cover": "images/cominotto-species.jpg"
     },
     {
         "product_id": 6,
         "title": "DJ Destiny VS. Organ Donors - What's Up?",
         "price": 5.5,
-        "cover": "static/images/dj_destiny_organ_donors-whats_up.jpg"
+        "cover": "images/dj_destiny_organ_donors-whats_up.jpg"
     },
     {
         "product_id": 7,
         "title": "JS Ten - Nature",
         "price": 10,
-        "cover":"static/images/js_ten-nature.jpg"
+        "cover":"images/js_ten-nature.jpg"
     },
     {
         "product_id": 8,
         "title": "Radium VS. DJ Inside - Universe Of Dreams",
         "price": 6,
-        "cover": "static/images/radium_vs_dj_inside-universe_of_dreams.jpg"
+        "cover": "images/radium_vs_dj_inside-universe_of_dreams.jpg"
     },
     {
         "product_id": 9,
         "title": "Joe Kelly - What's Happening / Arora",
         "price": 9,
-        "cover": "static/images/joe_kelly-whats_happening_arora.jpg"
+        "cover": "images/joe_kelly-whats_happening_arora.jpg"
     }
 ]
