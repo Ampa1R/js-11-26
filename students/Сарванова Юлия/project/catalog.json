@@ -1,0 +1,31 @@
+[
+    {
+        "id": 1234,
+        "title": "Mouse",
+        "price": 1000
+    },
+
+    {
+        "id": 1654,
+        "title": "Monitor",
+        "price": 10000
+    },
+
+    {
+        "id": 19897,
+        "title": "Laptop",
+        "price": 30000
+    },
+
+    {
+        "id": 687864,
+        "title": "Cabel",
+        "price": 800
+    },
+
+    {
+        "id": 31546,
+        "title": "Keyboard",
+        "price": 2000
+    }
+]

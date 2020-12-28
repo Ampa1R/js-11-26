@@ -1,184 +1,192 @@
 
-const API = "https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses";
-
-/*const sendRequest = (path, callback) => {
-  const xhr = new XMLHttpRequest();
-
-  xhr.timeout = 10000;
-
-  xhr.ontimeout = () => {
-    console.log('timeout!');
-  }
-
-  xhr.onreadystatechange = () => {
-    // console.log('ready state change', xhr.readyState);
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
-        callback(JSON.parse(xhr.responseText));
-      } else {
-        console.log('Error!', xhr.responseText);
-      }
-    }
-  }
-
-  xhr.open('GET', `${API}/${path}`);
-
-  // xhr.setRequestHeader('Content-Type', 'application/json');
-
-  xhr.send();
-}*/
+const API = 'https://raw.githubusercontent.com/JuliaSarvanova/js-11-26/master/students/Сарванова%20Юлия/project/';
 
 const sendRequest = (path) => {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
-  xhr.onreadystatechange = (() => {
-    
+  
     xhr.timeout = 10000;
+  
     xhr.ontimeout = () => {
       console.log('timeout!');
     }
-    if (xhr.readyState === 4) 
-      if (xhr.status === 200){
-        resolve(JSON.parse(xhr.responseText));
-      } else {
-       reject('Error!', xhr.responseText);
+  
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          resolve(JSON.parse(xhr.responseText));
+        } else {
+          console.log('Error!', xhr.responseText);
+          reject(xhr.responseText);
+        }
       }
-    });
+    }
   
-  xhr.open('GET', `${API}/${path}`);
-
-  xhr.send();
-});
-}
-
-class GoodsItem {
-  constructor({ product_name, price }) {
-    this.title = product_name;
-    this.price = price;
-  }
-
-  render() {
-    return `
-      <div class="item">
-        <h4>${this.title}</h4>
-        <p>${this.price}</p>
-        <button type="button">Add to basket</button>
-      </div>
-    `;
-  }
-}
-class GoodsList {
-  constructor(basket) {
-    this.goods = [];
-    this.basket = basket;
-  }
-
-  fetchData() {
-    this.goods = [
-      { title: 'Ноутбук', price: 30000 },
-      { title: 'Клавиатура', price: 1000 },
-      { title: 'Мышь', price: 500 },
-      { title: 'Монитор', price: 10000 },
-    ];
-  }
-  fetchData(callback) {
-    sendRequest('catalogData.json', (data) => {
-      this.goods = data;
-      callback();
-    });
-  }
-
-  newFetchData(callback) {
-    fetch(`${API}/catalogData.json`)
-      .then((response) => {
-        console.log(response);
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-        this.goods = data;
-        callback();
-      });
-  }
-
-  addToBasket(item) {
-    this.basket.add(item);
-  }
-
-  getTotalPrice() {
-    return this.goods.reduce((acc, curVal) => {
-      return acc + curVal.price;
-    }, 0);
-  }
-
-  render() {
-    const goodsList = this.goods.map(item => {
-      const goodsItem = new GoodsItem(item);
-      return goodsItem.render();
-    });
-    document.querySelector('.goods').innerHTML = goodsList.join('');
-  }
-}
-class Basket {
-  constructor() {
-    this.basketGoods = [];
-  }
-
-  addItem() {
-
-  }
-
-  removeItem() {
-
-  }
-
-  changeQuantity() {
-
-  }
-
-
-  fetchData() {
-
-  }
-
-
-  createOrder() {
-
-  }
-
-  getTotalPrice() {
-
-  }
-
-  render() {
-
-  }
-}
-class BasketItem {
-  constructor({ title }) {
-    this.title = title;
-  }
-
-  changeQuantity() {
-
-  }
-
-  removeItem() {
-  }
-
-  changeType() {
-  }
-
-  render() {
-
-  }
-}
+    xhr.open('GET', `${API}/${path}`);
   
-const basket = new Basket();
-const goodsList = new GoodsList(basket);
-goodsList.fetchData();
-goodsList.render();
-goodsList.fetchData(() => {
-  goodsList.render();
-  goodsList.getTotalPrice();
+    xhr.send();
+  });
+}
+
+Vue.component('v-error', {
+    props: ['message'],
+    template:`
+        <div class="error">
+            Ошибка! {{ message }}
+        </div>
+    `,
 });
+
+Vue.component('v-search', {
+    props: ['value'],
+    template:`
+        <div>
+            <input type="text" :value="value" @input="$emit('input', $event.target.value)" class="search" placeholder="Search...">
+        </div>
+    `,
+});
+
+Vue.component('v-basket', {
+    props: ['goods'],
+    template:`
+        <div class="cart">
+            <div class="cart-item" v-for="item in goods">
+                <p class="cart-item__title">{{item.title}}</p>
+                <p>{{item.quantity}} x {{item.price}}</p>
+                <button @click="$emit('delete', item.id)">Удалить</button>
+            </div>
+        </div>
+    `,
+});
+
+Vue.component('v-header', {
+    template:`
+        <header class="header padding-site">
+            <span class="logo">E-Shop</span>
+            <slot />
+            <button @click="handleClick" type="button" class="cart-button">Корзина</button>
+            <slot name="basket" />
+        </header>
+    `,
+
+    methods: {
+        handleClick() {
+            this.$emit('change-is-cart-visible')
+        }
+    }
+});
+
+Vue.component('v-goods', {
+    //принимаем св-во "goods"
+    props: ['goods'],
+    template:`
+        <main class="padding-site">
+            <section class="goods">
+                <v-item 
+                    v-for="item in goods" 
+                    v-bind:element="item" 
+                    v-on:addToBasket="handleAddToBasket"
+                />
+                <div v-if="!goods.length" class="goods-empty">
+                    Нет данных
+                </div>
+            </section>
+        </main>
+    `,
+
+    methods: {
+        handleAddToBasket(data) {
+            this.$emit('add', data);
+        }
+    }
+})
+
+Vue.component('v-item', {
+    props: ['element','title'],
+    template:`
+        <div class="item">
+            <h4>{{element.title}}</h4>
+            <p>{{element.price}}</p>
+            <button type="button" v-on:click="addToBasket(item)">Add to basket</button>
+        </div>
+    `,
+    methods: {
+        addToBasket() {
+            this.$emit('addToBasket', this.element);
+        }
+    }
+})
+
+new Vue({
+    el: '#app',
+    data: {
+      goods: [],
+      basketGoods: [],
+      searchValue: '',
+      isVisible: false,
+      errorMessage: [],
+    },
+    mounted() {
+      this.fetchData();
+      this.fetchBasketData();
+    },
+    methods: {
+      fetchData() {
+        return new Promise((resolve, reject) => {
+          sendRequest('catalog.json')
+            .then((data) => {
+              this.goods = data;
+              resolve();
+            }).catch((error) => {
+                this.errorMessage = 'Не удалось получить список товаров!';
+            })
+        });
+      },
+      fetchBasketData() {
+        return new Promise((resolve, reject) => {
+          sendRequest('basket.json')
+            .then((data) => {
+              this.basketGoods = data.contents;
+              // this.amount = data.amount;
+              // this.countGoods = data.countGoods;
+              resolve();
+            }).catch((error) => {
+                this.errorMessage = 'Не удалось получить содержимое корзины!';
+            })
+        });
+      },
+      addToBasket(item) {
+        const index = this.basketGoods.findIndex((basketItem) => basketItem.id === item.id);
+        if (index > -1) {
+          this.basketGoods[index].quantity += 1;
+          // this.basketGoods[index] = { ...this.basketGoods[index], quantity: this.basketGoods[index].quantity + 1 };
+        } else {
+          this.basketGoods.push(item);
+        }
+        console.log(this.basketGoods);
+      },
+      removeItem(id) {
+        this.basketGoods = this.basketGoods.filter((goodsItem) => goodsItem.id !== parseInt(id));
+        console.log(this.basketGoods);
+      }
+    },
+    computed: {
+      filteredGoods() {
+        const regexp = new RegExp(this.searchValue.trim(), 'i');
+        return this.goods.filter((goodsItem) => regexp.test(goodsItem.title));
+      },
+      totalPrice() {
+        return this.goods.reduce((acc, curVal) => {
+          return acc + curVal.price;
+        }, 0);
+      },
+      // someComputedProp: {
+      //   get() {
+      //     return this.name.toUpperCaes();
+      //   },
+      //   set(value) {
+      //     this.name = value.split('/');
+      //   }
+      // }
+    },
+  })
