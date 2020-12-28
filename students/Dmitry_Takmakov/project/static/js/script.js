@@ -1,38 +1,6 @@
 'use strict';
 
-const API_URL = 'https://raw.githubusercontent.com/DmitryTakmakov/js-11-26/master/students/Dmitry_Takmakov/project/json/'
-
-const makeGETRequest = (filename) => {
-    return new Promise((resolve, reject) => {
-        let xhr;
-
-        if (window.XMLHttpRequest) {
-            xhr = new XMLHttpRequest();
-        } else if (window.ActiveXObject) {
-            xhr = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-
-        xhr.timeout = 5000;
-
-        xhr.ontimeout = () => {
-            console.log(`GET request for ${this.filename} timed out!`);
-        }
-
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    resolve(JSON.parse(xhr.responseText));
-                } else {
-                    console.log('Error!', xhr.responseText);
-                    reject(xhr.responseText);
-                }
-            }
-        }
-
-        xhr.open('GET', `${API_URL}${filename}`);
-        xhr.send();
-    });
-}
+import makeRequest from './request';
 
 Vue.component('v-nothing-found', {
     template: `
@@ -57,6 +25,7 @@ Vue.component('v-header', {
                             v-for="item in cartItems"
                             :key="item.product_id"
                             :element="item"
+                            @delete="deleteHandler"
                         ></v-basket>
                         <v-nothing-found v-if="error" />
                     </ul>
@@ -70,6 +39,9 @@ Vue.component('v-header', {
         },
         newSearchInput(data) {
             this.$emit('search', data);
+        },
+        deleteHandler(data) {
+            this.$emit('delete-item', data);
         }
     }
 });
@@ -86,6 +58,7 @@ Vue.component('v-basket', {
         </div>
         <span class="text-muted">{{ element.quantity }}</span> x
         <span class="text-muted">$ {{ element.price }}</span>
+        <button @click="$emit('delete', element.product_id)"><i class="fas fa-trash-alt"></i></button>
     </li>
     `
 });
@@ -165,7 +138,7 @@ new Vue({
     methods: {
         getData() {
             return new Promise((resolve, reject) => {
-                makeGETRequest('products.json')
+                makeRequest('products')
                     .then((data) => {
                         this.products = data;
                         resolve();
@@ -177,9 +150,9 @@ new Vue({
         },
         getCartData() {
             return new Promise((resolve, reject) => {
-                makeGETRequest('basket_items.json')
+                makeRequest('basket')
                     .then((data) => {
-                        this.cartItemsList = data.contents;
+                        this.cartItemsList = data;
                         resolve();
                     })
                     .catch(() => {
@@ -188,18 +161,38 @@ new Vue({
             });
         },
         addProductToCart(product) {
-            let id = this.cartItemsList.findIndex((cartItem) => cartItem.product_id === product.product_id);
-            if (id > -1) {
-                this.cartItemsList[id].quantity += 1;
-            } else {
-                this.cartItemsList.push(product);
-                this.cartItemsList[this.cartItemsList.length - 1].quantity = 1;
-            }
-            console.log(this.cartItemsList);
+            makeRequest('basket', 'POST', product)
+                .then((res) => {
+                    console.log('Result: ', res);
+                    if (!res.success) {
+                        console.log('Error adding to basket.');
+                        return;
+                    }
+                    let id = this.cartItemsList.findIndex((cartItem) => cartItem.product_id === product.product_id);
+                    if (id > -1) {
+                        this.cartItemsList[id].quantity += 1;
+                    } else {
+                        this.cartItemsList.push(product);
+                        this.cartItemsList[this.cartItemsList.length - 1].quantity = 1;
+                    }
+                })
+                .catch((err) => {
+                    console.log(`Can't add item ${product} to cart.`, err);
+                });
         },
         removeProductFromCart(product_id) {
-            this.cartItemsList = this.cartItemsList.filter((product) => product.product_id !== parseInt(product_id));
-            console.log(this.cartItemsList);
+            makeRequest(`basket/${product_id}`, 'DELETE')
+                .then((res) => {
+                    console.log('Result: ', res);
+                    if (!res.success) {
+                        console.log('Error deleting item from cart');
+                        return;
+                    }
+                    this.cartItemsList = this.cartItemsList.filter((product) => product.product_id !== parseInt(product_id));
+                })
+                .catch((err) => {
+                    console.log(`Can't remove item #${product_id} to cart.`, err);
+                });
         },
         setNewSearchValue(value) {
             this.searchLine = value;
